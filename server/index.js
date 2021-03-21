@@ -1,7 +1,7 @@
-const express = require('express');
-const Identity = require('@iota/identity-wasm/node')
-const cors = require('cors');
-const fetch = require('node-fetch')
+const express = require("express");
+const Identity = require("@iota/identity-wasm/node")
+const cors = require("cors");
+const fetch = require("node-fetch")
 const server = express();
 global.Headers = fetch.Headers
 global.Request = fetch.Request
@@ -25,7 +25,7 @@ const CLIENT_CONFIG = {
   node: "https://nodes.thetangle.org:443",
 }
 
-server.use(cors())
+server.use(cors({origin: "http://localhost:3000", credentials: true }))
 server.use(express.json())
 
 server.post("/create", async (req, res) => {
@@ -80,10 +80,11 @@ server.post("/create", async (req, res) => {
     
     res
       .json({
+        id: user.doc.id.tag,
         docHash: user.message,
         pubKey: user.key.public,
         privKey: user.key.secret,
-        message: `Published user: https://explorer.iota.org/mainnet/transaction/${user.message}`,
+        message: `You have successfully created your digital identity, ${firstName}`,
         success: true
       })
       .status(500);
@@ -99,22 +100,25 @@ server.post("/create", async (req, res) => {
 });
 
 server.post("/verify", async (req, res) => {
-  const {docId} = req.body;
+  const {id} = req.body;
+  // reformat the id to fit the iota format
+  const docId = `did:iota:${id}`
 
   try {
-    if (!docId) {
+    if (!id) {
       return res
         .json({
-          message: "Please enter an DID",
+          message: "Identity not found",
           success: false
         })
         .status(500);
     }
 
     try {
+      // resolve the document
       const doc = await Identity.resolve(docId, CLIENT_CONFIG)
+      // parse the document
       const document = Document.fromJSON(doc)
-      console.log(document)
       if (document.verify()) {
         const documentJSON = document.toJSON();
         const date = documentJSON.created;
@@ -128,6 +132,7 @@ server.post("/verify", async (req, res) => {
     } catch (error) {
       return res
       .json({
+        error: error,
         message: "Identity not found",
         success: false
       })
@@ -136,13 +141,14 @@ server.post("/verify", async (req, res) => {
   } catch (error) {
     return res
       .json({
-        error: error,
         message: "There was a Problem with our Servers",
         success: false
       })
       .status(500);
   }
 })
+
+
 
 server.listen(3001, ()=>{
   console.log("***********************************");

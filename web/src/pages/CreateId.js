@@ -82,6 +82,7 @@ function CreateId() {
       });
     if (res.data.success === true) {
       db.collection("identity").add({
+        id: res.data.id,
         docHash: res.data.docHash,
         pubKey: res.data.pubKey,
         privKey: res.data.privKey
