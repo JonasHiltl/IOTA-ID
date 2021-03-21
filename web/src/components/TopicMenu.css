@@ -1,0 +1,17 @@
+.ant-menu {
+  border: none;
+}
+
+.ant-menu-item-selected {
+  border-radius: 10px 0px 0px 10px;
+}
+
+.ant-menu-item {
+  padding-left: 12px !important;
+  margin: 6px 12px 6px 12px !important;
+  width: auto !important;
+}
+
+.ant-divider {
+  margin: 14px 0px;
+}

@@ -1,0 +1,69 @@
+{
+    "signUp": {
+        "header": "Erstellen Sie Ihr Konto",
+        "firstN": "Vorname",
+        "firstName": "Wie lautet dein Vorname?",
+        "lastN": "Nachname",
+        "lastName": "Wie lautet dein Nachname?",
+        "email": "E-Mail Adresse",
+        "emailTypical": "Wie lautet deine E-Mail Adresse?",
+        "PW": "Passwort",
+        "confirmPW": "Passwort bestätigen",
+        "terms": "Ich akzeptiere die <1>Nutzungsbedingungen</1> und Datenschutzrichtlinien",
+        "signup": "Registrieren",
+        "alreadySign": "Haben Sie bereits ein Benutzerkonto? <1> Anmelden</1>",
+        "activateEmail": "Bitte aktivieren Sie Ihr Konto",
+        "sentEmail": "Wir haben Ihnen den Aktivierungslink an Ihre E-Mail geschickt."
+    },
+    "messages": {
+        "inputFN": "Bitte geben Sie Ihren Vornamen ein!",
+        "inputLN": "Bitte geben Sie Ihren Nachname ein!",
+        "invalidEmail": "Die Eingabe ist keine gültige E-Mail!",
+        "inputEmail": "Bitte geben Sie Ihre E-Mail ein!",
+        "inputPW": "Bitte geben Sie Ihr Passwort ein!",
+        "min8Char": "Mindestens 8 Buchstaben!",
+        "confirmPW": "Bitte bestätigen Sie Ihr Passwort!"
+    },
+    "toolTip": {
+        "back": "Zurück",
+        "backLogin": "Zurück zum Anmelden",
+        "next": "Weiter",
+        "submit": "Fertig"
+    },
+    "login": {
+        "header": "Bei Ihrem Konto anmelden",
+        "password": "Passwort",
+        "email": "E-Mail Adresse",
+        "notRegistered": "Noch kein Benutzerkonto? <1>Registrieren</>",
+        "remeberMe": "Angemeldet bleiben",
+        "login": "Anmelden",
+        "forgotPW": "Haben Sie Ihr Passwort vergessen? <1> Passwort zurücksetzen</1>"
+    },
+    "resetPassword": {
+        "header": "Haben Sie Ihr Passwort vergessen?",
+        "recoveryLink": "Wir senden Ihnen einen Wiederherstellungslink an Ihre E-Mail-Adresse.",
+        "sendEmail": "E-Mail senden",
+        "checkemail": "Prüfen Sie Ihre E-Mail",
+        "emailSent": "Wir haben Ihnen einen Link zur Wiederherstellung Ihres Passworts an Ihre E-Mail geschickt."
+    },
+    "resetPasswordConfirm": {
+        "header": "Neues Passwort erstellen",
+        "newEmail": "Bitte wählen Sie Ihr neues Passwort",
+        "newPW": "neues Passwort",
+        "confirmPW": "Passwort bestätigen",
+        "setPW": "neues Passwort festlegen",
+        "inputNewPW": "Bitte geben Sie Ihr neues Passwort ein!",
+        "confirmNewPW": "Bitte bestätigen Sie Ihr Passwort!"
+    },
+    "patientenfragebogen": {
+        "next": "Weiter",
+        "previous": "Zurück",
+        "done": "Fertig",
+        "Step1Header": "Schritt 1",
+        "Step1Description": "Dies ist eine Beschreibung.",
+        "Step2Header": "Schritt 2",
+        "Step2Description": "Dies ist eine Beschreibung.",
+        "Step3Header": "Schritt 3",
+        "Step3Description": "Dies ist eine Beschreibung."
+    }
+}

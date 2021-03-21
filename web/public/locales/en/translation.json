@@ -1,0 +1,69 @@
+{
+    "signUp": {
+        "header": "Create your account",
+        "firstN": "First name",
+        "firstName": "What is your first name?",
+        "lastN": "Last Name",
+        "lastName": "What is your last name?",
+        "email": "Email",
+        "emailTypical": "What is your email?",
+        "PW": "Password",
+        "confirmPW": "Confirm password",
+        "terms": " I accept the <1>Terms of service</1> and privacy policy",
+        "signup": "Sign up",
+        "alreadySign": "Already have an account? <1> Login</1>",
+        "activateEmail": "Please activate your Account",
+        "sentEmail": "We have sent you your email activation link to your email."
+    },
+    "messages": {
+        "inputFN": "Please input your first Name!",
+        "inputLN": "Please input your last name!",
+        "invalidEmail": "The input is not a valid Email!",
+        "inputEmail": "Please input your E-mail!",
+        "inputPW": "Please input your Password!",
+        "min8Char": "Minimum 8 characters!",
+        "confirmPW": "Please confirm your Password!"
+    },
+    "toolTip": {
+        "back": "Back",
+        "backLogin": "back to Login",
+        "next": "Next",
+        "submit": "Submit"
+    },
+    "login": {
+        "header": "Log in to your account",
+        "password": "Password",
+        "email": "Email",
+        "notRegistered": "Don't have an account? <1>Register</>",
+        "remeberMe": "Remember Me",
+        "login": "Login",
+        "forgotPW": "Forgot your password? <1> Reset password</1>"
+    },
+    "resetPassword": {
+        "header": "Forgot your Password?",
+        "recoveryLink": "We'll send a recovery link to your Email address.",
+        "sendEmail": "send Email",
+        "checkemail": "Check your Email",
+        "emailSent": "We have sent you your password recovery instructions to your email."
+    },
+    "resetPasswordConfirm": {
+        "header": "Create new password",
+        "newEmail": "Please choose your new password",
+        "newPW": "New password",
+        "confirmPW": "Confirm password",
+        "setPW": "Set new password",
+        "inputNewPW": "Please input your new Password!",
+        "confirmNewPW": "Please confirm your Password!"
+    },
+    "patientenfragebogen": {
+        "next": "Next",
+        "previous": "Previous",
+        "done": "Done",
+        "Step1Header": "Step 1",
+        "Step1Description": "This is a description.",
+        "Step2Header": "Step 1",
+        "Step2Description": "This is a description.",
+        "Step3Header": "Step 1",
+        "Step3Description": "This is a description."
+    }
+}
