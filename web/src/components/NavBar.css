@@ -1,8 +1,9 @@
 .navbar {
   background-color: white;
-  padding-left: 20px;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding: 1rem 20px 1rem 20px;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
 }
 @media (min-width: 992px) {
   .menu {

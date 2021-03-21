@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "./App.css";
@@ -13,17 +13,14 @@ function App() {
         <Switch>
           <Route path="/signup">
             <CreateId/>
-          </Route>        
-          <Route path="/patientenfragebogen">
-            <MenuLayout>
+          </Route>    
+          <MenuLayout>
+            <Route path="/patientenfragebogen">
               <Patientenfragebogen/>
-            </MenuLayout>
-          </Route>
-          <Route exact path="/">
-            <MenuLayout>
-              
-            </MenuLayout>
-          </Route>
+            </Route>
+            <Route exact path="/">              
+            </Route>
+          </MenuLayout>    
         </Switch>
       </div>
     </Router>

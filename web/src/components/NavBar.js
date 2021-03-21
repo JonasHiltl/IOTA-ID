@@ -7,14 +7,9 @@ const NavBar = ({ menu }) => {
   const [visible, setVisible] = useState(false);
   return (
     <nav className="navbar">
-      <Button
-        className="menu"
-        type="primary"
-        icon={<MenuOutlined />}
-        onClick={() => setVisible(true)}
-      />
+      
       <Drawer
-        title="Menu"
+        title="Logo"
         placement="left"
         onClick={() => setVisible(false)}
         onClose={() => setVisible(false)}
@@ -22,7 +17,13 @@ const NavBar = ({ menu }) => {
       > 
         {menu}
      </Drawer>
-     <a href="/">Logo</a>     
+     <a href="/">Logo</a>
+     <Button
+        className="menu"
+        type="primary"
+        icon={<MenuOutlined />}
+        onClick={() => setVisible(true)}
+      />
     </nav>
   );
 };
