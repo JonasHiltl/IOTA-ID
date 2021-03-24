@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, {  useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import Localbase from "localbase"
 
 import "./App.css";
@@ -11,18 +11,15 @@ import { verify } from "./store/actions/auth";
 
 function App() {
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector(state => state.isAuthenticated);
-
-  let db = new Localbase("db")
 
   useEffect(() => {
+    const db = new Localbase("db")
     db.collection("identity").get().then(identity => {
       if (identity[0]) {
-        console.log(identity[0])
         dispatch(verify(identity[0].id))
       }
     })
-  }, [])
+  }, [dispatch])
 
   return(
     <Router>

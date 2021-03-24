@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { Layout } from "antd";
 import NavBar from "../components/NavBar";
 import SideBar from "../components/SideBar";
-import TopicMenu from "../components/TopicMenu";
+import GeneralMenu from "../components/Menu";
 
 const MenuLayout = props => {
   const location = useLocation();
@@ -14,8 +14,8 @@ const MenuLayout = props => {
     setSelectedKey(key);
   };
 
-  const Menu = (
-    <TopicMenu
+  const generalMenu = (
+    <GeneralMenu
       selectedKey={selectedKey}
       changeSelectedKey={changeSelectedKey}
     />
@@ -37,9 +37,9 @@ const MenuLayout = props => {
 
   return (
     <div>
-      <NavBar menu={Menu} />
+      <NavBar menu={generalMenu} />
       <Layout>
-        <SideBar menu={Menu} />
+        <SideBar menu={generalMenu} />
         <Layout.Content className="content">
           { props.children }
         </Layout.Content>

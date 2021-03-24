@@ -1,4 +1,13 @@
 {
+    "general": {
+        "email": "E-Mail Adresse",
+        "firstName": "Vorname ",
+        "lastName": "Nachname",
+        "birthday": "Geburtsdatum",
+        "gender": "Geschlecht",
+        "residence": "Wohnadresse",
+        "phoneNumber": "Telefonnummer"
+    },
     "signUp": {
         "header": "Erstellen Sie Ihr Konto",
         "firstN": "Vorname",
@@ -59,11 +68,11 @@
         "next": "Weiter",
         "previous": "Zurück",
         "done": "Fertig",
-        "Step1Header": "Schritt 1",
-        "Step1Description": "Dies ist eine Beschreibung.",
-        "Step2Header": "Schritt 2",
+        "Step1Header": "Person",
+        "Step1Description": "Ihre persönlichen Informationen.",
+        "Step2Header": "Allergien",
         "Step2Description": "Dies ist eine Beschreibung.",
-        "Step3Header": "Schritt 3",
+        "Step3Header": "Medizin",
         "Step3Description": "Dies ist eine Beschreibung."
     }
 }

@@ -6,12 +6,13 @@ import {
   Divider
 } from "antd";
 import { 
-  HomeOutlined
+  HomeOutlined,
+  AuditOutlined
 } from "@ant-design/icons";
-import "./TopicMenu.css"
+import "./Menu.css"
 
 
-const TopicMenu = ({ selectedKey, changeSelectedKey }) => {
+const GeneralMenu = ({ selectedKey, changeSelectedKey }) => {
   return (
     <Menu mode="inline" selectedKeys={[selectedKey]}>
       <Menu.Item icon={<HomeOutlined/>} key={0} onClick={changeSelectedKey}>
@@ -21,10 +22,10 @@ const TopicMenu = ({ selectedKey, changeSelectedKey }) => {
         <Link to="/#">Second topic</Link>
       </Menu.Item>
       <Divider/>
-      <Menu.Item icon={<HomeOutlined/>} key={2} onClick={changeSelectedKey}>
+      <Menu.Item icon={<AuditOutlined />} key={2} onClick={changeSelectedKey}>
         <Link to="/patientenfragebogen">Patientenfragebogen</Link>
       </Menu.Item>
     </Menu>
   );
 }
-export default TopicMenu;
+export default GeneralMenu;
