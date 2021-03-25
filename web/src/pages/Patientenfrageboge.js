@@ -55,8 +55,6 @@ function Patientenfragebogen() {
       allergy: "",
       reaction: ""
     })
-    console.log("Data List", addedData)
-    console.log("Form inputs", formData)
   }
 	
 	const onStepChange = current => {
@@ -77,7 +75,18 @@ function Patientenfragebogen() {
 
   const credentialTip = <span>Edit <Link to="/#" style={{ color:"white", textDecoration:"underline" }}>credentials</Link> to change Information</span>;
 
-  const changeFormData = e => setFormData({ ...formData, [e.target.name]: e.target.value}); console.log(formData)
+  const changeFormData = e => setFormData({ ...formData, [e.target.name]: e.target.value})
+
+  const deleteItem = item => {
+    console.log(item)
+    const newAddedData = addedData;
+    console.log(newAddedData)
+    delete newAddedData[item];
+    console.log("deleted")
+    setAddedData(newAddedData)
+    console.log("Added Data", addedData)
+    setRerender({})
+  }
 
   return(
 		<div className="patientQuestionaire" style={{ padding:"20px", minHeight:"calc(100vh - 54px)", position:"relative" }}>
@@ -183,7 +192,7 @@ function Patientenfragebogen() {
                       </Col>
                       <Col span={12} style={{ justifyContent:"space-between", display:"flex", alignItems:"center"}}>
                         <Text key={`reaction-${item}`}>{addedData[item].reaction}</Text>
-                        <MinusCircleOutlined style={{ cursor:"pointer"}}/>
+                        <MinusCircleOutlined style={{ cursor:"pointer"}} onClick={ () => deleteItem(item)}/>
                       </Col>
                     </Row>
                   ))}
