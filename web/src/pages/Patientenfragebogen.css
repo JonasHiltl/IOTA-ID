@@ -3,6 +3,18 @@
 }
 
 .ant-form-item-control-input-content {
-    display:flex;
+    display: flex;
     align-items: center;
+}
+
+.ant-form-item {
+    margin-bottom: 8px;
+}
+
+.ant-space-item:first-child {
+    width: 100%
+}
+
+.ant-space-item:nth-child(2) {
+    width: 100%
 }

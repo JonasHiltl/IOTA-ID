@@ -1,8 +1,8 @@
 import { React, useState, useEffect } from "react";
-import moment from 'moment';
-import { useMediaQuery } from 'react-responsive'
+import moment from "moment";
+import { useMediaQuery } from "react-responsive"
 import { useTranslation } from "react-i18next";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 import { 
   Steps, 
@@ -34,6 +34,7 @@ function Patientenfragebogen() {
 	const { t } = useTranslation();
 	const [current, setCurrent] = useState(0);
   const [allergyData, setAllergyData] = useState({});
+  const [reactionData, setReactionData] = useState({});
   const [, setRerender] = useState();
   const isXs = useMediaQuery({ minWidth: 480 })
   const isSm = useMediaQuery({ minWidth: 576 })
@@ -61,17 +62,25 @@ function Patientenfragebogen() {
 
   const credentialTip = <span>Edit <Link to="/#" style={{ color:"white", textDecoration:"underline" }}>credentials</Link> to change Information</span>;
 
-  const onFinish = () => {
-    console.log(allergyData);
+  const onFinish = values  => {
+    console.log(values);
   };
 
-  const onChangeInput = e => {
-    setAllergyData({ ...allergyData, [e.target.name]: e.target.value })
-  };
+  const allergyInput = e => setAllergyData({ ...allergyData, [e.target.name]: e.target.value})
 
-  useEffect(() => {
-    console.log(allergyData)
-  });
+  const reactionInput = e => setReactionData({ ...reactionData, [e.target.name]: e.target.value})
+ 
+  const setAllergyAndReactions = (field) => {
+    const newAllergyData = allergyData;
+    delete newAllergyData[field.fieldKey];
+    setAllergyData(newAllergyData);
+    const newReactionData = reactionData;
+    delete newReactionData[field.fieldKey];
+    setReactionData(newReactionData);
+    console.log("New Reaction data", reactionData)
+    setRerender({});
+    console.log("Re-render")
+  }
 
   return(
 		<div  style={{ padding:"20px", minHeight:"calc(100vh - 54px)", position:"relative" }}>
@@ -132,35 +141,55 @@ function Patientenfragebogen() {
 			}
 			{current === 1 &&
         <>
-          <Form name="dynamic-allergy-form" autoComplete="off" onFinish={onFinish}>
+          <Form name="dynamic_form_nest_item" onFinish={onFinish} autoComplete="off">
             <Form.List name="allergies">
               {(fields, { add, remove }) => (
                 <>
                   {fields.map(field => (
-                    <Form.Item
-                      {...field}
-                      name={[field.fieldKey]}
-                      fieldKey={field.fieldKey}
-                      //rules={[{ required: true, whitespace: true, message: 'Missing allergy' }]}
-                      style={{ marginBottom:8 }}
-                    >
-                      <Input
-                        placeholder="Your allergy (e.g. nut allergy)"
-                        style={{ marginRight:4 }}
-                        name={field.fieldKey}
-                        onChange={e => onChangeInput(e)}
-                      />
-                      <MinusCircleOutlined onClick={() => {remove(field.name); const newAllergyData = allergyData; delete newAllergyData[field.fieldKey]; setAllergyData(newAllergyData); setRerender({})}}/>
-                    </Form.Item>
+                    <Space key={field.key} style={{ display: 'flex' }} align="baseline">
+                      <Form.Item
+                        {...field}
+                        name={[field.name, 'allergy']}
+                        fieldKey={[field.fieldKey, 'allergy']}
+                        rules={[{ required: true, message: 'Missing allergy' }]}
+                        style={{ width: "100%" }}
+                      >
+                        <Input
+                          placeholder="Allergy" 
+                          onChange={e => allergyInput(e)}
+                          // set name as fieldKey so that state and visual fields don't get out of context after deleting a field visually
+                          name={[field.fieldKey]}
+                        />
+                      </Form.Item>
+                      <Form.Item
+                        {...field}
+                        name={[field.name, 'reaction']}
+                        fieldKey={[field.fieldKey, 'reaction']}
+                        rules={[{ required: true, message: 'Missing reaction' }]}
+                        style={{ width: "100%" }}
+                      >
+                        <Input 
+                          placeholder="Reaction" 
+                          onChange={e => reactionInput(e)}
+                          name={[field.fieldKey]}
+                        />
+                      </Form.Item>
+                      <MinusCircleOutlined onClick={async () => {remove(field.name); await setAllergyAndReactions(field)}}/>
+                    </Space>
                   ))}
                   <Form.Item>
                     <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                      Add allergy
+                      Add field
                     </Button>
                   </Form.Item>
                 </>
               )}
             </Form.List>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
           </Form>
           { Object.keys(allergyData).length === 0 &&
             <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No allergies added"/>
@@ -170,6 +199,11 @@ function Patientenfragebogen() {
               <Card title="Allergies">
                 {Object.keys(allergyData).map(allergy => (
                   <p key={allergy}>{allergyData[allergy]}</p>
+                ))}
+              </Card>
+              <Card title="Reactions">
+                {Object.keys(reactionData).map(reaction => (
+                  <p key={reaction}>{reactionData[reaction]}</p>
                 ))}
               </Card>
             </>

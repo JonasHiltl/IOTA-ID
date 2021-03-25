@@ -8,6 +8,9 @@
         "residence": "Residential address",
         "phoneNumber": "Phone number"
     },
+    "patient": {
+
+    },
     "signUp": {
         "header": "Create your account",
         "firstN": "First name",
