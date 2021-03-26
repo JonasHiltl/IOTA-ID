@@ -154,7 +154,7 @@ function Patientenfragebogen() {
                   <Input
                     name="allergy"
                     value={allergy}
-                    placeholder="Allergy"
+                    placeholder={t("patientQuestionnaire.Allergy")}
                     onChange={e => changeFormData(e)}
                   />
                 </Form.Item>
@@ -164,7 +164,7 @@ function Patientenfragebogen() {
                   <Input
                     name="reaction"
                     value={reaction}
-                    placeholder="Reaction"
+                    placeholder={t("patientQuestionnaire.Reaction")}
                     onChange={e => changeFormData(e)}
                   />
                 </Form.Item>
@@ -184,7 +184,7 @@ function Patientenfragebogen() {
           { Object.keys(addedData).length > 0 &&
             <Row gutter={8}>
               <Col className="gutter-row" span={24}>
-                <Card title="Added Allergies">
+                <Card title={t("patientQuestionnaire.yourAllergies")}>
                   {Object.keys(addedData).map(item => (
                     <Row key={item} style={{ marginBottom:8 }}>
                       <Col span={12}>

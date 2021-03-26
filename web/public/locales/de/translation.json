@@ -8,6 +8,12 @@
         "residence": "Wohnadresse",
         "phoneNumber": "Telefonnummer"
     },
+    "patientQuestionnaire": {
+        "Allergy": "Allergie",
+        "Medicin": "Medizin",
+        "Reaction": "Reaktion",
+        "yourAllergies": "Deine Allergien"
+    },
     "signUp": {
         "header": "Erstellen Sie Ihr Konto",
         "firstN": "Vorname",
@@ -69,7 +75,7 @@
         "previous": "Zurück",
         "done": "Fertig",
         "Step1Header": "Person",
-        "Step1Description": "Ihre persönlichen Informationen.",
+        "Step1Description": "Deine persönlichen Informationen.",
         "Step2Header": "Allergien",
         "Step2Description": "Dies ist eine Beschreibung.",
         "Step3Header": "Medizin",

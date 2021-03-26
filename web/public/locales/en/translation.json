@@ -8,8 +8,11 @@
         "residence": "Residential address",
         "phoneNumber": "Phone number"
     },
-    "patient": {
-
+    "patientQuestionnaire": {
+        "Allergy": "Allergy",
+        "Medicin": "Medicin",
+        "Reaction": "Reaction",
+        "yourAllergies": "Your Allergies"
     },
     "signUp": {
         "header": "Create your account",
