@@ -40,29 +40,29 @@ function Patientenfragebogen() {
 	const [current, setCurrent] = useState(0);
   const [index, setIndex] = useState(0)
   const [, setRerender] = useState();
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [addedAlergyData, setAddedAlergyData] = useState({})
   const [addedMedicationData, setAddedMedicationData] = useState({})
 
   const [allergyFormData, setAllergyFormData] = useState({
     allergy: "",
-    reaction: ""
+    symptoms: ""
   })
   const [medicationFormData, setMedicationFormData] = useState({
     medication: "",
-    reason: "",
+    condition: "",
+    frequency: "",
     dosis: ""
   })
 
-  const { allergy, reaction } = allergyFormData;
-  const { medication, reason, dosis } = medicationFormData;
+  const { allergy, symptoms } = allergyFormData;
+  const { medication, condition, frequency, dosis } = medicationFormData;
 
   const addInputsToAllergyList = () => {
     setIndex(index + 1)
     setAddedAlergyData({ ...addedAlergyData, [index]:allergyFormData});
     setAllergyFormData({
       allergy: "",
-      reaction: ""
+      symptoms: ""
     })
   }
 
@@ -71,7 +71,8 @@ function Patientenfragebogen() {
     setAddedMedicationData({ ...addedMedicationData, [index]:medicationFormData});
     setMedicationFormData({
       medication: "",
-      reason: "",
+      condition: "",
+      frequency: "",
       dosis: ""
     })
   }
@@ -88,8 +89,8 @@ function Patientenfragebogen() {
 		setCurrent(current - 1)
 	};
 
-  const addAllergyIsEnabled = allergy.length > 0 && reaction.length > 0;
-  const addMedicationIsEnabled = medication.length > 0 && reason.length > 0 && dosis.length > 0;
+  const addAllergyIsEnabled = allergy.length > 0 && symptoms.length > 0;
+  const addMedicationIsEnabled = medication.length > 0 && condition.length > 0 && frequency.length > 0 && dosis.length > 0;
 
 	const isDisabled = current === 0;
 
@@ -113,19 +114,19 @@ function Patientenfragebogen() {
   }
 
   return(
-		<div className="patientQuestionaire" style={{ padding:"20px", minHeight:"calc(100vh - 54px)", position:"relative" }}>
+		<div className="patientQuestionaire">
 			<Steps current={current} onChange={onStepChange} direction="horizontal">
         <Step
-          title={t("patientenfragebogen.Step1Header")}
-          description={isMd && t("patientenfragebogen.Step1Description")}>
+          title={t("patientQuestionnaire.Step1Header")}
+          description={isMd && t("patientQuestionnaire.Step1Description")}>
         </Step>
         <Step
-          title={t("patientenfragebogen.Step2Header")}
-          description={isMd && t("patientenfragebogen.Step2Description")}>
+          title={t("patientQuestionnaire.Step2Header")}
+          description={isMd && t("patientQuestionnaire.Step2Description")}>
         </Step>
         <Step
-          title={t("patientenfragebogen.Step3Header")}
-          description={isMd && t("patientenfragebogen.Step3Description")}>
+          title={t("patientQuestionnaire.Step3Header")}
+          description={isMd && t("patientQuestionnaire.Step3Description")}>
         </Step>
 			</Steps>
 			<div style={{ backgroundColor:"#fff", minHeight:"50vh", border:"1px dashed #D1D1D1", marginTop:"20px", padding:"4px", justifyContent:"space-between" }}>
@@ -175,22 +176,22 @@ function Patientenfragebogen() {
             <Row gutter={{ xs: 8, sm: 16 }}>
               <Col className="gutter-row" xs={24} md={12}>
                 <Form.Item>
-                  <Text>Allergene</Text>
+                  <Text>{t("patientQuestionnaire.allergy")}</Text>
                   <Input
                     name="allergy"
                     value={allergy}
-                    placeholder="bsp. Pollen"
+                    placeholder={t("patientQuestionnaire.examplePollen")}
                     onChange={e => changeAllergyFormData(e)}
                   />
                 </Form.Item>
               </Col>
               <Col className="gutter-row" xs={24} md={12}>
                 <Form.Item>
-                  <Text>Symptome</Text>
+                  <Text>{t("patientQuestionnaire.symptoms")}</Text>
                   <Input
-                    name="reaction"
-                    value={reaction}
-                    placeholder="bsp. Heuschnupfen"
+                    name="symptoms"
+                    value={symptoms}
+                    placeholder={t("patientQuestionnaire.exampleSneezing")}
                     onChange={e => changeAllergyFormData(e)}
                   />
                 </Form.Item>
@@ -198,14 +199,14 @@ function Patientenfragebogen() {
               <Col span={24}>
                 <Form.Item>
                   <Button type="dashed" disabled={!addAllergyIsEnabled} block htmlType="submit" onClick={addInputsToAllergyList} icon={<PlusOutlined/>}>
-                    Add field
+                    {t("patientQuestionnaire.addAllergy")}
                   </Button>
                 </Form.Item>
               </Col>
             </Row>
           </Form>
           { Object.keys(addedAlergyData).length === 0 &&
-            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No allergies added"/>
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={t("patientQuestionnaire.noAllergiesAdded")}/>
           }
           { Object.keys(addedAlergyData).length > 0 &&
             <Row gutter={8}>
@@ -213,10 +214,10 @@ function Patientenfragebogen() {
                 <Card title={t("patientQuestionnaire.yourAllergies")}>
                   <Row>
                     <Col span={12}>
-                      <Text strong>Allergie:</Text>
+                      <Text strong>{t("patientQuestionnaire.allergy")}:</Text>
                     </Col>
                     <Col span={12}>
-                      <Text strong>Symptome:</Text>
+                      <Text strong>{t("patientQuestionnaire.symptoms")}:</Text>
                     </Col>
                   </Row>
                   {Object.keys(addedAlergyData).map(item => (
@@ -225,8 +226,8 @@ function Patientenfragebogen() {
                         <Text key={`allergy-${item}`}>{addedAlergyData[item].allergy}</Text>
                       </Col>
                       <Col span={12} style={{ justifyContent:"space-between", display:"flex", alignItems:"center"}}>
-                        <Text key={`reaction-${item}`} ellipsis={true}>{addedAlergyData[item].reaction}</Text>
-                        <Tooltip title="Remove allergy">
+                        <Text key={`reaction-${item}`} ellipsis={true}>{addedAlergyData[item].symptoms}</Text>
+                        <Tooltip title={t("toolTip.removeAllergy")}>
                           <MinusCircleOutlined style={{ cursor:"pointer"}} onClick={ () => deleteAllergyItem(item)}/>
                         </Tooltip>
                       </Col>
@@ -242,35 +243,46 @@ function Patientenfragebogen() {
 				<>
           <Form name="Medication">
             <Row gutter={{ xs: 8, sm: 16 }}>
-              <Col className="gutter-row" xs={24} md={8}>
+              <Col className="gutter-row" xs={24} md={6}>
                 <Form.Item>
-                  <Text>Medikamente</Text>
+                  <Text>{t("patientQuestionnaire.Step3Header")}</Text>
                   <Input
                     name="medication"  
                     value={medication}
-                    placeholder="Medication"
+                    placeholder={t("patientQuestionnaire.exampleAspirin")}
                     onChange={e => changeMedicationFormData(e)}
                   />
                 </Form.Item>
               </Col>
-              <Col className="gutter-row" xs={24} md={8}>
+              <Col className="gutter-row" xs={24} md={6}>
                 <Form.Item>
-                  <Text>Grund</Text>
+                  <Text>{t("patientQuestionnaire.condition")}</Text>
                   <Input
-                    name="reason"
-                    value={reason}
-                    placeholder="Grund"
+                    name="condition"
+                    value={condition}
+                    placeholder={t("patientQuestionnaire.exampleHeadaches")}
                     onChange={e => changeMedicationFormData(e)}
                   />
                 </Form.Item>
               </Col>
-              <Col className="gutter-row" xs={24} md={8}>
+              <Col className="gutter-row" xs={24} md={6}>
                 <Form.Item>
-                  <Text>Dosis</Text>
+                  <Text>{t("patientQuestionnaire.frequency")}y</Text>
+                  <Input
+                    name="frequency"
+                    value={frequency}
+                    placeholder={t("patientQuestionnaire.exampleOnceDaily")}
+                    onChange={e => changeMedicationFormData(e)}
+                  />
+                </Form.Item>
+              </Col>
+              <Col className="gutter-row" xs={24} md={6}>
+                <Form.Item>
+                  <Text>{t("patientQuestionnaire.dose")}</Text>
                   <Input
                     name="dosis"
                     value={dosis}
-                    placeholder="dosis"
+                    placeholder={t("patientQuestionnaire.example75mg")}
                     onChange={e => changeMedicationFormData(e)}
                   />
                 </Form.Item>
@@ -278,30 +290,47 @@ function Patientenfragebogen() {
               <Col span={24}>
                 <Form.Item>
                   <Button type="dashed" disabled={!addMedicationIsEnabled} block htmlType="submit" onClick={addInputsToMedicationList} icon={<PlusOutlined/>}>
-                    Add field
+                    {t("patientQuestionnaire.addMedication")}
                   </Button>
                 </Form.Item>
               </Col>
             </Row>
           </Form>
           { Object.keys(addedMedicationData).length === 0 &&
-            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No medication added"/>
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={t("patientQuestionnaire.noMedicationAdded")}/>
           }
           { Object.keys(addedMedicationData).length > 0 &&
             <Row gutter={8}>
               <Col className="gutter-row" span={24}>
-                <Card title="Your Medication">
+                <Card title={t("patientQuestionnaire.yourMedication")}>
+                  <Row>
+                    <Col span={6}>
+                      <Text strong>{t("patientQuestionnaire.medication")}:</Text>
+                    </Col>
+                    <Col span={6}>
+                      <Text strong>{t("patientQuestionnaire.condition")}:</Text>
+                    </Col>
+                    <Col span={6}>
+                      <Text strong>{t("patientQuestionnaire.frequency")}:</Text>
+                    </Col>
+                    <Col span={6}>
+                      <Text strong>{t("patientQuestionnaire.dose")}:</Text>
+                    </Col>
+                  </Row>
                   {Object.keys(addedMedicationData).map(item => (
                     <Row key={item} style={{ marginBottom:8 }}>
-                      <Col span={8}>
+                      <Col span={6}>
                         <Text key={`allergy-${item}`}>{addedMedicationData[item].medication}</Text>
                       </Col>
-                      <Col span={8}>
-                        <Text key={`reaction-${item}`}>{addedMedicationData[item].reason}</Text>
+                      <Col span={6}>
+                        <Text key={`reaction-${item}`}>{addedMedicationData[item].condition}</Text>
                       </Col>
-                      <Col span={8} style={{ justifyContent:"space-between", display:"flex", alignItems:"center"}}>
+                      <Col span={6}>
+                        <Text key={`reaction-${item}`}>{addedMedicationData[item].frequency}</Text>
+                      </Col>
+                      <Col span={6} style={{ justifyContent:"space-between", display:"flex", alignItems:"center"}}>
                         <Text key={`reaction-${item}`}  ellipsis={true}>{addedMedicationData[item].dosis}</Text>
-                        <Tooltip title="Remove Medication">
+                        <Tooltip title={t("toolTip.removeMedication")}>
                           <MinusCircleOutlined style={{ cursor:"pointer"}} onClick={ () => deleteMedicationItem(item)}/>
                         </Tooltip>
                       </Col>
@@ -316,11 +345,11 @@ function Patientenfragebogen() {
 			</div>
 			<div style={{ display:"flex", marginTop:"20px" }}>
 				{current === 2 ?
-					<Button type="primary" onClick={() => {console.log("Allergies", addedAlergyData); console.log("Medication", addedMedicationData)}}>{t("patientenfragebogen.done")}</Button>
+					<Button type="primary" onClick={() => {console.log("Allergies", addedAlergyData); console.log("Medication", addedMedicationData)}}>{t("patientQuestionnaire.done")}</Button>
 					:
-					<Button type="primary" onClick={increment}>{t("patientenfragebogen.next")}</Button>
+					<Button type="primary" onClick={increment}>{t("patientQuestionnaire.next")}</Button>
 				}
-				<Button disabled={isDisabled} onClick={decrement} style={{ marginLeft:"8px" }}>{t("patientenfragebogen.previous")}</Button>
+				<Button disabled={isDisabled} onClick={decrement} style={{ marginLeft:"8px" }}>{t("patientQuestionnaire.previous")}</Button>
 			</div>
 		</div>
   );
