@@ -38,10 +38,9 @@ function Patientenfragebogen() {
   const isXxl = useMediaQuery({ minWidth: 1600 })
 	const { t } = useTranslation();
 	const [current, setCurrent] = useState(0);
-  const [index, setIndex] = useState(0)
   const [, setRerender] = useState();
-  const [addedAlergyData, setAddedAlergyData] = useState({})
-  const [addedMedicationData, setAddedMedicationData] = useState({})
+  const [addedAlergyData, setAddedAlergyData] = useState([])
+  const [addedMedicationData, setAddedMedicationData] = useState([])
 
   const [allergyFormData, setAllergyFormData] = useState({
     allergy: "",
@@ -58,23 +57,23 @@ function Patientenfragebogen() {
   const { medication, condition, frequency, dosis } = medicationFormData;
 
   const addInputsToAllergyList = () => {
-    setIndex(index + 1)
-    setAddedAlergyData({ ...addedAlergyData, [index]:allergyFormData});
+    setAddedAlergyData([...addedAlergyData, allergyFormData]);
     setAllergyFormData({
       allergy: "",
       symptoms: ""
-    })
+    });
+    setRerender({})
   }
 
   const addInputsToMedicationList = () => {
-    setIndex(index + 1)
-    setAddedMedicationData({ ...addedMedicationData, [index]:medicationFormData});
+    setAddedMedicationData([...addedMedicationData, medicationFormData]);
     setMedicationFormData({
       medication: "",
       condition: "",
       frequency: "",
       dosis: ""
-    })
+    });
+    setRerender({})
   }
 	
 	const onStepChange = current => {
@@ -96,19 +95,19 @@ function Patientenfragebogen() {
 
   const credentialTip = <span>Edit <Link to="/#" style={{ color:"white", textDecoration:"underline" }}>credentials</Link> to change Information</span>;
 
-  const changeAllergyFormData = e => setAllergyFormData({ ...allergyFormData, [e.target.name]: e.target.value})
-  const changeMedicationFormData = e => setMedicationFormData({ ...medicationFormData, [e.target.name]: e.target.value})
+  const changeAllergyFormData = e => setAllergyFormData({ ...allergyFormData, [e.target.name]: e.target.value});
+  const changeMedicationFormData = e => setMedicationFormData({ ...medicationFormData, [e.target.name]: e.target.value});
 
   const deleteAllergyItem = item => {
     const newAddedData = addedAlergyData;
-    delete newAddedData[item];
+    newAddedData.splice(item, 1);
     setAddedAlergyData(newAddedData)
     setRerender({})
   }
 
   const deleteMedicationItem = item => {
     const newAddedData = addedMedicationData;
-    delete newAddedData[item];
+    newAddedData.splice(item, 1);
     setAddedMedicationData(newAddedData)
     setRerender({})
   }
@@ -150,9 +149,9 @@ function Patientenfragebogen() {
             </Col>
             <Col className="gutter-row" xs={24} md={12} style={{ paddingBottom: 20 }}>
               <div><Text>{t("general.gender")}</Text></div>
-              <Radio.Group name="radiogroup" defaultValue="männlich" disabled>
-                <Radio value="männlich" name="männlich">männlich</Radio>
-                <Radio value="weiblich" name="weiblich">weiblich</Radio>
+              <Radio.Group name="radiogroup" defaultValue="male" disabled>
+                <Radio value="male" name="male">{t("general.male")}</Radio>
+                <Radio value="female" name="female">{t("general.male")}</Radio>
               </Radio.Group>
             </Col>
             <Col className="gutter-row" xs={24} md={12} style={{ paddingBottom: 20 }}>
@@ -205,10 +204,10 @@ function Patientenfragebogen() {
               </Col>
             </Row>
           </Form>
-          { Object.keys(addedAlergyData).length === 0 &&
+          {addedAlergyData.length === 0 &&
             <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={t("patientQuestionnaire.noAllergiesAdded")}/>
           }
-          { Object.keys(addedAlergyData).length > 0 &&
+          {addedAlergyData.length > 0 &&
             <Row gutter={8}>
               <Col className="gutter-row" span={24}>
                 <Card title={t("patientQuestionnaire.yourAllergies")}>
@@ -220,15 +219,15 @@ function Patientenfragebogen() {
                       <Text strong>{t("patientQuestionnaire.symptoms")}:</Text>
                     </Col>
                   </Row>
-                  {Object.keys(addedAlergyData).map(item => (
-                    <Row key={item} style={{ marginBottom:8 }}>
+                  {addedAlergyData.map((item, i) => (
+                    <Row key={i} style={{ marginBottom:8 }}>
                       <Col span={12}>
-                        <Text key={`allergy-${item}`}>{addedAlergyData[item].allergy}</Text>
+                        <Text key={`allergy-${i}`}>{item.allergy}</Text>
                       </Col>
                       <Col span={12} style={{ justifyContent:"space-between", display:"flex", alignItems:"center"}}>
-                        <Text key={`reaction-${item}`} ellipsis={true}>{addedAlergyData[item].symptoms}</Text>
+                        <Text key={`reaction-${i}`} ellipsis={true}>{item.symptoms}</Text>
                         <Tooltip title={t("toolTip.removeAllergy")}>
-                          <MinusCircleOutlined style={{ cursor:"pointer"}} onClick={ () => deleteAllergyItem(item)}/>
+                          <MinusCircleOutlined style={{ cursor:"pointer"}} onClick={ () => deleteAllergyItem(i)}/>
                         </Tooltip>
                       </Col>
                     </Row>
@@ -296,10 +295,10 @@ function Patientenfragebogen() {
               </Col>
             </Row>
           </Form>
-          { Object.keys(addedMedicationData).length === 0 &&
+          { addedMedicationData.length === 0 &&
             <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={t("patientQuestionnaire.noMedicationAdded")}/>
           }
-          { Object.keys(addedMedicationData).length > 0 &&
+          { addedMedicationData.length > 0 &&
             <Row gutter={8}>
               <Col className="gutter-row" span={24}>
                 <Card title={t("patientQuestionnaire.yourMedication")}>
@@ -317,21 +316,21 @@ function Patientenfragebogen() {
                       <Text strong>{t("patientQuestionnaire.dose")}:</Text>
                     </Col>
                   </Row>
-                  {Object.keys(addedMedicationData).map(item => (
-                    <Row key={item} style={{ marginBottom:8 }}>
+                  {addedMedicationData.map((item, i) => (
+                    <Row key={i} style={{ marginBottom:8 }}>
                       <Col span={6}>
-                        <Text key={`allergy-${item}`}>{addedMedicationData[item].medication}</Text>
+                        <Text key={`allergy-${i}`}>{item.medication}</Text>
                       </Col>
                       <Col span={6}>
-                        <Text key={`reaction-${item}`}>{addedMedicationData[item].condition}</Text>
+                        <Text key={`reaction-${i}`}>{item.condition}</Text>
                       </Col>
                       <Col span={6}>
-                        <Text key={`reaction-${item}`}>{addedMedicationData[item].frequency}</Text>
+                        <Text key={`reaction-${i}`}>{item.frequency}</Text>
                       </Col>
                       <Col span={6} style={{ justifyContent:"space-between", display:"flex", alignItems:"center"}}>
-                        <Text key={`reaction-${item}`}  ellipsis={true}>{addedMedicationData[item].dosis}</Text>
+                        <Text key={`reaction-${i}`}  ellipsis={true}>{item.dosis}</Text>
                         <Tooltip title={t("toolTip.removeMedication")}>
-                          <MinusCircleOutlined style={{ cursor:"pointer"}} onClick={ () => deleteMedicationItem(item)}/>
+                          <MinusCircleOutlined style={{ cursor:"pointer"}} onClick={ () => deleteMedicationItem(i)}/>
                         </Tooltip>
                       </Col>
                     </Row>
@@ -345,7 +344,7 @@ function Patientenfragebogen() {
 			</div>
 			<div style={{ display:"flex", marginTop:"20px" }}>
 				{current === 2 ?
-					<Button type="primary" onClick={() => {console.log("Allergies", addedAlergyData); console.log("Medication", addedMedicationData)}}>{t("patientQuestionnaire.done")}</Button>
+					<Button type="primary">{t("patientQuestionnaire.done")}</Button>
 					:
 					<Button type="primary" onClick={increment}>{t("patientQuestionnaire.next")}</Button>
 				}
@@ -354,5 +353,5 @@ function Patientenfragebogen() {
 		</div>
   );
 }
- 
+
 export default Patientenfragebogen;

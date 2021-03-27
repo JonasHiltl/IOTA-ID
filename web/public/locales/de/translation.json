@@ -6,7 +6,9 @@
         "birthday": "Geburtsdatum",
         "gender": "Geschlecht",
         "residence": "Wohnadresse",
-        "phoneNumber": "Telefonnummer"
+        "phoneNumber": "Telefonnummer",
+        "male": "männlich",
+        "female": "weiblich"
     },
     "patientQuestionnaire": {
         "next": "Weiter",
@@ -15,7 +17,7 @@
         "Step1Header": "Person",
         "Step1Description": "Deine persönlichen Informationen.",
         "Step2Header": "Allergien",
-        "Step2Description": "Deine Allergien.",
+        "Step2Description": "Deine bekannten Allergien.",
         "Step3Header": "Medikamente",
         "Step3Description": "Medikamente die du derzeit einnimmst.",
         "allergy": "Allergie",
@@ -25,7 +27,7 @@
         "examplePollen": "Bsp. Pollen",
         "exampleSneezing": "Bsp. Niesen",
         "addAllergy": "Allergie hinzufügen",
-        "noAllergiesAdded": "Noch keine Allergie hinzugefügt",
+        "noAllergiesAdded": "Noch keine Allergie hinzugefügt.",
         "condition": "Zustand",
         "frequency": "Häufigkeit",
         "dose": "Dosis",
@@ -35,7 +37,7 @@
         "example75mg": "Bsp. 75 mg",
         "yourMedication": "Deine Medikamente",
         "addMedication": "Medikament hinzufügen",
-        "noMedicationAdded": "Noch kein Medikament hinzugefügt"
+        "noMedicationAdded": "Noch kein Medikament hinzugefügt."
     },
     "signUp": {
         "header": "Erstellen Sie Ihr Konto",
