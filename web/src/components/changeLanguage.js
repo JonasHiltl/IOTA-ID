@@ -35,9 +35,10 @@ const ChangeLanugage = props => {
   );
 
   return (
-    <Dropdown trigger={["click"]} overlay={menu} placement="bottomRight">
+    <Dropdown trigger={["click"]} overlay={menu} placement={props.placement}>
       <Button 
-        icon={<img src="languageIcon.svg" style={{ marginRight:"4px" }} alt=""/>}>
+        icon={<img src="languageIcon.svg" style={{ marginRight:"4px" }} alt=""/>}
+        >
         {i18n.language === "de" ? "Deutsch" : "English"}
       </Button>
     </Dropdown>

@@ -45,6 +45,7 @@
         "firstName": "What is your first name?",
         "lastN": "Last Name",
         "lastName": "What is your last name?",
+        "typicalBirthday": "What is your date of birth?",
         "email": "Email",
         "contactTypical": "What are your contact information?",
         "PW": "Password",

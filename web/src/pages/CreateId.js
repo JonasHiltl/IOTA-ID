@@ -1,9 +1,10 @@
 import React, {useState} from "react";
-import styled from "@emotion/styled"
+import styled from "@emotion/styled";
 import axios from "axios";
-import Typical from "react-typical"
+import Typical from "react-typical";
 import { useTranslation } from "react-i18next";
-import Localbase from 'localbase'
+import Localbase from "localbase";
+import { useMediaQuery } from "react-responsive";
 
 import ChangeLanugage from "../components/changeLanguage"
 import {
@@ -16,14 +17,16 @@ import {
   Steps,
   Typography,
   Tooltip,
-  AutoComplete
+  AutoComplete,
+  DatePicker
 } from "antd";
 import { 
   SendOutlined,
   TeamOutlined,
   MailOutlined,
   UserOutlined,
-  HomeOutlined
+  HomeOutlined,
+  ClockCircleOutlined
 } from "@ant-design/icons";
 import countries from "./countries.json"
 
@@ -33,7 +36,8 @@ const { Text, Title } = Typography;
 export const Container = styled.div`
   display: flex;
   justify-content:center;
-  height: 50vh;
+  align-items: center;
+  height: calc(100vh - 148px);
   width: 100vw;
   position: relative;
 `
@@ -55,9 +59,11 @@ export const CenteredWrapper = styled.div`
 
 function CreateId() {
   const { t } = useTranslation();
+  const isMd = useMediaQuery({ minWidth: 768 })
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
+    birthDate: "",
 		email: "",
     phoneNumber: "",
     streetNumber: "",
@@ -69,8 +75,9 @@ function CreateId() {
 
   const isDisabled = current === 0
 
-  const { firstName, lastName, email, phoneNumber, streetNumber, postalCode, country, city } = formData;
+  const { firstName, lastName, birthDate, email, phoneNumber, streetNumber, postalCode, country, city } = formData;
 	const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
+  const onBirthDateChange = value => setFormData({ ...formData, "birthDate": value })
 
   const increment = () => {
 		setCurrent(current + 1)
@@ -83,7 +90,11 @@ function CreateId() {
   let db = new Localbase('db')
 
   const create = async () => {
-    if (firstName && lastName && email) {
+    console.log("Your name is:" , firstName, lastName)
+    console.log("You are born at:" , birthDate._d)
+    console.log("Your contact information are:", email, phoneNumber)
+    console.log("You live at:", streetNumber, postalCode, country, city)
+    /* if (firstName && lastName && email) {
       const res = await axios.post("http://localhost:3001/create", {
         firstName: firstName,
         lastName: lastName,
@@ -100,7 +111,8 @@ function CreateId() {
 		} else if (res.data.success === false) {
 			message.error(res.data.message);
 		}
-	}}
+	} */
+}
 
   return (
     <>
@@ -108,10 +120,13 @@ function CreateId() {
         <Steps current={current} style={{ marginRight:4 }}>
           <Step icon={<UserOutlined/>}/>
           <Step icon={<TeamOutlined/>}/>
+          <Step icon={<ClockCircleOutlined/>}/>
           <Step icon={<MailOutlined/>}/>
           <Step icon={<HomeOutlined/>}/>
         </Steps>
-        <ChangeLanugage/>
+        { isMd &&
+          <ChangeLanugage placement="bottomRight"/>
+        }
       </div>
       <Container>
         <CenteredWrapper>
@@ -212,6 +227,51 @@ function CreateId() {
                 <Row>
                   <Title>
                     <Typical
+                      steps={[t("signUp.typicalBirthday")]}
+                      className={'typical'}
+                    />
+                  </Title>
+                </Row>
+                <Row>
+                  <Form.Item style={{ width:"100%" }}>
+                    <DatePicker
+                      name="birthDate"
+                      format="DD/MM/YYYY"
+                      style={{ width:"100%" }}
+                      value={birthDate}
+                      showToday={false}
+                      onChange={value => onBirthDateChange(value)}
+                    />
+                  </Form.Item>
+                </Row>
+                <Row  justify="end">
+                  <Tooltip title={t("toolTip.back")}>
+                    <Button
+                      size="large"
+                      type="text"
+                      onClick={decrement}
+                    >
+                      <SendOutlined rotate={180}/>
+                    </Button>
+                  </Tooltip>
+                  <Tooltip title={t("toolTip.next")}>
+                    <Button
+                      size="large"
+                      type="text"
+                      onClick={increment}
+                      disabled={!birthDate}
+                    >
+                      <SendOutlined/>
+                    </Button>
+                  </Tooltip>
+                </Row>
+              </Form.Item>
+            }
+            { current === 3 &&
+              <Form.Item>
+                <Row>
+                  <Title>
+                    <Typical
                       steps={[t("signUp.contactTypical")]}
                       className={'typical'}
                     />
@@ -253,7 +313,7 @@ function CreateId() {
                       <SendOutlined rotate={180}/>
                     </Button>
                   </Tooltip>
-                  <Tooltip title={t("toolTip.submit")}>
+                  <Tooltip title={t("toolTip.next")}>
                     <Button
                       size="large"
                       type="text"
@@ -265,7 +325,7 @@ function CreateId() {
                 </Row>
               </Form.Item>
             }
-            { current === 3 &&
+            { current === 4 &&
               <>
                 <Row>
                   <Title>
@@ -360,6 +420,11 @@ function CreateId() {
           </Form>
         </CenteredWrapper>
       </Container>
+      { !isMd &&
+        <Row justify="end" style={{ padding:"20px" }}>
+          <ChangeLanugage placement="bottomRight"/>
+        </Row>
+      }
     </>
   );
 }

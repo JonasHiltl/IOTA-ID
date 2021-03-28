@@ -19,7 +19,9 @@ const NavBar = ({ menu }) => {
       </Drawer>
       <a href="/">Logo</a>
       <div>
-        <ChangeLanugage/>
+        <ChangeLanugage
+          style={{ position:"relative"}}
+        />
         <Button
           className="menu"
           type="primary"
