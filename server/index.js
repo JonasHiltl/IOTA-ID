@@ -1,3 +1,8 @@
+// comments based on W3C
+//
+// Holders of verifiable credentials can generate verifiable presentations -> then share these verifiable presentations with verifiers to prove their possesion of the credential
+
+
 const express = require("express");
 const Identity = require("@iota/identity-wasm/node")
 const cors = require("cors");
@@ -77,7 +82,32 @@ server.post("/create", async (req, res) => {
     
     user.message = await Identity.publish(user.doc.toJSON(), CLIENT_CONFIG)
     console.log(`Published user: https://explorer.iota.org/mainnet/transaction/${user.message}`)
-    
+
+    const personalInformation = {
+      id: user.doc.id.toString(),
+      name: {
+        first: firstName,
+        last: lastName
+      },
+      phoneNumber: phoneNumber,
+      email: email,
+      DOB: birthDate,
+      gender: gender,
+      address: {
+        street: streetNumber, //Schuldorffstraße 10
+        postalCode: postalCode,
+        city: city,
+        country: country
+      }
+    }
+
+    const unsignedVc = VerifiableCredential.extend({
+      id: "http://example.edu/credentials/3732",
+      type: "personalInformationCredential",
+      issuer: user2.doc.id.toString(),
+      personalInformation,
+    })
+
     res
       .json({
         id: user.doc.id.tag,

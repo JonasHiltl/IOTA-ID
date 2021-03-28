@@ -1,13 +1,4 @@
-.ant-form-item {
-    margin-bottom: 8px;
-}
-.ant-space-align-baseline > .ant-space-item:first-child {
-    width: 100%
-}
 
-.ant-space-align-baseline > .ant-space-item:nth-child(2) {
-    width: 100%
-}
 
 .patientQuestionaire {
     padding: 10px;

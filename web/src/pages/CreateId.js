@@ -15,21 +15,24 @@ import {
   Col,
   Steps,
   Typography,
-  Tooltip
+  Tooltip,
+  AutoComplete
 } from "antd";
 import { 
   SendOutlined,
   TeamOutlined,
   MailOutlined,
-  UserOutlined
+  UserOutlined,
+  HomeOutlined
 } from "@ant-design/icons";
+import countries from "./countries.json"
 
 const { Step } = Steps;
-const { Title } = Typography;
+const { Text, Title } = Typography;
 
 export const Container = styled.div`
-  display: grid;
-  place-items:center;
+  display: flex;
+  justify-content:center;
   height: 50vh;
   width: 100vw;
   position: relative;
@@ -39,13 +42,14 @@ export const CenteredWrapper = styled.div`
   width: 40%;
   padding: 20px;
   @media (max-width: 1024px) {
-      width: 60%;
+    width: 60%;
   }
   @media (max-width: 768px) {
-      width: 70%;
+    width: 70%;
   }
   @media (max-width: 480px) {
-      width: 100%;
+    width: 100%;
+    padding: 10px
   }
 `
 
@@ -54,13 +58,18 @@ function CreateId() {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-		email: ""
+		email: "",
+    phoneNumber: "",
+    streetNumber: "",
+    postalCode: "",
+    country: "",
+    city: ""
 	});
   const [current, setCurrent] = useState(0)
 
   const isDisabled = current === 0
 
-  const { firstName, lastName, email } = formData;
+  const { firstName, lastName, email, phoneNumber, streetNumber, postalCode, country, city } = formData;
 	const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
 
   const increment = () => {
@@ -100,6 +109,7 @@ function CreateId() {
           <Step icon={<UserOutlined/>}/>
           <Step icon={<TeamOutlined/>}/>
           <Step icon={<MailOutlined/>}/>
+          <Step icon={<HomeOutlined/>}/>
         </Steps>
         <ChangeLanugage/>
       </div>
@@ -107,7 +117,7 @@ function CreateId() {
         <CenteredWrapper>
           <Form onFinish={create}>
             { current === 0 &&
-              <Form.Item>
+              <>
                 <Row>
                   <Title>
                     <Typical
@@ -117,7 +127,7 @@ function CreateId() {
                   </Title>
                 </Row>
                 <Row>
-                  <Col span={24} style={{ display:"flex" }}>
+                  <Form.Item style={{ width:"100%" }}>
                     <Input
                       size="large" 
                       name="firstName"
@@ -126,32 +136,34 @@ function CreateId() {
                       allowClear
                       onChange={e => onChange(e)}
                     />
-                    <Tooltip title={t("toolTip.back")}>
-                      <Button
-                        type="text"
-                        size="large"
-                        onClick={decrement}
-                        disabled={isDisabled}
-                      >
-                        <SendOutlined rotate={180}/>
-                      </Button>
-                    </Tooltip>
-                    <Tooltip title={t("toolTip.next")}>
-                      <Button
-                        size="large"
-                        type="text"
-                        onClick={increment}
-                        disabled={!firstName}
-                      >
-                        <SendOutlined/>
-                      </Button>
-                    </Tooltip>
-                  </Col>
+                  </Form.Item>
                 </Row>
-              </Form.Item>
+                <Row justify="end">
+                  <Tooltip title={t("toolTip.back")}>
+                    <Button
+                      type="text"
+                      size="large"
+                      onClick={decrement}
+                      disabled={isDisabled}
+                    >
+                      <SendOutlined rotate={180}/>
+                    </Button>
+                  </Tooltip>
+                  <Tooltip title={t("toolTip.next")}>
+                    <Button
+                      size="large"
+                      type="text"
+                      onClick={increment}
+                      disabled={!firstName}
+                    >
+                      <SendOutlined/>
+                    </Button>
+                  </Tooltip>
+                </Row>
+              </>
             }
             { current === 1 &&
-              <Form.Item>
+              <>
                 <Row>
                   <Title>
                     <Typical
@@ -161,7 +173,7 @@ function CreateId() {
                   </Title>
                 </Row>
                 <Row>
-                  <Col span={24} style={{ display:"flex" }}>
+                  <Form.Item style={{ width:"100%" }}>
                     <Input
                       size="large" 
                       name="lastName"
@@ -170,41 +182,44 @@ function CreateId() {
                       allowClear
                       onChange={e => onChange(e)}
                     />
-                    <Tooltip title={t("toolTip.back")}>
-                      <Button
-                        type="text"
-                        size="large"
-                        onClick={decrement}
-                      >
-                        <SendOutlined rotate={180}/>
-                      </Button>
-                    </Tooltip>
-                    <Tooltip title={t("toolTip.next")}>
-                      <Button
-                        size="large"
-                        type="text"
-                        onClick={increment}
-                        disabled={!lastName}
-                      >
-                        <SendOutlined/>
-                      </Button>
-                    </Tooltip>
-                  </Col>
+                  </Form.Item>
                 </Row>
-              </Form.Item>
+                <Row justify="end">
+                  <Tooltip title={t("toolTip.back")}>
+                    <Button
+                      type="text"
+                      size="large"
+                      onClick={decrement}
+                    >
+                      <SendOutlined rotate={180}/>
+                    </Button>
+                  </Tooltip>
+                  <Tooltip title={t("toolTip.next")}>
+                    <Button
+                      size="large"
+                      type="text"
+                      onClick={increment}
+                      disabled={!lastName}
+                    >
+                      <SendOutlined/>
+                    </Button>
+                  </Tooltip>
+                </Row>
+              </>
             }
             { current === 2 &&
               <Form.Item>
                 <Row>
                   <Title>
                     <Typical
-                      steps={[t("signUp.emailTypical")]}
+                      steps={[t("signUp.contactTypical")]}
                       className={'typical'}
                     />
                   </Title>
                 </Row>
                 <Row>
-                  <Col span={24} style={{ display:"flex" }}>
+                  <Form.Item style={{ width:"100%" }}>
+                    <Text>Email:</Text>
                     <Input
                       size="large" 
                       name="email"
@@ -213,27 +228,134 @@ function CreateId() {
                       allowClear
                       onChange={e => onChange(e)}
                     />
-                    <Tooltip title={t("toolTip.back")}>
-                      <Button
-                        size="large"
-                        type="text"
-                        onClick={decrement}
-                      >
-                        <SendOutlined rotate={180}/>
-                      </Button>
-                    </Tooltip>
-                    <Tooltip title={t("toolTip.submit")}>
-                      <Button
-                        size="large"
-                        type="primary"
-                        htmlType="submit"
-                      >
-                        <SendOutlined/>
-                      </Button>
-                    </Tooltip>
-                  </Col>
+                  </Form.Item>
+                </Row>
+                <Row>
+                  <Form.Item style={{ width:"100%" }}>
+                    <Text>Phone number:</Text>
+                    <Input
+                      size="large"
+                      name="phoneNumber"
+                      value={phoneNumber}
+                      placeholder="Phone number"
+                      allowClear
+                      onChange={e => onChange(e)}
+                    />
+                  </Form.Item>
+                </Row>
+                <Row  justify="end">
+                  <Tooltip title={t("toolTip.back")}>
+                    <Button
+                      size="large"
+                      type="text"
+                      onClick={decrement}
+                    >
+                      <SendOutlined rotate={180}/>
+                    </Button>
+                  </Tooltip>
+                  <Tooltip title={t("toolTip.submit")}>
+                    <Button
+                      size="large"
+                      type="text"
+                      onClick={increment}
+                    >
+                      <SendOutlined/>
+                    </Button>
+                  </Tooltip>
                 </Row>
               </Form.Item>
+            }
+            { current === 3 &&
+              <>
+                <Row>
+                  <Title>
+                    <Typical
+                      steps={[t("signUp.addressTypical")]}
+                      className={'typical'}
+                    />
+                  </Title>
+                </Row>
+                <Row>
+                  <Form.Item style={{ width:"100%" }}>
+                    <Text>Street and Number:</Text>
+                    <Input
+                      size="large" 
+                      name="streetNumber"
+                      value={streetNumber}
+                      placeholder="Street and number"
+                      allowClear
+                      onChange={e => onChange(e)}
+                    />
+                  </Form.Item>
+                </Row>
+                <Row gutter={{ xs: 8, sm: 16 }}>
+                  <Col span={12}>
+                    <Form.Item style={{ width:"100%" }}>
+                      <Text>Postal Code:</Text>
+                      <Input
+                        size="large" 
+                        name="postalCode"
+                        value={postalCode}
+                        placeholder="Postal Code"
+                        allowClear
+                        onChange={e => onChange(e)}
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item style={{ width:"100%" }}>
+                      <Text>Country:</Text>
+                      <AutoComplete
+                        options={countries}
+                        filterOption={true}
+                      >
+                        <Input
+                          size="large" 
+                          name="country"
+                          value={country}
+                          placeholder="Country"
+                          autocomplete="new-password"
+                          allowClear
+                          onChange={e => onChange(e)}
+                        />
+                      </AutoComplete>
+                    </Form.Item>
+                  </Col>
+                </Row>
+                <Row >
+                  <Form.Item style={{ width:"100%" }}>
+                    <Text>City:</Text>
+                    <Input
+                      size="large" 
+                      name="city"
+                      value={city}
+                      placeholder="City"
+                      allowClear
+                      onChange={e => onChange(e)}
+                    />
+                  </Form.Item>
+                </Row>
+                <Row justify="end">
+                  <Tooltip title={t("toolTip.back")}>
+                    <Button
+                      size="large"
+                      type="text"
+                      onClick={decrement}
+                    >
+                      <SendOutlined rotate={180}/>
+                    </Button>
+                  </Tooltip>
+                  <Tooltip title={t("toolTip.submit")}>
+                    <Button
+                      size="large"
+                      type="primary"
+                      htmlType="submit"
+                    >
+                      <SendOutlined/>
+                    </Button>
+                  </Tooltip>
+                </Row>
+              </>
             }
           </Form>
         </CenteredWrapper>

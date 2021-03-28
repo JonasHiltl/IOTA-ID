@@ -15,7 +15,6 @@ export const Container = styled.div`
 
 export const CenteredWrapper = styled.div`
   width: 440px;
-  padding: 20px;
   @media (max-width: 1024px) {
       width: 60%;
   }

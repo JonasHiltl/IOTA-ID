@@ -46,14 +46,15 @@
         "lastN": "Last Name",
         "lastName": "What is your last name?",
         "email": "Email",
-        "emailTypical": "What is your email?",
+        "contactTypical": "What are your contact information?",
         "PW": "Password",
         "confirmPW": "Confirm password",
         "terms": " I accept the <1>Terms of service</1> and privacy policy",
         "signup": "Sign up",
         "alreadySign": "Already have an account? <1> Login</1>",
         "activateEmail": "Please activate your Account",
-        "sentEmail": "We have sent you your email activation link to your email."
+        "sentEmail": "We have sent you your email activation link to your email.",
+        "addressTypical": "What is your address?"
     },
     "messages": {
         "inputFN": "Please input your first Name!",
