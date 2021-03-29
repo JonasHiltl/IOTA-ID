@@ -8,7 +8,12 @@
         "residence": "Residential address",
         "phoneNumber": "Phone number",
         "male": "male",
-        "female": "female"
+        "female": "female",
+        "streetNumber": "Straße and number",
+        "postalCode": "Postal code",
+        "country": "Country",
+        "city": "City",
+        "state": "State"
     },
     "patientQuestionnaire": {
         "next": "Next",

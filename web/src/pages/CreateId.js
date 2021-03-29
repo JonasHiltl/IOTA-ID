@@ -67,15 +67,16 @@ function CreateId() {
 		email: "",
     phoneNumber: "",
     streetNumber: "",
+    city: "",
+    state: "",
     postalCode: "",
     country: "",
-    city: ""
 	});
   const [current, setCurrent] = useState(0)
 
   const isDisabled = current === 0
 
-  const { firstName, lastName, birthDate, email, phoneNumber, streetNumber, postalCode, country, city } = formData;
+  const { firstName, lastName, birthDate, email, phoneNumber, streetNumber, city, state, postalCode, country } = formData;
 	const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
   const onBirthDateChange = value => setFormData({ ...formData, "birthDate": value })
 
@@ -93,7 +94,7 @@ function CreateId() {
     console.log("Your name is:" , firstName, lastName)
     console.log("You are born at:" , birthDate._d)
     console.log("Your contact information are:", email, phoneNumber)
-    console.log("You live at:", streetNumber, postalCode, country, city)
+    console.log("You live at:", streetNumber, postalCode, city, state, country)
     /* if (firstName && lastName && email) {
       const res = await axios.post("http://localhost:3001/create", {
         firstName: firstName,
@@ -236,6 +237,7 @@ function CreateId() {
                   <Form.Item style={{ width:"100%" }}>
                     <DatePicker
                       name="birthDate"
+                      placeholder={t("general.birthday")}
                       format="DD/MM/YYYY"
                       style={{ width:"100%" }}
                       value={birthDate}
@@ -279,12 +281,12 @@ function CreateId() {
                 </Row>
                 <Row>
                   <Form.Item style={{ width:"100%" }}>
-                    <Text>Email:</Text>
+                    <Text>{t("general.email")}:</Text>
                     <Input
                       size="large" 
                       name="email"
                       value={email}
-                      placeholder="Email"
+                      placeholder={t("general.email")}
                       allowClear
                       onChange={e => onChange(e)}
                     />
@@ -292,12 +294,12 @@ function CreateId() {
                 </Row>
                 <Row>
                   <Form.Item style={{ width:"100%" }}>
-                    <Text>Phone number:</Text>
+                    <Text>{t("general.phoneNumber")}:</Text>
                     <Input
                       size="large"
                       name="phoneNumber"
                       value={phoneNumber}
-                      placeholder="Phone number"
+                      placeholder={t("general.phoneNumber")}
                       allowClear
                       onChange={e => onChange(e)}
                     />
@@ -337,12 +339,12 @@ function CreateId() {
                 </Row>
                 <Row>
                   <Form.Item style={{ width:"100%" }}>
-                    <Text>Street and Number:</Text>
+                    <Text>{[t("general.streetNumber")]}:</Text>
                     <Input
                       size="large" 
                       name="streetNumber"
                       value={streetNumber}
-                      placeholder="Street and number"
+                      placeholder={[t("general.streetNumber")]}
                       allowClear
                       onChange={e => onChange(e)}
                     />
@@ -351,12 +353,12 @@ function CreateId() {
                 <Row gutter={{ xs: 8, sm: 16 }}>
                   <Col span={12}>
                     <Form.Item style={{ width:"100%" }}>
-                      <Text>Postal Code:</Text>
+                      <Text>{[t("general.city")]}:</Text>
                       <Input
                         size="large" 
-                        name="postalCode"
-                        value={postalCode}
-                        placeholder="Postal Code"
+                        name="city"
+                        value={city}
+                        placeholder={[t("general.city")]}
                         allowClear
                         onChange={e => onChange(e)}
                       />
@@ -364,7 +366,33 @@ function CreateId() {
                   </Col>
                   <Col span={12}>
                     <Form.Item style={{ width:"100%" }}>
-                      <Text>Country:</Text>
+                      <Text>{[t("general.state")]}:</Text>
+                        <Input
+                          size="large" 
+                          name="state"
+                          value={state}
+                          placeholder={[t("general.state")]}
+                          allowClear
+                          onChange={e => onChange(e)}
+                        />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item>
+                      <Text>{[t("general.postalCode")]}:</Text>
+                      <Input
+                        size="large" 
+                        name="postalCode"
+                        value={postalCode}
+                        placeholder={[t("general.postalCode")]}
+                        allowClear
+                        onChange={e => onChange(e)}
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item>
+                      <Text>{[t("general.country")]}:</Text>
                       <AutoComplete
                         options={countries}
                         filterOption={true}
@@ -373,27 +401,14 @@ function CreateId() {
                           size="large" 
                           name="country"
                           value={country}
-                          placeholder="Country"
-                          autocomplete="new-password"
+                          placeholder={[t("general.country")]}
                           allowClear
+                          autocomplete="new-password"
                           onChange={e => onChange(e)}
                         />
                       </AutoComplete>
                     </Form.Item>
                   </Col>
-                </Row>
-                <Row >
-                  <Form.Item style={{ width:"100%" }}>
-                    <Text>City:</Text>
-                    <Input
-                      size="large" 
-                      name="city"
-                      value={city}
-                      placeholder="City"
-                      allowClear
-                      onChange={e => onChange(e)}
-                    />
-                  </Form.Item>
                 </Row>
                 <Row justify="end">
                   <Tooltip title={t("toolTip.back")}>

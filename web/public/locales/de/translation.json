@@ -8,7 +8,12 @@
         "residence": "Wohnadresse",
         "phoneNumber": "Telefonnummer",
         "male": "männlich",
-        "female": "weiblich"
+        "female": "weiblich",
+        "streetNumber": "Straße und Hausnummer",
+        "postalCode": "Postleitzahl",
+        "country": "Land",
+        "city": "Stadt",
+        "state": "Bundesland"
     },
     "patientQuestionnaire": {
         "next": "Weiter",
@@ -47,7 +52,7 @@
         "lastName": "Wie lautet dein Nachname?",
         "typicalBirthday": "Wie lautet dein Geburtsdatum?",
         "email": "E-Mail Adresse",
-        "emailTypical": "Wie lauten deine Kontaktdaten?",
+        "contactTypical": "Wie lauten deine Kontaktinformationen?",
         "PW": "Passwort",
         "confirmPW": "Passwort bestätigen",
         "terms": "Ich akzeptiere die <1>Nutzungsbedingungen</1> und Datenschutzrichtlinien",
