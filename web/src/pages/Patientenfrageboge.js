@@ -148,7 +148,7 @@ function Patientenfragebogen() {
                 <DatePicker defaultValue={moment("19/03/2003", "DD/MM/YYYY")} format="DD/MM/YYYY" style={{backgroundColor:"none"}} disabled/>
             </Col>
             <Col className="gutter-row" xs={24} md={12} style={{ paddingBottom: 20 }}>
-              <div><Text>{t("general.gender")}</Text></div>
+              <div><Text>{t("general.sex")}</Text></div>
               <Radio.Group name="radiogroup" defaultValue="male" disabled>
                 <Radio value="male" name="male">{t("general.male")}</Radio>
                 <Radio value="female" name="female">{t("general.male")}</Radio>

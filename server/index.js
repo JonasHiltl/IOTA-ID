@@ -1,17 +1,11 @@
 // comments based on W3C
 //
 // Holders of verifiable credentials can generate verifiable presentations -> then share these verifiable presentations with verifiers to prove their possesion of the credential
-
-
 const express = require("express");
 const Identity = require("@iota/identity-wasm/node")
 const cors = require("cors");
-const fetch = require("node-fetch")
 const server = express();
-global.Headers = fetch.Headers
-global.Request = fetch.Request
-global.Response = fetch.Response
-global.fetch = fetch
+const testIssuer = require("./testIssuer.json")
 
 const {
   Digest,
@@ -34,30 +28,15 @@ server.use(cors({origin: "http://localhost:3000", credentials: true }))
 server.use(express.json())
 
 server.post("/create", async (req, res) => {
-  const {firstName, lastName, email} = req.body;
+  const {firstName, lastName, birthDate, sex, email, phoneNumber, streetNumber, city, state, postalCode, country} = req.body;
   const name = `${firstName} ${lastName}` 
 
   try {
-    if (!firstName) {
+    const reqIsIncomplete = Object.values(req.body).find(value => !value);
+    if (reqIsIncomplete) {
       return res
         .json({
-          message: "Please enter your first name",
-          success: false
-        })
-        .status(500);
-    }
-    if (!lastName) {
-      return res
-        .json({
-          message: "Please enter your last name",
-          success: false
-        })
-        .status(500);
-    }
-    if (!email) {
-      return res
-        .json({
-          message: "Please enter an email",
+          message: "You are missing personal information",
           success: false
         })
         .status(500);
@@ -76,7 +55,6 @@ server.post("/create", async (req, res) => {
 
     // Generate a KeyPair, DID, and Document for user
     const user = generateUser(name)
-    console.log(user)
     // Sign users DID Documents
     user.doc.sign(user.key)
     
@@ -89,37 +67,62 @@ server.post("/create", async (req, res) => {
         first: firstName,
         last: lastName
       },
-      phoneNumber: phoneNumber,
+      birthDate: birthDate,
+      sex: sex,
       email: email,
-      DOB: birthDate,
-      gender: gender,
+      phoneNumber: phoneNumber,
       address: {
         street: streetNumber, //Schuldorffstraße 10
-        postalCode: postalCode,
         city: city,
+        state: state,
+        postalCode: postalCode,
         country: country
       }
     }
 
+    console.log(personalInformation)
+
     const unsignedVc = VerifiableCredential.extend({
       id: "http://example.edu/credentials/3732",
       type: "personalInformationCredential",
-      issuer: user2.doc.id.toString(),
+      issuer: testIssuer.doc.id.toString(),
       personalInformation,
     })
 
-    res
+    console.log("Unsigned verifiable credential", unsignedVc)
+
+    // Sign the credential with testIssuer's Merkle Key Collection method
+    const signedVc = testIssuer.doc.signCredential(unsignedVc, {
+      method: method.id.toString(),
+      public: keys.public(0),
+      secret: keys.secret(0),
+      proof: keys.merkleProof(Digest.Sha256, 0),
+    })
+
+    console.log("Verifiable Credential", signedVc)
+
+    if (!testIssuer.doc.verify(signedVc)) {
+      return res
+        .json({
+          message: `Error creating credentials for you, ${firstName}`,
+          success: false
+        })
+        .status(500);
+    }
+
+    return res
       .json({
         id: user.doc.id.tag,
         docHash: user.message,
         pubKey: user.key.public,
         privKey: user.key.secret,
+        credential: signedVc,
         message: `You have successfully created your digital identity, ${firstName}`,
         success: true
       })
       .status(500);
   } catch (error) {
-    res
+    return res
       .json({
         error: error,
         message: "There was a Problem with our Servers",

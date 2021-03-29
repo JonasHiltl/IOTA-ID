@@ -18,7 +18,8 @@ import {
   Typography,
   Tooltip,
   AutoComplete,
-  DatePicker
+  DatePicker,
+  Radio
 } from "antd";
 import { 
   SendOutlined,
@@ -64,6 +65,7 @@ function CreateId() {
     firstName: "",
     lastName: "",
     birthDate: "",
+    sex: "",
 		email: "",
     phoneNumber: "",
     streetNumber: "",
@@ -74,13 +76,21 @@ function CreateId() {
 	});
   const [current, setCurrent] = useState(0)
 
-  const isDisabled = current === 0
+  const { firstName, lastName, birthDate, sex, email, phoneNumber, streetNumber, city, state, postalCode, country } = formData;
 
-  const { firstName, lastName, birthDate, email, phoneNumber, streetNumber, city, state, postalCode, country } = formData;
 	const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
-  const onBirthDateChange = value => setFormData({ ...formData, "birthDate": value })
+  const onBirthDateChange = (dateString) => setFormData({ ...formData, "birthDate": dateString }); console.log(formData.birthDate)
+  const onSexChange = e => setFormData({ ...formData, "sex": e.target.value})
+  const onCountryChange = (value) => setFormData({ ...formData, "country": value})
 
-  const increment = () => {
+  const isDisabled = current === 0
+  const isFormComplete = firstName && lastName && birthDate && sex && email && phoneNumber && streetNumber && city && state && postalCode && country
+  const secondIsfilled = birthDate && sex
+  const thirdIsFilled = email && phoneNumber
+  const fourthIsFilled = streetNumber && city && state && postalCode && country
+
+  const incrementUntil4 = () => {
+    if (current === 4) return
 		setCurrent(current + 1)
 	};
 
@@ -92,27 +102,39 @@ function CreateId() {
 
   const create = async () => {
     console.log("Your name is:" , firstName, lastName)
-    console.log("You are born at:" , birthDate._d)
+    console.log("You are born at:" , birthDate._d, "and are", sex)
     console.log("Your contact information are:", email, phoneNumber)
     console.log("You live at:", streetNumber, postalCode, city, state, country)
-    /* if (firstName && lastName && email) {
-      const res = await axios.post("http://localhost:3001/create", {
-        firstName: firstName,
-        lastName: lastName,
-        email: email
-      });
-    if (res.data.success === true) {
+    if (!isFormComplete) return message.error("You are missing personal information.");
+
+    const res = await axios.post("http://localhost:3001/create", {
+      firstName: firstName,
+      lastName: lastName,
+      birthDate: birthDate,
+      sex: sex,
+      email: email,
+      phoneNumber: phoneNumber,
+      streetNumber: streetNumber,
+      city: city,
+      state: state,
+      postalCode: postalCode,
+      country: country
+    });
+  
+    if (res.data.success) {
       db.collection("identity").add({
         id: res.data.id,
         docHash: res.data.docHash,
         pubKey: res.data.pubKey,
         privKey: res.data.privKey
       }, "did")
-			message.success(res.data.message);
-		} else if (res.data.success === false) {
-			message.error(res.data.message);
-		}
-	} */
+      db.collection("identity").add({
+        credential: res.data.credential
+      }, "personalInformation")
+      message.success(res.data.message);
+    } else {
+      message.error(res.data.message);
+    }
 }
 
   return (
@@ -154,28 +176,6 @@ function CreateId() {
                     />
                   </Form.Item>
                 </Row>
-                <Row justify="end">
-                  <Tooltip title={t("toolTip.back")}>
-                    <Button
-                      type="text"
-                      size="large"
-                      onClick={decrement}
-                      disabled={isDisabled}
-                    >
-                      <SendOutlined rotate={180}/>
-                    </Button>
-                  </Tooltip>
-                  <Tooltip title={t("toolTip.next")}>
-                    <Button
-                      size="large"
-                      type="text"
-                      onClick={increment}
-                      disabled={!firstName}
-                    >
-                      <SendOutlined/>
-                    </Button>
-                  </Tooltip>
-                </Row>
               </>
             }
             { current === 1 &&
@@ -200,27 +200,6 @@ function CreateId() {
                     />
                   </Form.Item>
                 </Row>
-                <Row justify="end">
-                  <Tooltip title={t("toolTip.back")}>
-                    <Button
-                      type="text"
-                      size="large"
-                      onClick={decrement}
-                    >
-                      <SendOutlined rotate={180}/>
-                    </Button>
-                  </Tooltip>
-                  <Tooltip title={t("toolTip.next")}>
-                    <Button
-                      size="large"
-                      type="text"
-                      onClick={increment}
-                      disabled={!lastName}
-                    >
-                      <SendOutlined/>
-                    </Button>
-                  </Tooltip>
-                </Row>
               </>
             }
             { current === 2 &&
@@ -228,16 +207,17 @@ function CreateId() {
                 <Row>
                   <Title>
                     <Typical
-                      steps={[t("signUp.typicalBirthday")]}
+                      steps={[t("signUp.typicalBirth")]}
                       className={'typical'}
                     />
                   </Title>
                 </Row>
                 <Row>
                   <Form.Item style={{ width:"100%" }}>
+                    <Text>{t("general.dateOfBirth")}:</Text>
                     <DatePicker
                       name="birthDate"
-                      placeholder={t("general.birthday")}
+                      placeholder={t("general.dateOfBirth")}
                       format="DD/MM/YYYY"
                       style={{ width:"100%" }}
                       value={birthDate}
@@ -246,26 +226,16 @@ function CreateId() {
                     />
                   </Form.Item>
                 </Row>
-                <Row  justify="end">
-                  <Tooltip title={t("toolTip.back")}>
-                    <Button
-                      size="large"
-                      type="text"
-                      onClick={decrement}
-                    >
-                      <SendOutlined rotate={180}/>
-                    </Button>
-                  </Tooltip>
-                  <Tooltip title={t("toolTip.next")}>
-                    <Button
-                      size="large"
-                      type="text"
-                      onClick={increment}
-                      disabled={!birthDate}
-                    >
-                      <SendOutlined/>
-                    </Button>
-                  </Tooltip>
+                <Row>
+                  <Form.Item>
+                    <Text>{t("general.sex")}:</Text>
+                    <div>
+                      <Radio.Group onChange={onSexChange} value={formData.sex}>
+                        <Radio value="female">Female</Radio>
+                        <Radio value="male">Male</Radio>
+                      </Radio.Group>
+                    </div>
+                  </Form.Item>
                 </Row>
               </Form.Item>
             }
@@ -305,26 +275,7 @@ function CreateId() {
                     />
                   </Form.Item>
                 </Row>
-                <Row  justify="end">
-                  <Tooltip title={t("toolTip.back")}>
-                    <Button
-                      size="large"
-                      type="text"
-                      onClick={decrement}
-                    >
-                      <SendOutlined rotate={180}/>
-                    </Button>
-                  </Tooltip>
-                  <Tooltip title={t("toolTip.next")}>
-                    <Button
-                      size="large"
-                      type="text"
-                      onClick={increment}
-                    >
-                      <SendOutlined/>
-                    </Button>
-                  </Tooltip>
-                </Row>
+                
               </Form.Item>
             }
             { current === 4 &&
@@ -396,6 +347,8 @@ function CreateId() {
                       <AutoComplete
                         options={countries}
                         filterOption={true}
+                        onChange={onCountryChange}
+                        name="country"
                       >
                         <Input
                           size="large" 
@@ -404,34 +357,36 @@ function CreateId() {
                           placeholder={[t("general.country")]}
                           allowClear
                           autocomplete="new-password"
-                          onChange={e => onChange(e)}
                         />
                       </AutoComplete>
                     </Form.Item>
                   </Col>
                 </Row>
-                <Row justify="end">
-                  <Tooltip title={t("toolTip.back")}>
-                    <Button
-                      size="large"
-                      type="text"
-                      onClick={decrement}
-                    >
-                      <SendOutlined rotate={180}/>
-                    </Button>
-                  </Tooltip>
-                  <Tooltip title={t("toolTip.submit")}>
-                    <Button
-                      size="large"
-                      type="primary"
-                      htmlType="submit"
-                    >
-                      <SendOutlined/>
-                    </Button>
-                  </Tooltip>
-                </Row>
               </>
             }
+            <Row  justify="end">
+              <Tooltip title={t("toolTip.back")}>
+                <Button
+                  size="large"
+                  type="text"
+                  onClick={decrement}
+                  disabled={isDisabled}
+                >
+                  <SendOutlined rotate={180}/>
+                </Button>
+              </Tooltip>
+              <Tooltip title={t("toolTip.next")}>
+                <Button
+                  size="large"
+                  type={ current === 4 ? "primary" : "text"}
+                  onClick={incrementUntil4}
+                  htmlType={ current === 4 ? "submit" : "button"}
+                  disabled={!isFormComplete && current === 4 || current === 0 && !firstName || current === 1 && !lastName || current === 2 && !secondIsfilled}
+                >
+                  <SendOutlined/>
+                </Button>
+              </Tooltip>
+            </Row>
           </Form>
         </CenteredWrapper>
       </Container>
