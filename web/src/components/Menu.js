@@ -19,7 +19,7 @@ const GeneralMenu = ({ selectedKey, changeSelectedKey }) => {
         <Link to="/#">First topic</Link>
       </Menu.Item>
       <Menu.Item icon={<HomeOutlined/>} key={1} onClick={changeSelectedKey}>
-        <Link to="/#">Second topic</Link>
+        <Link to="/2">Second topic</Link>
       </Menu.Item>
       <Divider style={{ margin:"14px 0px" }}/>
       <Menu.Item icon={<AuditOutlined />} key={2} onClick={changeSelectedKey}>

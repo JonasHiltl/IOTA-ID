@@ -1,6 +1,13 @@
 import React, { useState } from "react";
-import { Drawer, Button } from "antd";
-import { MenuOutlined } from "@ant-design/icons";
+import { Link} from 'react-router-dom';
+
+import { 
+  Drawer, 
+  Button 
+} from "antd";
+import { 
+  MenuOutlined 
+} from "@ant-design/icons";
 import "./NavBar.css";
 import ChangeLanugage from "./changeLanguage"
 
@@ -17,7 +24,9 @@ const NavBar = ({ menu }) => {
       > 
         {menu}
       </Drawer>
-      <a href="/">Logo</a>
+      <Link to="/">
+        Logo
+      </Link>
       <div>
         <ChangeLanugage
           style={{ position:"relative"}}

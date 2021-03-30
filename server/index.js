@@ -64,7 +64,6 @@ server.post("/create", async (req, res) => {
     user.doc.sign(user.key)
 
     user.message = await Identity.publish(user.doc.toJSON(), CLIENT_CONFIG)
-    console.log(`Published user: https://explorer.iota.org/mainnet/transaction/${user.message}`)
 
     const personalInformation = {
       id: user.doc.id.toString(),
@@ -103,7 +102,6 @@ server.post("/create", async (req, res) => {
       proof: deserializedKeyCollection.merkleProof(Digest.Sha256, 0),
     })
 
-    console.log("Verifiable Credential", signedVc)
     if (!deserializedTestIssuer.verify(signedVc)) {
       return res
         .json({

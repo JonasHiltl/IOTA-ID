@@ -15,4 +15,5 @@ const SideBar = ({ menu }) => {
    </Layout.Sider>
    );
 };
+
 export default SideBar;

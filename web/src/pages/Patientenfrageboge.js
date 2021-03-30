@@ -1,8 +1,9 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import moment from "moment";
 import { useMediaQuery } from "react-responsive"
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 import { 
   Steps, 
@@ -30,22 +31,32 @@ const { Step } = Steps;
 const { Text } = Typography;
 
 function Patientenfragebogen() {
-  const isXs = useMediaQuery({ minWidth: 480 })
-  const isSm = useMediaQuery({ minWidth: 576 })
   const isMd = useMediaQuery({ minWidth: 768 })
-  const isLg = useMediaQuery({ minWidth: 992 })
-  const isXl = useMediaQuery({ minWidth: 1200 })
-  const isXxl = useMediaQuery({ minWidth: 1600 })
 	const { t } = useTranslation();
+  const isAuthenticated = useSelector(state => state.isAuthenticated);
 	const [current, setCurrent] = useState(0);
   const [, setRerender] = useState();
   const [addedAlergyData, setAddedAlergyData] = useState([])
   const [addedMedicationData, setAddedMedicationData] = useState([])
+  const [personalData] = useState({
+    firstName: useSelector(state => state.personalInformation.name.first) || "",
+    lastName: useSelector(state => state.personalInformation.name.last) || "",
+    dateOfBirth: useSelector(state => state.personalInformation.birthDate) || "",
+    sex: useSelector(state => state.personalInformation.sex) || "",
+    streetNumber: useSelector(state => state.personalInformation.address.street) || "",
+    city: useSelector(state => state.personalInformation.address.city) || "",
+    state: useSelector(state => state.personalInformation.address.state) || "",
+    postalCode: useSelector(state => state.personalInformation.address.postalCode) || "",
+    country: useSelector(state => state.personalInformation.address.country) || "",
+    phoneNumber: useSelector(state => state.personalInformation.phoneNumber) || "",
+    email: useSelector(state => state.personalInformation.email) || "",
+  })
 
   const [allergyFormData, setAllergyFormData] = useState({
     allergy: "",
     symptoms: ""
   })
+
   const [medicationFormData, setMedicationFormData] = useState({
     medication: "",
     condition: "",
@@ -55,6 +66,7 @@ function Patientenfragebogen() {
 
   const { allergy, symptoms } = allergyFormData;
   const { medication, condition, frequency, dosis } = medicationFormData;
+  const { firstName, lastName, dateOfBirth, sex, streetNumber, city, state, postalCode, country, phoneNumber, email } = personalData
 
   const addInputsToAllergyList = () => {
     setAddedAlergyData([...addedAlergyData, allergyFormData]);
@@ -112,6 +124,13 @@ function Patientenfragebogen() {
     setRerender({})
   }
 
+  if (!isAuthenticated) {
+    return <Redirect to='/signup' />
+  }
+  
+  const splittedBirthDate = dateOfBirth.split("T")
+  const formattedBirthData = splittedBirthDate[0].split("-")
+
   return(
 		<div className="patientQuestionaire">
 			<Steps current={current} onChange={onStepChange} direction="horizontal">
@@ -137,34 +156,34 @@ function Patientenfragebogen() {
               <Tooltip placement="top" title={credentialTip}>
                 <QuestionCircleOutlined style={{ fontSize:12 }}/>
               </Tooltip>
-              <Input value="Jonas" disabled/>
+              <Input value={firstName} disabled/>
             </Col>
             <Col className="gutter-row" xs={24} md={12} style={{ paddingBottom: 20 }}>
               <Text>{t("general.lastName")}</Text>
-              <Input value="Hiltl" disabled/>
+              <Input value={lastName} disabled/>
             </Col>
             <Col className="gutter-row" xs={24} md={12} style={{ paddingBottom: 20 }}>
-                <div><Text>{t("general.birthday")}</Text></div>
-                <DatePicker defaultValue={moment("19/03/2003", "DD/MM/YYYY")} format="DD/MM/YYYY" style={{backgroundColor:"none"}} disabled/>
+                <div><Text>{t("general.dateOfBirth")}</Text></div>
+                <DatePicker  defaultValue={moment(`${formattedBirthData[2]}/${formattedBirthData[1]}/${formattedBirthData[0]}`, "DD-MM-YYYY")} format="DD MM YYYY" style={{backgroundColor:"none"}} disabled/>
             </Col>
             <Col className="gutter-row" xs={24} md={12} style={{ paddingBottom: 20 }}>
               <div><Text>{t("general.sex")}</Text></div>
-              <Radio.Group name="radiogroup" defaultValue="male" disabled>
+              <Radio.Group name="radiogroup" defaultValue={sex} disabled>
                 <Radio value="male" name="male">{t("general.male")}</Radio>
-                <Radio value="female" name="female">{t("general.male")}</Radio>
+                <Radio value="female" name="female">{t("general.female")}</Radio>
               </Radio.Group>
             </Col>
             <Col className="gutter-row" xs={24} md={12} style={{ paddingBottom: 20 }}>
               <Text>{t("general.residence")}</Text>
-              <Input value="Schuldorffstraße 10, 21029 Hamburg Deutschland" disabled/>
+              <Input value={`${streetNumber}, ${postalCode} ${city} ${state} ${country}`} disabled/>
             </Col>
             <Col className="gutter-row" xs={24} md={12} style={{ paddingBottom: 20 }}>
               <Text>{t("general.phoneNumber")}</Text>
-              <Input value="0176 36949666" disabled/>
+              <Input value={phoneNumber} disabled/>
             </Col>
             <Col className="gutter-row" xs={24} md={12} style={{ paddingBottom: 20 }}>
               <Text>{t("general.email")}</Text>
-              <Input value="jonashiltl@gmx.net" disabled/>
+              <Input value={email} disabled/>
             </Col>
           </Row>
         </>

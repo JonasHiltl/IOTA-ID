@@ -1,12 +1,13 @@
-import React, {useState} from "react";
+import {React, useState, useEffect} from "react";
+import { Redirect } from "react-router-dom";
 import styled from "@emotion/styled";
 import axios from "axios";
 import Typical from "react-typical";
 import { useTranslation } from "react-i18next";
+import { useSelector, useDispatch } from "react-redux";
 import Localbase from "localbase";
 import { useMediaQuery } from "react-responsive";
 
-import ChangeLanugage from "../components/changeLanguage"
 import {
   Form,
   Input,
@@ -30,6 +31,8 @@ import {
   ClockCircleOutlined
 } from "@ant-design/icons";
 import countries from "./countries.json"
+import ChangeLanugage from "../components/changeLanguage"
+import { verify, loadPersonalInformation } from "../store/actions/auth";
 
 const { Step } = Steps;
 const { Text, Title } = Typography;
@@ -60,7 +63,10 @@ export const CenteredWrapper = styled.div`
 
 function CreateId() {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector(state => state.isAuthenticated);
   const isMd = useMediaQuery({ minWidth: 768 })
+  const [isLoading, setIsloading] = useState(false)
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -79,15 +85,13 @@ function CreateId() {
   const { firstName, lastName, birthDate, sex, email, phoneNumber, streetNumber, city, state, postalCode, country } = formData;
 
 	const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
-  const onBirthDateChange = (dateString) => setFormData({ ...formData, "birthDate": dateString }); console.log(formData.birthDate)
+  const onBirthDateChange = (dateString) => setFormData({ ...formData, "birthDate": dateString })
   const onSexChange = e => setFormData({ ...formData, "sex": e.target.value})
   const onCountryChange = (value) => setFormData({ ...formData, "country": value})
 
   const isDisabled = current === 0
   const isFormComplete = firstName && lastName && birthDate && sex && email && phoneNumber && streetNumber && city && state && postalCode && country
   const secondIsfilled = birthDate && sex
-  const thirdIsFilled = email && phoneNumber
-  const fourthIsFilled = streetNumber && city && state && postalCode && country
 
   const incrementUntil4 = () => {
     if (current === 4) return
@@ -98,13 +102,10 @@ function CreateId() {
 		setCurrent(current - 1)
 	};
 
-  let db = new Localbase('db')
+  let db = new Localbase("db")
 
   const create = async () => {
-    console.log("Your name is:" , firstName, lastName)
-    console.log("You are born at:" , birthDate._d, "and are", sex)
-    console.log("Your contact information are:", email, phoneNumber)
-    console.log("You live at:", streetNumber, postalCode, city, state, country)
+    setIsloading(true)
     if (!isFormComplete) return message.error("You are missing personal information.");
 
     const res = await axios.post("http://localhost:3001/create", {
@@ -131,11 +132,19 @@ function CreateId() {
       db.collection("identity").add({
         credential: res.data.credential
       }, "personalInformation")
+
       message.success(res.data.message);
+      dispatch(verify(res.data.id))
+      dispatch(loadPersonalInformation())
     } else {
       message.error(res.data.message);
     }
-}
+    setIsloading(true)
+  }
+
+  if (isAuthenticated) {
+    return <Redirect to='/' />
+  }
 
   return (
     <>
@@ -160,7 +169,7 @@ function CreateId() {
                   <Title>
                     <Typical
                       steps={[t("signUp.firstName")]}
-                      className={'typical'}
+                      className={"typical"}
                     />
                   </Title>
                 </Row>
@@ -184,7 +193,7 @@ function CreateId() {
                   <Title>
                     <Typical
                       steps={[t("signUp.lastName")]}
-                      className={'typical'}
+                      className={"typical"}
                     />
                   </Title>
                 </Row>
@@ -208,7 +217,7 @@ function CreateId() {
                   <Title>
                     <Typical
                       steps={[t("signUp.typicalBirth")]}
-                      className={'typical'}
+                      className={"typical"}
                     />
                   </Title>
                 </Row>
@@ -245,7 +254,7 @@ function CreateId() {
                   <Title>
                     <Typical
                       steps={[t("signUp.contactTypical")]}
-                      className={'typical'}
+                      className={"typical"}
                     />
                   </Title>
                 </Row>
@@ -284,7 +293,7 @@ function CreateId() {
                   <Title>
                     <Typical
                       steps={[t("signUp.addressTypical")]}
-                      className={'typical'}
+                      className={"typical"}
                     />
                   </Title>
                 </Row>
@@ -372,9 +381,8 @@ function CreateId() {
                   type="text"
                   onClick={decrement}
                   disabled={isDisabled}
-                >
-                  <SendOutlined rotate={180}/>
-                </Button>
+                  icon={<SendOutlined rotate={180}/>}
+                />
               </Tooltip>
               <Tooltip title={t("toolTip.next")}>
                 <Button
@@ -383,9 +391,9 @@ function CreateId() {
                   onClick={incrementUntil4}
                   htmlType={ current === 4 ? "submit" : "button"}
                   disabled={!isFormComplete && current === 4 || current === 0 && !firstName || current === 1 && !lastName || current === 2 && !secondIsfilled}
-                >
-                  <SendOutlined/>
-                </Button>
+                  loading={isLoading}
+                  icon={<SendOutlined/>}
+                />
               </Tooltip>
             </Row>
           </Form>
