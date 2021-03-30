@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
 
 import {
   Menu,
@@ -13,6 +14,7 @@ import "./Menu.css"
 
 
 const GeneralMenu = ({ selectedKey, changeSelectedKey }) => {
+  const { t } = useTranslation();
   return (
     <Menu mode="inline" selectedKeys={[selectedKey]}>
       <Menu.Item icon={<HomeOutlined/>} key={0} onClick={changeSelectedKey}>
@@ -23,7 +25,7 @@ const GeneralMenu = ({ selectedKey, changeSelectedKey }) => {
       </Menu.Item>
       <Divider style={{ margin:"14px 0px" }}/>
       <Menu.Item icon={<AuditOutlined />} key={2} onClick={changeSelectedKey}>
-        <Link to="/patientenfragebogen">Patientenfragebogen</Link>
+        <Link to="/patientenfragebogen">{t("patientQuestionnaire.patientQuestionnaire")}</Link>
       </Menu.Item>
     </Menu>
   );

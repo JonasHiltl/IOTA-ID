@@ -162,7 +162,7 @@ function CreateId() {
       </div>
       <Container>
         <CenteredWrapper>
-          <Form onFinish={create}>
+          <Form onFinish={create} autocomplete="off">
             { current === 0 &&
               <>
                 <Row>

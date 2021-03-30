@@ -1,5 +1,9 @@
 {
     "general": {
+        "next": "Next",
+        "previous": "Previous",
+        "done": "Done",
+        "review": "Review entries",
         "email": "Email",
         "firstName": "First name ",
         "lastName": "Last Name",
@@ -16,9 +20,7 @@
         "state": "State"
     },
     "patientQuestionnaire": {
-        "next": "Next",
-        "previous": "Previous",
-        "done": "Done",
+        "patientQuestionnaire": "Patient questionnaire",
         "Step1Header": "Person",
         "Step1Description": "Your personal informationen.",
         "Step2Header": "Allergies",
