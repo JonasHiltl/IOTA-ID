@@ -349,6 +349,7 @@ function CreateId() {
                         filterOption={true}
                         onChange={onCountryChange}
                         name="country"
+                        value={country}
                       >
                         <Input
                           size="large" 
@@ -392,7 +393,7 @@ function CreateId() {
       </Container>
       { !isMd &&
         <Row justify="end" style={{ padding:"20px" }}>
-          <ChangeLanugage placement="bottomRight"/>
+          <ChangeLanugage placement="topRight"/>
         </Row>
       }
     </>

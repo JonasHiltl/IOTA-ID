@@ -6,6 +6,11 @@ const Identity = require("@iota/identity-wasm/node")
 const cors = require("cors");
 const server = express();
 const testIssuer = require("./testIssuer.json")
+const fetch = require('node-fetch')
+global.Headers = fetch.Headers
+global.Request = fetch.Request
+global.Response = fetch.Response
+global.fetch = fetch
 
 const {
   Digest,
@@ -57,7 +62,7 @@ server.post("/create", async (req, res) => {
     const user = generateUser(name)
     // Sign users DID Documents
     user.doc.sign(user.key)
-    
+
     user.message = await Identity.publish(user.doc.toJSON(), CLIENT_CONFIG)
     console.log(`Published user: https://explorer.iota.org/mainnet/transaction/${user.message}`)
 
@@ -72,39 +77,37 @@ server.post("/create", async (req, res) => {
       email: email,
       phoneNumber: phoneNumber,
       address: {
-        street: streetNumber, //Schuldorffstraße 10
+        street: streetNumber,
         city: city,
         state: state,
         postalCode: postalCode,
-        country: country
+        country: country,
       }
     }
 
-    console.log(personalInformation)
+    const deserializedTestIssuer = Document.fromJSON(testIssuer.issuer.doc)
+    const deserializedKeyCollection = KeyCollection.fromJSON(testIssuer.keyKollection)
 
     const unsignedVc = VerifiableCredential.extend({
       id: "http://example.edu/credentials/3732",
       type: "personalInformationCredential",
-      issuer: testIssuer.doc.id.toString(),
-      personalInformation,
+      issuer: deserializedTestIssuer.id.toString(),
+      credentialSubject: personalInformation,
     })
 
-    console.log("Unsigned verifiable credential", unsignedVc)
-
     // Sign the credential with testIssuer's Merkle Key Collection method
-    const signedVc = testIssuer.doc.signCredential(unsignedVc, {
-      method: method.id.toString(),
-      public: keys.public(0),
-      secret: keys.secret(0),
-      proof: keys.merkleProof(Digest.Sha256, 0),
+    const signedVc = deserializedTestIssuer.signCredential(unsignedVc, {
+      method: testIssuer.issuer.doc.verificationMethod[0].id,
+      public: deserializedKeyCollection.public(0),
+      secret: deserializedKeyCollection.secret(0),
+      proof: deserializedKeyCollection.merkleProof(Digest.Sha256, 0),
     })
 
     console.log("Verifiable Credential", signedVc)
-
-    if (!testIssuer.doc.verify(signedVc)) {
+    if (!deserializedTestIssuer.verify(signedVc)) {
       return res
         .json({
-          message: `Error creating credentials for you, ${firstName}`,
+          message: "Your credential is not verified",
           success: false
         })
         .status(500);

@@ -36,6 +36,7 @@ async function run() {
   // Add a Merkle Key Collection method for Bob, so compromised keys can be revoked.
   const keys = new KeyCollection(KeyType.Ed25519, 8)
   const method = Method.createMerkleKey(Digest.Sha256, issuer.doc.id, keys, "key-collection")
+  const merkleProof =  keys.merkleProof(Digest.Sha256, 0)
 
   issuer.doc.insertMethod(method, "VerificationMethod")
 
@@ -43,7 +44,9 @@ async function run() {
 
   issuermessage = await Identity.publish(issuer.doc.toJSON(), CLIENT_CONFIG)
 
-  const issuerString = JSON.stringify(issuer)
+  const testIssuer = {issuer, "merkleProof": merkleProof, "keyKollection": keys}
+
+  const issuerString = JSON.stringify(testIssuer)
 
   fs.writeFile("testIssuer.json", issuerString, (err, issuer) => {
     if(err) console.log('error', err);
