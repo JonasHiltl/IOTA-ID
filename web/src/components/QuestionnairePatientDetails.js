@@ -25,10 +25,20 @@ const QuestionnairePatientDetails = props => {
           <Text>{firstName} {lastName}</Text>
         </Col>
         <Col span={12}>
-          <Col>
-            <Text type="secondary" strong>{t("general.dateOfBirth")}</Text>
-          </Col>
-          <Text>{`${formattedBirthData[2]}/${formattedBirthData[1]}/${formattedBirthData[0]}`}</Text>
+          <Row>
+            <div style={{ marginRight:16 }}>
+              <Col>
+                <Text type="secondary" strong>{t("general.dateOfBirth")}</Text>
+              </Col>
+              <Text>{`${formattedBirthData[2]}/${formattedBirthData[1]}/${formattedBirthData[0]}`}</Text>
+            </div>
+            <div>
+              <Col>
+                <Text type="secondary" strong>{t("general.sex")}</Text>
+              </Col>
+              <Text>{sex}</Text>
+            </div>
+          </Row>
         </Col>
       </Row>
       <Row>

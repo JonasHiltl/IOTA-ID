@@ -22,7 +22,6 @@
     },
     "patientQuestionnaire": {
         "patientQuestionnaire": "Patientenfragebogen",
-
         "Step1Header": "Person",
         "Step1Description": "Deine persönlichen Informationen.",
         "Step2Header": "Allergien",
@@ -66,13 +65,18 @@
         "sentEmail": "Wir haben Ihnen den Aktivierungslink an Ihre E-Mail geschickt."
     },
     "messages": {
-        "inputFN": "Bitte geben Sie Ihren Vornamen ein!",
-        "inputLN": "Bitte geben Sie Ihren Nachname ein!",
-        "invalidEmail": "Die Eingabe ist keine gültige E-Mail!",
-        "inputEmail": "Bitte geben Sie Ihre E-Mail ein!",
-        "inputPW": "Bitte geben Sie Ihr Passwort ein!",
-        "min8Char": "Mindestens 8 Buchstaben!",
-        "confirmPW": "Bitte bestätigen Sie Ihr Passwort!"
+        "inputFN": "Bitte gib deinen Vornamen ein.",
+        "inputLN": "Bitte gib deinen Nachname ein.",
+        "inputBirth": "Bitte gib deinen Geburtstag ein.",
+        "inputSex": "Bitte gib dein Geschlecht ein.",
+        "invalidEmail": "Die Eingabe ist keine gültige E-Mail.",
+        "inputEmail": "Bitte gib dein E-Mail ein.",
+        "inputPhone": "Bitte gib deine Telefonnummer ein.",
+        "inputStreet": "Bitte gib deine Straße und Hausnummer ein.",
+        "inputCity": "Bitte gib deine Stadt ein.",
+        "inputState": "Bitte gib dein Bundesland ein.",
+        "inputPostalCode": "Bitte gib deine Postleitzahl ein.",
+        "inputCountry": "Bitte gib dein Land ein."
     },
     "toolTip": {
         "back": "Zurück",

@@ -27,6 +27,8 @@ import {
 } from "@ant-design/icons";
 import "./Patientenfragebogen.css"
 import QuestionnairePatientDetails from "../components/QuestionnairePatientDetails"
+import AllergyDetailsReview from "../components/AllergyDetailsReview"
+import MedicationDetailsReview from "../components/MedicationDetailsReview"
 
 const { Step } = Steps;
 const { Text } = Typography;
@@ -377,6 +379,8 @@ function Patientenfragebogen() {
         <div className="patientQuestionaire">
           <div style={{ backgroundColor:"#fff", minHeight:"60vh", border:"1px dashed #D1D1D1", padding:"4px", justifyContent:"space-between" }}>
             <QuestionnairePatientDetails personalData={personalData}/>
+            <AllergyDetailsReview allergyData={addedAlergyData}/>
+            <MedicationDetailsReview medicationData={addedMedicationData}/>
           </div>
           <div style={{ display:"flex", marginTop:"20px" }}>
             <Button type="primary">{t("general.done")}</Button>

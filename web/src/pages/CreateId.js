@@ -84,14 +84,16 @@ function CreateId() {
 
   const { firstName, lastName, birthDate, sex, email, phoneNumber, streetNumber, city, state, postalCode, country } = formData;
 
-	const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
+	const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value }); console.log(formData)
   const onBirthDateChange = (dateString) => setFormData({ ...formData, "birthDate": dateString })
   const onSexChange = e => setFormData({ ...formData, "sex": e.target.value})
   const onCountryChange = (value) => setFormData({ ...formData, "country": value})
 
+  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const isDisabled = current === 0
   const isFormComplete = firstName && lastName && birthDate && sex && email && phoneNumber && streetNumber && city && state && postalCode && country
   const secondIsfilled = birthDate && sex
+  const thirdIsValid = email && re.test(email) && phoneNumber
 
   const incrementUntil4 = () => {
     if (current === 4) return
@@ -139,7 +141,7 @@ function CreateId() {
     } else {
       message.error(res.data.message);
     }
-    setIsloading(true)
+    setIsloading(false)
   }
 
   if (isAuthenticated) {
@@ -174,7 +176,16 @@ function CreateId() {
                   </Title>
                 </Row>
                 <Row>
-                  <Form.Item style={{ width:"100%" }}>
+                  <Form.Item 
+                    style={{ width:"100%" }} 
+                    name="firstName" 
+                    rules={[
+                      { 
+                        required: true,
+                        message: t("messages.inputFN")
+                      }
+                    ]}
+                  >
                     <Input
                       size="large" 
                       name="firstName"
@@ -198,7 +209,16 @@ function CreateId() {
                   </Title>
                 </Row>
                 <Row>
-                  <Form.Item style={{ width:"100%" }}>
+                  <Form.Item 
+                    style={{ width:"100%" }}
+                    name="lastName" 
+                    rules={[
+                      { 
+                        required: true,
+                        message: t("messages.inputLN")
+                      }
+                    ]}
+                  >
                     <Input
                       size="large" 
                       name="lastName"
@@ -212,7 +232,7 @@ function CreateId() {
               </>
             }
             { current === 2 &&
-              <Form.Item>
+              <>
                 <Row>
                   <Title>
                     <Typical
@@ -222,7 +242,16 @@ function CreateId() {
                   </Title>
                 </Row>
                 <Row>
-                  <Form.Item style={{ width:"100%" }}>
+                  <Form.Item 
+                    style={{ width:"100%" }}
+                    name="birthDate" 
+                    rules={[
+                      { 
+                        required: true,
+                        message: t("messages.inputBirth")
+                      }
+                    ]}
+                  >
                     <Text>{t("general.dateOfBirth")}:</Text>
                     <DatePicker
                       name="birthDate"
@@ -246,10 +275,10 @@ function CreateId() {
                     </div>
                   </Form.Item>
                 </Row>
-              </Form.Item>
+              </>
             }
             { current === 3 &&
-              <Form.Item>
+              <>
                 <Row>
                   <Title>
                     <Typical
@@ -259,8 +288,21 @@ function CreateId() {
                   </Title>
                 </Row>
                 <Row>
-                  <Form.Item style={{ width:"100%" }}>
-                    <Text>{t("general.email")}:</Text>
+                  <Text>{t("general.email")}:</Text>
+                  <Form.Item
+                    style={{ width:"100%" }}
+                    name="email" 
+                    rules={[
+                      { 
+                        type: "email",
+                        message: t("messages.invalidEmail")
+                      },
+                      { 
+                        required: true,
+                        message: t("messages.inputEmail")
+                      }
+                    ]}
+                  >
                     <Input
                       size="large" 
                       name="email"
@@ -272,8 +314,17 @@ function CreateId() {
                   </Form.Item>
                 </Row>
                 <Row>
-                  <Form.Item style={{ width:"100%" }}>
-                    <Text>{t("general.phoneNumber")}:</Text>
+                  <Text>{t("general.phoneNumber")}:</Text>
+                  <Form.Item 
+                    style={{ width:"100%" }}
+                    name="phoneNumber"
+                    rules={[
+                      { 
+                        required: true,
+                        message: t("messages.inputPhone")
+                      }
+                    ]}
+                  >
                     <Input
                       size="large"
                       name="phoneNumber"
@@ -284,8 +335,7 @@ function CreateId() {
                     />
                   </Form.Item>
                 </Row>
-                
-              </Form.Item>
+              </>
             }
             { current === 4 &&
               <>
@@ -298,8 +348,17 @@ function CreateId() {
                   </Title>
                 </Row>
                 <Row>
-                  <Form.Item style={{ width:"100%" }}>
-                    <Text>{[t("general.streetNumber")]}:</Text>
+                  <Text>{[t("general.streetNumber")]}:</Text>
+                  <Form.Item 
+                    style={{ width:"100%" }}
+                    name="streetNumber"
+                    rules={[
+                      { 
+                        required: true,
+                        message: t("messages.inputStreet")
+                      }
+                    ]}
+                  >
                     <Input
                       size="large" 
                       name="streetNumber"
@@ -312,8 +371,17 @@ function CreateId() {
                 </Row>
                 <Row gutter={{ xs: 8, sm: 16 }}>
                   <Col span={12}>
-                    <Form.Item style={{ width:"100%" }}>
-                      <Text>{[t("general.city")]}:</Text>
+                    <Text>{[t("general.city")]}:</Text>
+                    <Form.Item 
+                      style={{ width:"100%" }}
+                      name="city"
+                      rules={[
+                        { 
+                          required: true,
+                          message: t("messages.inputCity")
+                        }
+                      ]}
+                    >
                       <Input
                         size="large" 
                         name="city"
@@ -325,21 +393,38 @@ function CreateId() {
                     </Form.Item>
                   </Col>
                   <Col span={12}>
-                    <Form.Item style={{ width:"100%" }}>
-                      <Text>{[t("general.state")]}:</Text>
-                        <Input
-                          size="large" 
-                          name="state"
-                          value={state}
-                          placeholder={[t("general.state")]}
-                          allowClear
-                          onChange={e => onChange(e)}
-                        />
+                    <Text>{[t("general.state")]}:</Text>
+                    <Form.Item 
+                      style={{ width:"100%" }}
+                      name="state"
+                      rules={[
+                        { 
+                          required: true,
+                          message: t("messages.inputState")
+                        }
+                      ]}
+                    >
+                      <Input
+                        size="large" 
+                        name="state"
+                        value={state}
+                        placeholder={[t("general.state")]}
+                        allowClear
+                        onChange={e => onChange(e)}
+                      />
                     </Form.Item>
                   </Col>
                   <Col span={12}>
-                    <Form.Item>
-                      <Text>{[t("general.postalCode")]}:</Text>
+                    <Text>{[t("general.postalCode")]}:</Text>
+                    <Form.Item
+                      name="postalCode"
+                      rules={[
+                        { 
+                          required: true,
+                          message: t("messages.inputPostalCode")
+                        }
+                      ]}
+                    >
                       <Input
                         size="large" 
                         name="postalCode"
@@ -351,8 +436,16 @@ function CreateId() {
                     </Form.Item>
                   </Col>
                   <Col span={12}>
-                    <Form.Item>
-                      <Text>{[t("general.country")]}:</Text>
+                    <Text>{[t("general.country")]}:</Text>
+                    <Form.Item
+                      name="country"
+                      rules={[
+                        { 
+                          required: true,
+                          message: t("messages.inputCountry")
+                        }
+                      ]}
+                    >
                       <AutoComplete
                         options={countries}
                         filterOption={true}
@@ -390,7 +483,7 @@ function CreateId() {
                   type={ current === 4 ? "primary" : "text"}
                   onClick={incrementUntil4}
                   htmlType={ current === 4 ? "submit" : "button"}
-                  disabled={!isFormComplete && current === 4 || current === 0 && !firstName || current === 1 && !lastName || current === 2 && !secondIsfilled}
+                  disabled={!isFormComplete && current === 4 || current === 0 && !firstName || current === 1 && !lastName || current === 2 && !secondIsfilled || current === 3 && !thirdIsValid}
                   loading={isLoading}
                   icon={<SendOutlined/>}
                 />
