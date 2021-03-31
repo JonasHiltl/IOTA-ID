@@ -5,6 +5,7 @@
         "done": "Fertig",
         "review": "Eingaben überprüfen",
         "email": "E-Mail Adresse",
+        "name": "Name",
         "firstName": "Vorname ",
         "lastName": "Nachname",
         "dateOfBirth": "Geburtsdatum",

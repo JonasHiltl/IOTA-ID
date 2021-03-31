@@ -3,7 +3,8 @@
 .patientQuestionaire {
     padding: 10px;
     min-height: calc(100vh - 64px);
-    position: relative
+    position: relative;
+    background-color: #F6F8FC
 }
 
 @media (min-width: 768px) {

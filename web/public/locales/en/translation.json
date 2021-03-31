@@ -5,6 +5,7 @@
         "done": "Done",
         "review": "Review entries",
         "email": "Email",
+        "name": "Fullname",
         "firstName": "First name ",
         "lastName": "Last Name",
         "dateOfBirth": "Date of birth",

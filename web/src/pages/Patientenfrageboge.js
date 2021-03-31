@@ -26,6 +26,7 @@ import {
   PlusOutlined
 } from "@ant-design/icons";
 import "./Patientenfragebogen.css"
+import QuestionnairePatientDetails from "../components/QuestionnairePatientDetails"
 
 const { Step } = Steps;
 const { Text } = Typography;
@@ -234,10 +235,10 @@ function Patientenfragebogen() {
                     <Card title={t("patientQuestionnaire.yourAllergies")}>
                       <Row>
                         <Col span={12}>
-                          <Text strong>{t("patientQuestionnaire.allergy")}:</Text>
+                          <Text type="secondary" strong>{t("patientQuestionnaire.allergy")}:</Text>
                         </Col>
                         <Col span={12}>
-                          <Text strong>{t("patientQuestionnaire.symptoms")}:</Text>
+                          <Text type="secondary" strong>{t("patientQuestionnaire.symptoms")}:</Text>
                         </Col>
                       </Row>
                       {addedAlergyData.map((item, i) => (
@@ -325,16 +326,16 @@ function Patientenfragebogen() {
                     <Card title={t("patientQuestionnaire.yourMedication")}>
                       <Row>
                         <Col span={6}>
-                          <Text strong>{t("patientQuestionnaire.medication")}:</Text>
+                          <Text type="secondary" strong>{t("patientQuestionnaire.medication")}:</Text>
                         </Col>
                         <Col span={6}>
-                          <Text strong>{t("patientQuestionnaire.condition")}:</Text>
+                          <Text type="secondary" strong>{t("patientQuestionnaire.condition")}:</Text>
                         </Col>
                         <Col span={6}>
-                          <Text strong>{t("patientQuestionnaire.frequency")}:</Text>
+                          <Text type="secondary" strong>{t("patientQuestionnaire.frequency")}:</Text>
                         </Col>
                         <Col span={6}>
-                          <Text strong>{t("patientQuestionnaire.dose")}:</Text>
+                          <Text type="secondary" strong>{t("patientQuestionnaire.dose")}:</Text>
                         </Col>
                       </Row>
                       {addedMedicationData.map((item, i) => (
@@ -375,6 +376,7 @@ function Patientenfragebogen() {
       :
         <div className="patientQuestionaire">
           <div style={{ backgroundColor:"#fff", minHeight:"60vh", border:"1px dashed #D1D1D1", padding:"4px", justifyContent:"space-between" }}>
+            <QuestionnairePatientDetails personalData={personalData}/>
           </div>
           <div style={{ display:"flex", marginTop:"20px" }}>
             <Button type="primary">{t("general.done")}</Button>

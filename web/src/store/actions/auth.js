@@ -52,7 +52,6 @@ export const loadPersonalInformation = () => async dispatch => {
   try {
     db.collection('identity').doc("personalInformation").get()
       .then(document => {
-        console.log(document)
         dispatch({
           type: USERLOADED_SUCCESS,
           payload: document
