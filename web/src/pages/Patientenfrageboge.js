@@ -29,6 +29,7 @@ import "./Patientenfragebogen.css"
 import QuestionnairePatientDetails from "../components/QuestionnairePatientDetails"
 import AllergyDetailsReview from "../components/AllergyDetailsReview"
 import MedicationDetailsReview from "../components/MedicationDetailsReview"
+import ConfirmModal from "../components/ConfirmModal"
 
 const { Step } = Steps;
 const { Text } = Typography;
@@ -290,7 +291,7 @@ function Patientenfragebogen() {
                   </Col>
                   <Col className="gutter-row" xs={24} md={6}>
                     <Form.Item>
-                      <Text>{t("patientQuestionnaire.frequency")}y</Text>
+                      <Text>{t("patientQuestionnaire.frequency")}</Text>
                       <Input
                         name="frequency"
                         value={frequency}
@@ -383,7 +384,7 @@ function Patientenfragebogen() {
             <MedicationDetailsReview medicationData={addedMedicationData}/>
           </div>
           <div style={{ display:"flex", marginTop:"20px" }}>
-            <Button type="primary">{t("general.done")}</Button>
+            <ConfirmModal personalData={personalData} allergyData={addedAlergyData} medicationData={addedMedicationData}/>
             <Button onClick={decrement} style={{ marginLeft:"8px" }}>{t("general.previous")}</Button>
           </div>
         </div>

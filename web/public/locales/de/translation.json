@@ -18,7 +18,8 @@
         "postalCode": "Postleitzahl",
         "country": "Land",
         "city": "Stadt",
-        "state": "Bundesland"
+        "state": "Bundesland",
+        "confirm": "Bestätigen"
     },
     "patientQuestionnaire": {
         "patientQuestionnaire": "Patientenfragebogen",
@@ -45,7 +46,9 @@
         "example75mg": "Bsp. 75 mg",
         "yourMedication": "Deine Medikamente",
         "addMedication": "Medikament hinzufügen",
-        "noMedicationAdded": "Noch kein Medikament hinzugefügt."
+        "noMedicationAdded": "Noch kein Medikament hinzugefügt.",
+        "modalTitle": "Haben Sie Ihre Fragebogendaten überprüft?",
+        "modalDisc": "Mit der Bestätigung erstellst du deinen Patientenfragebogen, den du deinem Arzt zur Verfügung stellen kannst."
     },
     "signUp": {
         "header": "Erstellen Sie Ihr Konto",

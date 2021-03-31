@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, Redirect } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import NavBar from "../components/NavBar";
 import SideBar from "../components/SideBar";
@@ -16,7 +16,6 @@ import {
 const antIcon = <LoadingOutlined style={{ fontSize: 45 }} spin />;
 
 const MenuLayout = props => {
-  const dispatch = useDispatch();
   const location = useLocation();
   const [selectedKey, setSelectedKey] = useState();
   const isAuthenticated = useSelector(state => state.isAuthenticated);

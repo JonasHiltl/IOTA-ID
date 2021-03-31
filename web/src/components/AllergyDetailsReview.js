@@ -9,7 +9,6 @@ import {
 const { Title } = Typography;
 const { Column } = Table;
 
-
 const AllergyDetailsReview = props => {
   const { t } = useTranslation();
   console.log(props.allergyData)

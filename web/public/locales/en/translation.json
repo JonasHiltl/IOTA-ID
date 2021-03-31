@@ -18,7 +18,8 @@
         "postalCode": "Postal code",
         "country": "Country",
         "city": "City",
-        "state": "State"
+        "state": "State",
+        "confirm": "Confirm"
     },
     "patientQuestionnaire": {
         "patientQuestionnaire": "Patient questionnaire",
@@ -45,7 +46,9 @@
         "example75mg": "e.g. 75 mg",
         "yourMedication": "Your medication",
         "addMedication": "Add medication",
-        "noMedicationAdded": "No medication added."
+        "noMedicationAdded": "No medication added.",
+        "modalTitle": "Have you reviewed your questionnaire data?",
+        "modalDisc": "By confirming you will create your patient questionnaire to share with your doctor."
     },
     "signUp": {
         "header": "Create your account",
