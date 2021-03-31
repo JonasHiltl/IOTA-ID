@@ -10,7 +10,7 @@ import {
   Spin
 } from "antd";
 import { 
-  LoadingOutlined 
+  LoadingOutlined
 } from '@ant-design/icons';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 45 }} spin />;
@@ -43,6 +43,9 @@ const MenuLayout = props => {
       case "/patientenfragebogen":
         setSelectedKey("2");
         break;
+        case "/profile":
+          setSelectedKey("3");
+          break;
       default:
         setSelectedKey("0");
         break;

@@ -36,7 +36,13 @@ const QuestionnairePatientDetails = props => {
               <Col>
                 <Text type="secondary" strong>{t("general.sex")}</Text>
               </Col>
-              <Text>{sex}</Text>
+              <Text>
+                { sex === "male" ?
+                  t("general.male")
+                  :
+                  t("general.female")
+                }
+              </Text>
             </div>
           </Row>
         </Col>

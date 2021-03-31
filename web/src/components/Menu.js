@@ -8,7 +8,8 @@ import {
 } from "antd";
 import { 
   HomeOutlined,
-  AuditOutlined
+  AuditOutlined,
+  UserOutlined
 } from "@ant-design/icons";
 import "./Menu.css"
 
@@ -26,6 +27,10 @@ const GeneralMenu = ({ selectedKey, changeSelectedKey }) => {
       <Divider style={{ margin:"14px 0px" }}/>
       <Menu.Item icon={<AuditOutlined />} key={2} onClick={changeSelectedKey}>
         <Link to="/patientenfragebogen">{t("patientQuestionnaire.patientQuestionnaire")}</Link>
+      </Menu.Item>
+      <Divider style={{ margin:"14px 0px" }}/>
+      <Menu.Item icon={<UserOutlined />} key={3} onClick={changeSelectedKey}>
+        <Link to="/profile">Profile</Link>
       </Menu.Item>
     </Menu>
   );

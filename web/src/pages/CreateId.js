@@ -269,8 +269,8 @@ function CreateId() {
                     <Text>{t("general.sex")}:</Text>
                     <div>
                       <Radio.Group onChange={onSexChange} value={formData.sex}>
-                        <Radio value="female">Female</Radio>
-                        <Radio value="male">Male</Radio>
+                        <Radio value="female">{t("general.female")}</Radio>
+                        <Radio value="male">{t("general.male")}</Radio>
                       </Radio.Group>
                     </div>
                   </Form.Item>
