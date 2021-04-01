@@ -48,7 +48,8 @@
         "addMedication": "Add medication",
         "noMedicationAdded": "No medication added.",
         "modalTitle": "Have you reviewed your questionnaire data?",
-        "modalDisc": "By confirming you will create your patient questionnaire to share with your doctor."
+        "modalDisc": "By confirming you will create your patient questionnaire to share with your doctor.",
+        "editProfile": "Edit <1>profile</1> to change Information"
     },
     "signUp": {
         "header": "Create your account",
@@ -70,17 +71,24 @@
     },
     "messages": {
         "inputFN": "Please input your first Name.",
+        "firstName": "Please input your first Name.",
         "inputLN": "Please input your last name.",
+        "lastName": "Please input your last name.",
         "inputBirth": "Please input your date of birth.",
+        "dateOfBirth": "Please input your date of birth.",
         "inputSex": "Please input your biological sex.",
+        "sex": "Please input your biological sex.",
         "invalidEmail": "The input is not a valid Email.",
         "inputEmail": "Please input your E-mail.",
+        "email": "Please input your E-mail.",
         "inputPhone": "Please input your phone Number.",
+        "phoneNumber": "Please input your phone Number.",
         "inputStreet": "Please input your street and number.",
         "inputCity": "Please input your city.",
         "inputState": "Please input your state.",
         "inputPostalCode": "Please input your postal code.",
-        "inputCountry": "Please input your country."
+        "inputCountry": "Please input your country.",
+        "country": "Please input your country."
     },
     "toolTip": {
         "back": "Back",

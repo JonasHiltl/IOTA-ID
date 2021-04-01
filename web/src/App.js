@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import CreateId from "./pages/CreateId"
 import Patientenfragebogen from "./pages/Patientenfrageboge"
+import Profile from "./pages/Profile"
 import MenuLayout from "./containers/MenuLayout"
 import CheckAuthenticated from "./containers/CheckAuthenticated"
 
@@ -15,10 +16,13 @@ function App() {
           <Switch>
             <Route path="/signup">
               <CreateId/>
-            </Route>    
+            </Route>
             <MenuLayout>
               <Route path="/patientenfragebogen">
                 <Patientenfragebogen/>
+              </Route>
+              <Route path="/profile">
+                <Profile/>
               </Route>
               <Route exact path="/">              
               </Route>

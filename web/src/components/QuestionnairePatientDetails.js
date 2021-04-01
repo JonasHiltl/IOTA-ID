@@ -1,5 +1,7 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
+import moment from 'moment';
+
 import { 
   Row, 
   Col,
@@ -12,8 +14,6 @@ const QuestionnairePatientDetails = props => {
   const { t } = useTranslation();
 
   const { firstName, lastName, dateOfBirth, sex, streetNumber, city, state, postalCode, country, phoneNumber, email } = props.personalData
-  const splittedBirthDate = dateOfBirth.split("T")
-  const formattedBirthData = splittedBirthDate[0].split("-")
 
   return (
     <div style={{ backgroundColor:"#F6F8FC", padding:8, borderRadius:8, border:"1px dashed #D1D1D1" }}>
@@ -30,7 +30,7 @@ const QuestionnairePatientDetails = props => {
               <Col>
                 <Text type="secondary" strong>{t("general.dateOfBirth")}</Text>
               </Col>
-              <Text>{`${formattedBirthData[2]}/${formattedBirthData[1]}/${formattedBirthData[0]}`}</Text>
+              <Text>{moment(dateOfBirth).format("MMM Mo YYYY")}</Text>
             </div>
             <div>
               <Col>

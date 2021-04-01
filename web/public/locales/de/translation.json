@@ -48,7 +48,8 @@
         "addMedication": "Medikament hinzufügen",
         "noMedicationAdded": "Noch kein Medikament hinzugefügt.",
         "modalTitle": "Haben Sie Ihre Fragebogendaten überprüft?",
-        "modalDisc": "Mit der Bestätigung erstellst du deinen Patientenfragebogen, den du deinem Arzt zur Verfügung stellen kannst."
+        "modalDisc": "Mit der Bestätigung erstellst du deinen Patientenfragebogen, den du deinem Arzt zur Verfügung stellen kannst.",
+        "editProfile": "Bearbeite dein <1>Profile</1>, um Informationen zu ändern"
     },
     "signUp": {
         "header": "Erstellen Sie Ihr Konto",
@@ -69,17 +70,24 @@
     },
     "messages": {
         "inputFN": "Bitte gib deinen Vornamen ein.",
+        "firstName": "Bitte gib deinen Vornamen ein.",
         "inputLN": "Bitte gib deinen Nachname ein.",
+        "lastName": "Bitte gib deinen Nachname ein.",
         "inputBirth": "Bitte gib deinen Geburtstag ein.",
+        "dateOfBirth": "Bitte gib deinen Geburtstag ein.",
         "inputSex": "Bitte gib dein Geschlecht ein.",
+        "sex": "Bitte gib dein Geschlecht ein.",
         "invalidEmail": "Die Eingabe ist keine gültige E-Mail.",
         "inputEmail": "Bitte gib dein E-Mail ein.",
+        "email": "Bitte gib dein E-Mail ein.",
         "inputPhone": "Bitte gib deine Telefonnummer ein.",
+        "phoneNumber": "Bitte gib deine Telefonnummer ein.",
         "inputStreet": "Bitte gib deine Straße und Hausnummer ein.",
         "inputCity": "Bitte gib deine Stadt ein.",
         "inputState": "Bitte gib dein Bundesland ein.",
         "inputPostalCode": "Bitte gib deine Postleitzahl ein.",
-        "inputCountry": "Bitte gib dein Land ein."
+        "inputCountry": "Bitte gib dein Land ein.",
+        "country": "Bitte gib dein Land ein."
     },
     "toolTip": {
         "back": "Zurück",

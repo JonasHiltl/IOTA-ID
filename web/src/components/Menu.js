@@ -13,7 +13,6 @@ import {
 } from "@ant-design/icons";
 import "./Menu.css"
 
-
 const GeneralMenu = ({ selectedKey, changeSelectedKey }) => {
   const { t } = useTranslation();
   return (
