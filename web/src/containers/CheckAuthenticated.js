@@ -8,16 +8,19 @@ const CheckAuthenticated = props => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(state => state.isAuthenticated);
 
-  useEffect(async () => {
-    const db = new Localbase("db")
-    await db.collection("identity").doc("did").get().then(identity => {
-      if (identity) {
-        dispatch(verify(identity.id))
+  useEffect( () => {
+    async function getDID() {
+      const db = new Localbase("db")
+      await db.collection("identity").doc("did").get().then(identity => {
+        if (identity) {
+          dispatch(verify(identity.id))
+        }
+      })
+      if (isAuthenticated) {
+        dispatch(loadPersonalInformation())
       }
-    })
-    if (isAuthenticated) {
-      dispatch(loadPersonalInformation())
     }
+    getDID()
   }, [dispatch, isAuthenticated])
 
   return (

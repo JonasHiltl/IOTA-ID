@@ -45,7 +45,7 @@ const Profile = () => {
     setIsloading(true)
     if (!isFormComplete) return message.error("You are missing personal information.");
     const res = await axios.post("http://localhost:3001/update-personal-credential", {
-      id:id,
+      id: id,
       firstName: firstName,
       lastName: lastName,
       birthDate: dateOfBirth,

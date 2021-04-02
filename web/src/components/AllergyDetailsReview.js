@@ -11,7 +11,6 @@ const { Column } = Table;
 
 const AllergyDetailsReview = props => {
   const { t } = useTranslation();
-  console.log(props.allergyData)
   return (
     <div style={{ padding:8 }}>
       <Title level={3}>{t("patientQuestionnaire.yourAllergies")}</Title>

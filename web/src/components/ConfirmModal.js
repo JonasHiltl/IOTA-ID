@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from "react-i18next";
+import axios from "axios"
 
 import { 
   Modal,
-  Button
+  Button,
+  message
 } from 'antd';
 import {
   ExclamationCircleOutlined 
@@ -15,8 +17,24 @@ const { confirm } = Modal;
 
 const ConfirmModal = props => {
   const { t } = useTranslation();
+  const [ isLoading, setIsLoading ] = useState(false)
 
-  //const { firstName, lastName, dateOfBirth, sex, streetNumber, city, state, postalCode, country, phoneNumber, email } = props.personalData
+  const send = async () => {
+    setIsLoading(true)
+    const res = await axios.post("http://localhost:3001/patient-questionnaire/create", {
+      personalData: props.personalData,
+      allergyData: props.allergyData,
+      medicationData: props.medicationData
+    })
+    if (res.data.success) {
+      message.success(res.data.message);
+    } else {
+      message.error(res.data.message);
+    }
+    setIsLoading(false)
+  }
+
+  console.log(isLoading)
 
   function showConfirm() {
     confirm({
@@ -24,14 +42,12 @@ const ConfirmModal = props => {
       icon: <ExclamationCircleOutlined />,
       content: t("patientQuestionnaire.modalDisc"),
       okText: t("general.confirm"),
-      onOk() {
-        console.log("Personal Data", props.personalData);
-        console.log("Allergy Data", props.allergyData);
-        console.log("Medication Data", props.medicationData);
-      },
+      okButtonProps: {loading:isLoading},
+      onOk() {send()},
       onCancel() {
         console.log('Cancel');
       },
+      
     });
   }
 

@@ -18,7 +18,7 @@ function App() {
               <CreateId/>
             </Route>
             <MenuLayout>
-              <Route path="/patientenfragebogen">
+              <Route path="/patient-questionnaire">
                 <Patientenfragebogen/>
               </Route>
               <Route path="/profile">

@@ -40,7 +40,7 @@ const MenuLayout = props => {
       case "/2":
         setSelectedKey("1");
         break;
-      case "/patientenfragebogen":
+      case "/patient-questionnaire":
         setSelectedKey("2");
         break;
         case "/profile":
