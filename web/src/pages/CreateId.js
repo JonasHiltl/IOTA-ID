@@ -105,8 +105,6 @@ function CreateId() {
 		setCurrent(current - 1)
 	};
 
-  let db = new Localbase("db")
-
   const create = async () => {
     setIsloading(true)
     if (!isFormComplete) return message.error("You are missing personal information.");
@@ -126,6 +124,7 @@ function CreateId() {
     });
   
     if (res.data.success) {
+      let db = new Localbase("db")
       db.collection("identity").add({
         id: res.data.id,
         docHash: res.data.docHash,
@@ -221,7 +220,7 @@ function CreateId() {
                     ]}
                   >
                     <Input
-                      size="large" 
+                      size="large"
                       name="lastName"
                       value={lastName}
                       placeholder={t("signUp.lastN")}

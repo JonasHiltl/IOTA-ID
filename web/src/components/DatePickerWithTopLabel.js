@@ -19,7 +19,8 @@ const DatePickerWithTopLabel = props => {
     <div>
       <Text>{t(`general.${props.item}`)}</Text>
       <Form.Item
-        //name={`formitem.${props.item}`}
+        name={`formitem.${props.item}`}
+        initialValue={moment(props.itemData)}
         rules={[
           { 
             required: true,

@@ -182,6 +182,73 @@ server.post("/verify", async (req, res) => {
   }
 })
 
+server.post("/update-personal-credential", async (req, res) =>{
+  const {id, firstName, lastName, birthDate, sex, email, phoneNumber, streetNumber, city, state, postalCode, country} = req.body;
+
+  try {
+    const personalInformation = {
+      id: id,
+      name: {
+        first: firstName,
+        last: lastName
+      },
+      birthDate: birthDate,
+      sex: sex,
+      email: email,
+      phoneNumber: phoneNumber,
+      address: {
+        street: streetNumber,
+        city: city,
+        state: state,
+        postalCode: postalCode,
+        country: country,
+      }
+    }
+
+    const deserializedTestIssuer = Document.fromJSON(testIssuer.issuer.doc)
+    const deserializedKeyCollection = KeyCollection.fromJSON(testIssuer.keyKollection)
+
+    const unsignedVc = VerifiableCredential.extend({
+      id: "http://example.edu/credentials/3732",
+      type: "personalInformationCredential",
+      issuer: deserializedTestIssuer.id.toString(),
+      credentialSubject: personalInformation,
+    })
+
+    // Sign the credential with testIssuer's Merkle Key Collection method
+    const signedVc = deserializedTestIssuer.signCredential(unsignedVc, {
+      method: testIssuer.issuer.doc.verificationMethod[0].id,
+      public: deserializedKeyCollection.public(0),
+      secret: deserializedKeyCollection.secret(0),
+      proof: deserializedKeyCollection.merkleProof(Digest.Sha256, 0),
+    })
+
+    if (!deserializedTestIssuer.verify(signedVc)) {
+      return res
+        .json({
+          message: "Your credential is not verified",
+          success: false
+        })
+        .status(500);
+    }
+
+    return res
+      .json({
+        credential: signedVc,
+        message: `Your credential is updated.`,
+        success: true
+      })
+      .status(500);
+  } catch (error) {
+    return res
+      .json({
+        message: "There was a Problem with our Servers",
+        success: false
+      })
+      .status(500);
+  }
+})
+
 
 
 server.listen(3001, ()=>{

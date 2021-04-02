@@ -24,6 +24,7 @@ const AutocompleteWithTopLabel = props => {
       <Text>{t(`general.${props.item}`)}</Text>
       <Form.Item
         name={`formitem.${props.item}`}
+        initialValue={props.itemData}
         rules={[
           { 
             required: true,

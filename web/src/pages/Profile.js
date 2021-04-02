@@ -1,20 +1,27 @@
 import { React, useState } from 'react';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import Localbase from "localbase";
 
 import {
   Row,
   Col,
   Form,
-  Button
+  Button,
+  message
 } from "antd";
 import "./profile.css"
 import InputWithTopLabel from "../components/InputWithTopLabel"
 import DatePickerWithTopLabel from "../components/DatePickerWithTopLabel"
 import RadioGroupWithTopLabel from "../components/RadioGroupWithTopLabel"
 import AutocompleteWithTopLabel from "../components/AutocompleteWithTopLabel"
+import { verify, loadPersonalInformation } from "../store/actions/auth";
 
 const Profile = () => {
+  const dispatch = useDispatch();
+  const [isLoading, setIsloading] = useState(false)
   const [personalData, setPersonalData] = useState({
+    id: useSelector(state => state.personalInformation.id),
     firstName: useSelector(state => state.personalInformation.name.first),
     lastName: useSelector(state => state.personalInformation.name.last),
     dateOfBirth: useSelector(state => state.personalInformation.birthDate),
@@ -27,12 +34,46 @@ const Profile = () => {
     phoneNumber: useSelector(state => state.personalInformation.phoneNumber),
     email: useSelector(state => state.personalInformation.email),
   })
-  const { firstName, lastName, dateOfBirth, sex, streetNumber, city, state, postalCode, country, phoneNumber, email } = personalData
+  const { id, firstName, lastName, dateOfBirth, sex, streetNumber, city, state, postalCode, country, phoneNumber, email } = personalData
+
+  const isFormComplete = id && firstName && lastName && dateOfBirth && sex && email && phoneNumber && streetNumber && city && state && postalCode && country
+
+  const update = async () => {
+    setIsloading(true)
+    if (!isFormComplete) return message.error("You are missing personal information.");
+    const res = await axios.post("http://localhost:3001/update-personal-credential", {
+      id:id,
+      firstName: firstName,
+      lastName: lastName,
+      birthDate: dateOfBirth,
+      sex: sex,
+      email: email,
+      phoneNumber: phoneNumber,
+      streetNumber: streetNumber,
+      city: city,
+      state: state,
+      postalCode: postalCode,
+      country: country
+    });
+
+    if (res.data.success) {
+      let db = new Localbase("db")
+      db.collection("identity").add({
+        credential: res.data.credential
+      }, "personalInformation")
+
+      message.success(res.data.message);
+      dispatch(loadPersonalInformation())
+    } else {
+      message.error(res.data.message);
+    }
+    setIsloading(false)
+  }
 
   return (
     <div className="profile">
       <div className="profileWrapper">
-        <Form>
+        <Form onFinish={update}>
           <Row gutter={{ xs: 8, sm: 16, md: 24 }}>
             <Col span={12}>
               <InputWithTopLabel item="firstName" itemData={firstName} personalData={personalData} setPersonalData={setPersonalData}/>
@@ -63,6 +104,8 @@ const Profile = () => {
           <Row>
             <Button
               type="primary"
+              htmlType="submit"
+              loading={isLoading}
             >
               Save changes
             </Button>

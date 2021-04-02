@@ -47,8 +47,8 @@
         "yourMedication": "Deine Medikamente",
         "addMedication": "Medikament hinzufügen",
         "noMedicationAdded": "Noch kein Medikament hinzugefügt.",
-        "modalTitle": "Haben Sie Ihre Fragebogendaten überprüft?",
-        "modalDisc": "Mit der Bestätigung erstellst du deinen Patientenfragebogen, den du deinem Arzt zur Verfügung stellen kannst.",
+        "modalTitle": "Hast du deine Fragebogendaten überprüft?",
+        "modalDisc": "Mit der Bestätigung wird dein Patientenfragebogen erstellt, den du deinem Arzt zur Verfügung stellen kannst.",
         "editProfile": "Bearbeite dein <1>Profile</1>, um Informationen zu ändern"
     },
     "signUp": {

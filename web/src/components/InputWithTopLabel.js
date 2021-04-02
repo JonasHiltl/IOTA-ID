@@ -20,6 +20,7 @@ const InputWithTopLabel = props => {
       <Text>{t(`general.${props.item}`)}</Text>
       <Form.Item
         name={`formitem.${props.item}`}
+        initialValue={props.itemData}
         rules={[
           { 
             required: true,
@@ -34,9 +35,10 @@ const InputWithTopLabel = props => {
       >
         <Input
           name={props.item}
-          defaultValue={props.itemData}
+          value={props.itemData}
           placeholder={t(`general.${props.item}`)}
           onChange={e => onChange(e)}
+          allowClear={true}
         />
       </Form.Item>
     </div>
