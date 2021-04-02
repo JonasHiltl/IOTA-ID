@@ -4,7 +4,8 @@ import { useSelector } from "react-redux";
 import {
   Row,
   Col,
-  Form
+  Form,
+  Button
 } from "antd";
 import "./profile.css"
 import InputWithTopLabel from "../components/InputWithTopLabel"
@@ -58,6 +59,13 @@ const Profile = () => {
             <Col span={12}>
               <AutocompleteWithTopLabel item="country" itemData={country} personalData={personalData} setPersonalData={setPersonalData}/>
             </Col>
+          </Row>
+          <Row>
+            <Button
+              type="primary"
+            >
+              Save changes
+            </Button>
           </Row>
         </Form>
       </div>

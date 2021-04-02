@@ -13,9 +13,12 @@ import countries from "../pages/countries.json"
 const { Text } = Typography;
 
 const AutocompleteWithTopLabel = props => {
+  const { t } = useTranslation();
+  
   const onCountryChange = (value) => props.setPersonalData({ ...props.personalData, "country": value}); console.log(props.personalData)
 
-  const { t } = useTranslation();
+  const image = props.itemData.split(" ")
+  const imageSrc = image.join("")
   return (
     <div>
       <Text>{t(`general.${props.item}`)}</Text>
@@ -38,13 +41,12 @@ const AutocompleteWithTopLabel = props => {
           filterOption={true}
           onChange={onCountryChange}
           //value={props.itemData}
+          defaultValue={props.itemData}
         >
           <Input
             name={props.item}
             value={props.itemData}
-            defaultValue={props.itemData}
-            placeholder={t(`general.${props.item}`)}
-            prefix={<Image width={22} preview={false} src={`country-flags/svg/${props.itemData}.svg`}/>}
+            prefix={<Image width={22} preview={false} src={`country-flags/svg/${imageSrc}.svg`}/>}
             autocomplete="new-password"
           />
         </AutoComplete>

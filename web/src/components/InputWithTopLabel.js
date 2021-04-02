@@ -11,9 +11,10 @@ import {
 const { Text } = Typography;
 
 const InputWithTopLabel = props => {
+  const { t } = useTranslation();
+  
   const onChange = e => props.setPersonalData({ ...props.personalData, [e.target.name]: e.target.value })
 
-  const { t } = useTranslation();
   return (
     <div>
       <Text>{t(`general.${props.item}`)}</Text>

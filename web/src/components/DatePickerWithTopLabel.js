@@ -12,6 +12,7 @@ const { Text } = Typography;
 
 const DatePickerWithTopLabel = props => {
   const { t } = useTranslation();
+  
   const onBirthDateChange = (value) => props.setPersonalData({ ...props.personalData, "dateOfBirth": value})
 
   return (
@@ -34,6 +35,8 @@ const DatePickerWithTopLabel = props => {
           value={moment(props.itemData)}
           //showToday={false}
           onChange={(value) => onBirthDateChange(value)}
+          showToday={false}
+          allowClear={false}
         />
       </Form.Item>
     </div>
