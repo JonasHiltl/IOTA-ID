@@ -10,6 +10,7 @@ import "./profile.css"
 import InputWithTopLabel from "../components/InputWithTopLabel"
 import DatePickerWithTopLabel from "../components/DatePickerWithTopLabel"
 import RadioGroupWithTopLabel from "../components/RadioGroupWithTopLabel"
+import AutocompleteWithTopLabel from "../components/AutocompleteWithTopLabel"
 
 const Profile = () => {
   const [personalData, setPersonalData] = useState({
@@ -55,7 +56,7 @@ const Profile = () => {
               <InputWithTopLabel item="postalCode" itemData={postalCode} personalData={personalData} setPersonalData={setPersonalData}/>
             </Col>
             <Col span={12}>
-              <InputWithTopLabel item="country" itemData={country} personalData={personalData} setPersonalData={setPersonalData}/>
+              <AutocompleteWithTopLabel item="country" itemData={country} personalData={personalData} setPersonalData={setPersonalData}/>
             </Col>
           </Row>
         </Form>

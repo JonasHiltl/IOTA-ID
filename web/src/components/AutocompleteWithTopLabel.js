@@ -1,0 +1,56 @@
+import React from 'react';
+import { useTranslation } from "react-i18next";
+
+import {
+  Input,
+  AutoComplete,
+  Typography,
+  Form,
+  Image
+} from "antd";
+import countries from "../pages/countries.json"
+
+const { Text } = Typography;
+
+const AutocompleteWithTopLabel = props => {
+  const onCountryChange = (value) => props.setPersonalData({ ...props.personalData, "country": value}); console.log(props.personalData)
+
+  const { t } = useTranslation();
+  return (
+    <div>
+      <Text>{t(`general.${props.item}`)}</Text>
+      <Form.Item
+        name={`formitem.${props.item}`}
+        rules={[
+          { 
+            required: true,
+            message: t(`messages.${props.item}`)
+          },
+          props.item === "email" &&
+            {
+              type: "email",
+              message: t("messages.invalidEmail")
+            }
+        ]}
+      >
+        <AutoComplete
+          options={countries}
+          filterOption={true}
+          onChange={onCountryChange}
+          //value={props.itemData}
+        >
+          <Input
+            name={props.item}
+            value={props.itemData}
+            defaultValue={props.itemData}
+            placeholder={t(`general.${props.item}`)}
+            prefix={<Image width={22} preview={false} src={`country-flags/svg/${props.itemData}.svg`}/>}
+            autocomplete="new-password"
+          />
+        </AutoComplete>
+      </Form.Item>
+    </div>
+  );
+}
+
+export default AutocompleteWithTopLabel;

@@ -83,9 +83,13 @@
         "inputPhone": "Bitte gib deine Telefonnummer ein.",
         "phoneNumber": "Bitte gib deine Telefonnummer ein.",
         "inputStreet": "Bitte gib deine Straße und Hausnummer ein.",
+        "streetNumber": "Bitte gib deine Straße und Hausnummer ein.",
         "inputCity": "Bitte gib deine Stadt ein.",
+        "city": "Bitte gib deine Stadt ein.",
         "inputState": "Bitte gib dein Bundesland ein.",
+        "state": "Bitte gib dein Bundesland ein.",
         "inputPostalCode": "Bitte gib deine Postleitzahl ein.",
+        "postalCode": "Bitte gib deine Postleitzahl ein.",
         "inputCountry": "Bitte gib dein Land ein.",
         "country": "Bitte gib dein Land ein."
     },
