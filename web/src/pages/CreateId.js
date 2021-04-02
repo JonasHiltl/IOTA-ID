@@ -125,13 +125,13 @@ function CreateId() {
   
     if (res.data.success) {
       let db = new Localbase("db")
-      db.collection("identity").add({
+      await db.collection("identity").add({
         id: res.data.id,
         docHash: res.data.docHash,
         pubKey: res.data.pubKey,
         privKey: res.data.privKey
       }, "did")
-      db.collection("identity").add({
+      await db.collection("identity").add({
         credential: res.data.credential
       }, "personalInformation")
 

@@ -8,14 +8,17 @@ import {
   Col,
   Form,
   Button,
-  message
+  message,
+  Typography
 } from "antd";
 import "./profile.css"
 import InputWithTopLabel from "../components/InputWithTopLabel"
 import DatePickerWithTopLabel from "../components/DatePickerWithTopLabel"
 import RadioGroupWithTopLabel from "../components/RadioGroupWithTopLabel"
 import AutocompleteWithTopLabel from "../components/AutocompleteWithTopLabel"
-import { verify, loadPersonalInformation } from "../store/actions/auth";
+import { loadPersonalInformation } from "../store/actions/auth";
+
+const { Title } = Typography
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -58,7 +61,7 @@ const Profile = () => {
 
     if (res.data.success) {
       let db = new Localbase("db")
-      db.collection("identity").add({
+      await db.collection("identity").add({
         credential: res.data.credential
       }, "personalInformation")
 
@@ -72,9 +75,10 @@ const Profile = () => {
 
   return (
     <div className="profile">
-      <div className="profileWrapper">
-        <Form onFinish={update}>
-          <Row gutter={{ xs: 8, sm: 16, md: 24 }}>
+      <Title>{useSelector(state => state.personalInformation.name.first)} {useSelector(state => state.personalInformation.name.last)}</Title>
+      <Form onFinish={update}>
+        <div className="profileWrapper">
+          <Row gutter={{ xs: 8, sm: 16, md: 24 }} style={{ marginBottom:0 }}>
             <Col span={12}>
               <InputWithTopLabel item="firstName" itemData={firstName} personalData={personalData} setPersonalData={setPersonalData}/>
             </Col>
@@ -86,8 +90,10 @@ const Profile = () => {
           <InputWithTopLabel item="phoneNumber" itemData={phoneNumber} personalData={personalData} setPersonalData={setPersonalData}/>
           <DatePickerWithTopLabel item="dateOfBirth" itemData={dateOfBirth} personalData={personalData} setPersonalData={setPersonalData}/>
           <RadioGroupWithTopLabel item="sex" itemData={sex} personalData={personalData} setPersonalData={setPersonalData}/>
+        </div>
+        <div className="profileWrapper">
           <InputWithTopLabel item="streetNumber" itemData={streetNumber} personalData={personalData} setPersonalData={setPersonalData}/>
-          <Row gutter={{ xs: 8, sm: 16, md: 24 }}>
+          <Row gutter={{ xs: 8, sm: 16, md: 24 }}  style={{ marginBottom:0 }}>
             <Col span={12}>
               <InputWithTopLabel item="city" itemData={city} personalData={personalData} setPersonalData={setPersonalData}/>
             </Col>
@@ -101,7 +107,8 @@ const Profile = () => {
               <AutocompleteWithTopLabel item="country" itemData={country} personalData={personalData} setPersonalData={setPersonalData}/>
             </Col>
           </Row>
-          <Row>
+        </div>
+        <Row>
             <Button
               type="primary"
               htmlType="submit"
@@ -110,8 +117,7 @@ const Profile = () => {
               Save changes
             </Button>
           </Row>
-        </Form>
-      </div>
+      </Form>
     </div>
   );
 }
