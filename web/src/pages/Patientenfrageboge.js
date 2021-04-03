@@ -131,9 +131,6 @@ function Patientenfragebogen() {
   if (!isAuthenticated) {
     return <Redirect to='/signup' />
   }
-  
-  const splittedBirthDate = dateOfBirth.split("T")
-  const formattedBirthData = splittedBirthDate[0].split("-")
 
   return(
     <>

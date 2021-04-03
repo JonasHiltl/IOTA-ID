@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from "react-i18next";
 import axios from "axios"
+import i18n from 'i18next';
 
 import { 
   Modal,
@@ -20,21 +21,27 @@ const ConfirmModal = props => {
   const [ isLoading, setIsLoading ] = useState(false)
 
   const send = async () => {
-    setIsLoading(true)
-    const res = await axios.post("http://localhost:3001/patient-questionnaire/create", {
-      personalData: props.personalData,
-      allergyData: props.allergyData,
-      medicationData: props.medicationData
-    })
-    if (res.data.success) {
-      message.success(res.data.message);
-    } else {
-      message.error(res.data.message);
+    try {
+      setIsLoading(true)
+      const res = await axios.post("http://localhost:3001/patient-questionnaire/create", {
+        personalData: props.personalData,
+        allergyData: props.allergyData,
+        medicationData: props.medicationData,
+        language: i18n.language
+      })
+      if (res.data.success) {
+        message.success(res.data.message);
+        console.log(res.data.pdf)
+      } else {
+        message.error(res.data.message);
+      }
+      setIsLoading(false)
+    } catch (error) {
+      message.error("Server error");
+      setIsLoading(false)
     }
-    setIsLoading(false)
   }
 
-  console.log(isLoading)
 
   function showConfirm() {
     confirm({

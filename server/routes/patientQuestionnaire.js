@@ -1,6 +1,8 @@
 const express = require('express')
+const { jsPDF } = require("jspdf");
 const Identity = require("@iota/identity-wasm/node")
 const testIssuer = require("../testIssuer.json")
+const { deCreatePDF } = require("./deCreatePDF")
 global.Headers = fetch.Headers
 global.Request = fetch.Request
 global.Response = fetch.Response
@@ -26,16 +28,16 @@ const CLIENT_CONFIG = {
 const router = express.Router();
 
 router.post('/create', async (req, res) => {
-  const { personalData, allergyData, medicationData } = req.body;
+  const { personalData, allergyData, medicationData, language } = req.body;
   try {
-    console.log(personalData)
-    console.log(allergyData)
-    console.log(medicationData)
-
-    if (allergyData.length === 0) {console.log(undefined)}
+    let pdf
+    if(language === "de") {
+      let pdf = deCreatePDF(personalData, allergyData, medicationData)
+    }
 
     return res
       .json({
+        pdf: pdf,
         message: "Patient Questionnaire is successfully created",
         success: true
       })
