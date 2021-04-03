@@ -6,8 +6,8 @@ const Identity = require("@iota/identity-wasm/node")
 const cors = require("cors");
 const server = express();
 const testIssuer = require("./testIssuer.json")
-const fetch = require('node-fetch')
-const patientQuestionnaireRoute = require('./routes/patientQuestionnaire')
+const fetch = require("node-fetch")
+const patientQuestionnaireRoute = require("./routes/patientQuestionnaire")
 global.Headers = fetch.Headers
 global.Request = fetch.Request
 global.Response = fetch.Response
@@ -31,9 +31,9 @@ const CLIENT_CONFIG = {
 }
 
 server.use(cors({origin: "http://localhost:3000", credentials: true }))
-server.use(express.json())
+server.use(express.json({ limit: "10MB" }))
 
-server.use('/patient-questionnaire', patientQuestionnaireRoute);
+server.use("/patient-questionnaire", patientQuestionnaireRoute);
 
 server.post("/create", async (req, res) => {
   const {firstName, lastName, birthDate, sex, email, phoneNumber, streetNumber, city, state, postalCode, country} = req.body;
@@ -97,7 +97,7 @@ server.post("/create", async (req, res) => {
       credentialSubject: personalInformation,
     })
 
-    // Sign the credential with testIssuer's Merkle Key Collection method
+    // Sign the credential with testIssuer"s Merkle Key Collection method
     const signedVc = deserializedTestIssuer.signCredential(unsignedVc, {
       method: testIssuer.issuer.doc.verificationMethod[0].id,
       public: deserializedKeyCollection.public(0),
@@ -218,7 +218,7 @@ server.post("/update-personal-credential", async (req, res) =>{
       credentialSubject: personalInformation,
     })
 
-    // Sign the credential with testIssuer's Merkle Key Collection method
+    // Sign the credential with testIssuer"s Merkle Key Collection method
     const signedVc = deserializedTestIssuer.signCredential(unsignedVc, {
       method: testIssuer.issuer.doc.verificationMethod[0].id,
       public: deserializedKeyCollection.public(0),

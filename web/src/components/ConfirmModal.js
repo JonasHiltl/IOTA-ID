@@ -19,24 +19,15 @@ const { confirm } = Modal;
 const ConfirmModal = props => {
   const { t } = useTranslation();
   const [ isLoading, setIsLoading ] = useState(false)
-  const [ location, setLocation ] = useState("")
 
   const send = async () => {
     try {
       setIsLoading(true)
-      fetch('https://extreme-ip-lookup.com/json/')
-      .then( res => res.json())
-      .then(response => {
-        setLocation(response.countryCode);
-      })
-      .catch((data, status) => {
-        setLocation("Location not found");
-      })
       const res = await axios.post("http://localhost:3001/patient-questionnaire/create", {
         personalData: props.personalData,
         allergyData: props.allergyData,
         medicationData: props.medicationData,
-        countryCode: location
+        language: i18n.language
       })
       if (res.data.success) {
         message.success(res.data.message);

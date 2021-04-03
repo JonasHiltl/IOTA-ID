@@ -1,6 +1,9 @@
+'use strict';
 const express = require('express')
-const { jsPDF } = require("jspdf");
 const Identity = require("@iota/identity-wasm/node")
+const crypto = require("crypto")
+const ipfsClient = require("ipfs-http-client")
+const { globSource } = ipfsClient
 const testIssuer = require("../testIssuer.json")
 const { deCreatePDF } = require("./deCreatePDF")
 const { enCreatePDF } = require("./enCreatePDF")
@@ -29,14 +32,23 @@ const CLIENT_CONFIG = {
 const router = express.Router();
 
 router.post('/create', async (req, res) => {
-  const { personalData, allergyData, medicationData, countryCode } = req.body;
+  const { personalData, allergyData, medicationData, language } = req.body;
   try {
+    console.log(language)
     let pdf
-    if(countryCode === "DE" || "AT" || "CH") {
-      let pdf = deCreatePDF(personalData, allergyData, medicationData)
-    } else if (countryCode !== "DE" || "AT" || "CH") {
-      let pdf = enCreatePDF(personalData, allergyData, medicationData)
+    if(language === "de") {
+      pdf = deCreatePDF(personalData, allergyData, medicationData)
+    } else {
+      pdf = enCreatePDF(personalData, allergyData, medicationData)
     }
+
+    const buffer = Buffer.from(pdf, "base64");
+    console.log(buffer)
+
+    const client = ipfsClient()
+
+    const file = await client.add(buffer)
+    console.log(file)
 
     return res
       .json({
@@ -46,6 +58,7 @@ router.post('/create', async (req, res) => {
       })
       .status(500);
   } catch (error) {
+    console.log(error)
     return res
       .json({
         error: error,
