@@ -3,6 +3,7 @@ const { jsPDF } = require("jspdf");
 const Identity = require("@iota/identity-wasm/node")
 const testIssuer = require("../testIssuer.json")
 const { deCreatePDF } = require("./deCreatePDF")
+const { enCreatePDF } = require("./enCreatePDF")
 global.Headers = fetch.Headers
 global.Request = fetch.Request
 global.Response = fetch.Response
@@ -28,11 +29,13 @@ const CLIENT_CONFIG = {
 const router = express.Router();
 
 router.post('/create', async (req, res) => {
-  const { personalData, allergyData, medicationData, language } = req.body;
+  const { personalData, allergyData, medicationData, countryCode } = req.body;
   try {
     let pdf
-    if(language === "de") {
+    if(countryCode === "DE" || "AT" || "CH") {
       let pdf = deCreatePDF(personalData, allergyData, medicationData)
+    } else if (countryCode !== "DE" || "AT" || "CH") {
+      let pdf = enCreatePDF(personalData, allergyData, medicationData)
     }
 
     return res

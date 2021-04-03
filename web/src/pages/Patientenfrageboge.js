@@ -266,7 +266,7 @@ function Patientenfragebogen() {
                 <Row gutter={{ xs: 8, sm: 16 }}>
                   <Col className="gutter-row" xs={24} md={6}>
                     <Form.Item>
-                      <Text>{t("patientQuestionnaire.Step3Header")}</Text>
+                      <Text>{t("patientQuestionnaire.medication")}</Text>
                       <Input
                         name="medication"  
                         value={medication}
