@@ -8,6 +8,7 @@ const server = express();
 const testIssuer = require("./testIssuer.json")
 const fetch = require("node-fetch")
 const patientQuestionnaireRoute = require("./routes/patientQuestionnaire")
+const { CLIENT_CONFIG } = require("./config")
 global.Headers = fetch.Headers
 global.Request = fetch.Request
 global.Response = fetch.Response
@@ -25,10 +26,7 @@ const {
   VerifiablePresentation,
 } = Identity
 
-const CLIENT_CONFIG = {
-  network: "main",
-  node: "https://nodes.thetangle.org:443",
-}
+
 
 server.use(cors({origin: "http://localhost:3000", credentials: true }))
 server.use(express.json({ limit: "10MB" }))

@@ -38,6 +38,7 @@ const DatePickerWithTopLabel = props => {
           onChange={(value) => onBirthDateChange(value)}
           showToday={false}
           allowClear={false}
+          inputReadOnly={true}
         />
       </Form.Item>
     </div>

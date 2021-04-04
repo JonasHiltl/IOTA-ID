@@ -18,12 +18,14 @@ import {
   Radio,
   Form,
   Empty,
-  Card
+  Card,
+  Alert
 } from "antd";
 import {
   QuestionCircleOutlined,
   MinusCircleOutlined,
-  PlusOutlined
+  PlusOutlined,
+  LoadingOutlined
 } from "@ant-design/icons";
 import "./Patientenfragebogen.css"
 import QuestionnairePatientDetails from "../components/QuestionnairePatientDetails"
@@ -39,6 +41,8 @@ function Patientenfragebogen() {
 	const { t } = useTranslation();
   const isAuthenticated = useSelector(state => state.isAuthenticated);
 	const [current, setCurrent] = useState(0);
+  const [ isLoading, setIsLoading ] = useState(false)
+  const [ successfullyCreated, setSuccessfullyCreated ] = useState(undefined)
   const [, setRerender] = useState();
   const [addedAlergyData, setAddedAlergyData] = useState([])
   const [addedMedicationData, setAddedMedicationData] = useState([])
@@ -380,10 +384,44 @@ function Patientenfragebogen() {
             <AllergyDetailsReview allergyData={addedAlergyData}/>
             <MedicationDetailsReview medicationData={addedMedicationData}/>
           </div>
-          <div style={{ display:"flex", marginTop:"20px" }}>
-            <ConfirmModal personalData={personalData} allergyData={addedAlergyData} medicationData={addedMedicationData}/>
-            <Button onClick={decrement} style={{ marginLeft:"8px" }}>{t("general.previous")}</Button>
+          <div style={{ display:"flex", marginTop:"20px", marginBottom:"20px" }}>
+            <ConfirmModal 
+              personalData={personalData} 
+              allergyData={addedAlergyData} 
+              medicationData={addedMedicationData} 
+              isLoading={isLoading} 
+              setIsLoading={setIsLoading} 
+              successfullyCreated={successfullyCreated} 
+              setSuccessfullyCreated={setSuccessfullyCreated}
+            />
+            <Button onClick={decrement} style={{ marginLeft:"8px" }} disabled={isLoading}>{t("general.previous")}</Button>
           </div>
+          { isLoading &&
+            <Alert
+              message="Creating and uploading file, please wait..."
+              description="Your patient questionnaire will be available shortly."
+              type="info"
+              showIcon
+              icon={<LoadingOutlined style={{ fontSize: 24 }} spin />}
+            />
+          }
+          { successfullyCreated &&
+            <Alert
+              message="Successfully created patient questionnaire"
+              description="Return to the homepage to see your patient Questionnaire."
+              type="success"
+              showIcon
+              closable
+            />
+          }
+          { successfullyCreated === false &&
+            <Alert
+              message="Error creating patient questionnaire."
+              type="error"
+              showIcon
+              closable
+            />
+          }
         </div>
       }
     </>

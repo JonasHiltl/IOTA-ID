@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import axios from "axios"
 import i18n from 'i18next';
 
-import { 
+import {
   Modal,
   Button,
   message
@@ -18,11 +18,10 @@ const { confirm } = Modal;
 
 const ConfirmModal = props => {
   const { t } = useTranslation();
-  const [ isLoading, setIsLoading ] = useState(false)
 
   const send = async () => {
     try {
-      setIsLoading(true)
+      props.setIsLoading(true)
       const res = await axios.post("http://localhost:3001/patient-questionnaire/create", {
         personalData: props.personalData,
         allergyData: props.allergyData,
@@ -31,13 +30,15 @@ const ConfirmModal = props => {
       })
       if (res.data.success) {
         message.success(res.data.message);
+        props.setSuccessfullyCreated(true)
       } else {
         message.error(res.data.message);
+        props.setSuccessfullyCreated(false)
       }
-      setIsLoading(false)
+      props.setIsLoading(false)
     } catch (error) {
       message.error("Server error");
-      setIsLoading(false)
+      props.setIsLoading(false)
     }
   }
 
@@ -48,7 +49,7 @@ const ConfirmModal = props => {
       icon: <ExclamationCircleOutlined />,
       content: t("patientQuestionnaire.modalDisc"),
       okText: t("general.confirm"),
-      okButtonProps: {loading:isLoading},
+      okButtonProps: {loading:props.isLoading},
       onOk() {send()},
       onCancel() {
         console.log('Cancel');
@@ -58,7 +59,7 @@ const ConfirmModal = props => {
   }
 
   return (
-    <Button type="primary" onClick={showConfirm}>{t("general.done")}</Button>
+    <Button type="primary" onClick={showConfirm} loading={props.isLoading}>{t("general.done")}</Button>
   );
 }
 

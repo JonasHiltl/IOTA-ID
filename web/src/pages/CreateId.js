@@ -261,6 +261,7 @@ function CreateId() {
                       value={birthDate}
                       showToday={false}
                       onChange={value => onBirthDateChange(value)}
+                      inputReadOnly={true}
                     />
                   </Form.Item>
                 </Row>
