@@ -15,7 +15,7 @@ const { Text } = Typography;
 const AutocompleteWithTopLabel = props => {
   const { t } = useTranslation();
   
-  const onCountryChange = (value) => props.setPersonalData({ ...props.personalData, "country": value}); console.log(props.personalData)
+  const onCountryChange = (value) => props.setPersonalData({ ...props.personalData, "country": value})
 
   const image = props.itemData.split(" ")
   const imageSrc = image.join("")

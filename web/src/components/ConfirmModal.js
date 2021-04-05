@@ -21,6 +21,8 @@ const ConfirmModal = props => {
 
   const send = async () => {
     try {
+      props.setIsLoading(false)
+      props.setSuccessfullyCreated(undefined)
       props.setIsLoading(true)
       const res = await axios.post("http://localhost:3001/patient-questionnaire/create", {
         personalData: props.personalData,

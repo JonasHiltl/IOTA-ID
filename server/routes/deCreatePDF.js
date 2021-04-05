@@ -75,7 +75,7 @@ const deCreatePDF = (personalData, allergyData, medicationData) => {
   doc.setFont("helvetica")
   doc.text("Dieser Patientenfragebogen wurde durch EHR generiert", 14, doc.lastAutoTable.finalY + 10)
   
-  const string = doc.output();
+  const string = doc.output("arraybuffer");
   return string
 }
 

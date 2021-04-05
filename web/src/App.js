@@ -5,6 +5,7 @@ import "./App.css";
 import CreateId from "./pages/CreateId"
 import Patientenfragebogen from "./pages/Patientenfrageboge"
 import Profile from "./pages/Profile"
+import Index from "./pages/Index"
 import MenuLayout from "./containers/MenuLayout"
 import CheckAuthenticated from "./containers/CheckAuthenticated"
 
@@ -24,7 +25,8 @@ function App() {
               <Route path="/profile">
                 <Profile/>
               </Route>
-              <Route exact path="/">              
+              <Route exact path="/">     
+                <Index/>         
               </Route>
             </MenuLayout>    
           </Switch>
