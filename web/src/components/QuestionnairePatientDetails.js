@@ -31,7 +31,7 @@ const QuestionnairePatientDetails = props => {
               <Col>
                 <Text type="secondary" strong>{t("general.dateOfBirth")}</Text>
               </Col>
-              <Text>{DateTime.fromISO(dateOfBirth).toFormat("DD")}</Text>
+              <Text>{DateTime.fromISO(dateOfBirth).setLocale(i18n.language).toFormat("DD")}</Text>
             </div>
             <div>
               <Col>
