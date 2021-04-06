@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import Localbase from "localbase"
 
-import { verify, loadPersonalInformation } from "../store/actions/auth";
+import { verify, loadPersonalInformation, loadPatientQuestionnaire } from "../store/actions/auth";
 
 const CheckAuthenticated = props => {
   const dispatch = useDispatch();
@@ -18,6 +18,8 @@ const CheckAuthenticated = props => {
       })
       if (isAuthenticated) {
         dispatch(loadPersonalInformation())
+        const patientQuestionnaire = await db.collection("patientQuestionnaire").get();
+        dispatch(loadPatientQuestionnaire(patientQuestionnaire))
       }
     }
     getDID()

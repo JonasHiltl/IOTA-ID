@@ -106,6 +106,7 @@ function Patientenfragebogen() {
 
 	const decrement = () => {
 		setCurrent(current - 1)
+    setSuccessfullyCreated(undefined)
 	};
 
   const addAllergyIsEnabled = allergy.length > 0 && symptoms.length > 0;

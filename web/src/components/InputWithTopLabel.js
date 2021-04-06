@@ -4,8 +4,7 @@ import { useTranslation } from "react-i18next";
 import {
   Input,
   Typography,
-  Form,
-  Image
+  Form
 } from "antd";
 
 const { Text } = Typography;

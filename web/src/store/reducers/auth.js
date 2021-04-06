@@ -3,12 +3,15 @@ import {
   AUTHENTICATED_FAILED,
   AUTHENTICATED_SUCCESS,
   USERLOADED_SUCCESS,
-  USERLOADED_FAILED
+  USERLOADED_FAILED,
+  PATIENT_QUESTIONNAIRE_LOADED_SUCCESS,
+  PATIENT_QUESTIONNAIRE_LOADED_FAILED
 } from '../actions/types';
 
 const initialState = {
   isAuthenticated: undefined,
-  personalInformation: {}
+  personalInformation: {},
+  patientQuestionnaire: []
 };
 
 export default function(state=initialState, action) {
@@ -28,6 +31,13 @@ export default function(state=initialState, action) {
         draft.personalInformation = payload.credential.credentialSubject;
       })
     case USERLOADED_FAILED:
+      return produce(state, draft => {
+      })
+    case PATIENT_QUESTIONNAIRE_LOADED_SUCCESS:
+      return produce(state, draft => {
+        draft.patientQuestionnaire = payload.transactions;
+      })
+    case PATIENT_QUESTIONNAIRE_LOADED_FAILED:
       return produce(state, draft => {
       })
     default:

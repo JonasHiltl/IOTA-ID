@@ -4,7 +4,9 @@ import {
   AUTHENTICATED_FAILED,
   AUTHENTICATED_SUCCESS,
   USERLOADED_SUCCESS,
-  USERLOADED_FAILED
+  USERLOADED_FAILED,
+  PATIENT_QUESTIONNAIRE_LOADED_SUCCESS,
+  PATIENT_QUESTIONNAIRE_LOADED_FAILED
 } from './types';
 axios.defaults.withCredentials = true;
 
@@ -68,5 +70,43 @@ export const loadPersonalInformation = () => async dispatch => {
       type: USERLOADED_FAILED,
       payload: "Couldn't load your personal information. Did you clear your browser cache?"
     })
+  }
+};
+
+export const loadPatientQuestionnaire = (patientQuestionnaire) => async dispatch => {
+  if (patientQuestionnaire) {
+    const body = JSON.stringify({hashes: patientQuestionnaire})
+    const config = {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    };
+
+    try {
+      const res = await axios.post('http://localhost:3001/patient-questionnaire/retrieve', body, config)
+  
+      if (res.data.success === true) {
+        dispatch({
+          type: PATIENT_QUESTIONNAIRE_LOADED_SUCCESS,
+          payload: res.data
+        });
+      } else {
+        dispatch({
+          type: PATIENT_QUESTIONNAIRE_LOADED_FAILED,
+          payload: res.data
+        });
+      }
+    } catch (err) {
+      dispatch({
+        type: PATIENT_QUESTIONNAIRE_LOADED_FAILED,
+        payload: err
+      });
+    }
+  } else {
+    dispatch({
+      type: PATIENT_QUESTIONNAIRE_LOADED_FAILED,
+      payload: "No patient questionnaire in local Database"
+    });
   }
 };

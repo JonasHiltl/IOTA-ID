@@ -4,12 +4,13 @@ const { composeAPI, generateAddress } = require("@iota/core");
 const { trytesToAscii, asciiToTrytes } = require("@iota/converter");
 const { asTransactionObject } = require("@iota/transaction-converter");
 const Identity = require("@iota/identity-wasm/node");
-const fleekStorage = require('@fleekhq/fleek-storage-js');
+const fleekStorage = require("@fleekhq/fleek-storage-js");
 const ipfsClient = require("ipfs-http-client");
 const { SHA3 } = require("sha3");;
 const { deCreatePDF } = require("./deCreatePDF");
 const { enCreatePDF } = require("./enCreatePDF");
 const { CLIENT_CONFIG } = require("../config");
+require("dotenv").config()
 global.Headers = fetch.Headers
 global.Request = fetch.Request
 global.Response = fetch.Response
@@ -48,17 +49,19 @@ router.post("/create", async (req, res) => {
     hash.update(buffer);
     const hex = hash.digest("hex");
 
+    //implementation with fleek pinning service
     const uploadedFile = await fleekStorage.upload({
-      apiKey: '3ZtbUdlyjtm+0yphmGbfrg==',
-      apiSecret: '5fCgLox1GR5oXL4OiSpYFDrDlI6QEtzXNxBaRqifkj0=',
+      apiKey: process.env.fleekKey,
+      apiSecret: process.env.fleekSecret,
       key: hex,
       data: buffer,
     });
 
-    const client = ipfsClient();
+    /* const client = ipfsClient();
 
     const addResponse = await client.add(buffer);
-    const ipfsHash = addResponse.path;
+    console.log(addResponse) */
+    const ipfsHash = uploadedFile.hashV0;
     const size = buffer.length;
 
     const iota = composeAPI({
@@ -73,6 +76,7 @@ router.post("/create", async (req, res) => {
       size: size,
       created: currentDate,
       hash: hex,
+      publicFleekUrl: uploadedFile.publicUrl,
       ipfs: ipfsHash
     };
 
@@ -87,62 +91,56 @@ router.post("/create", async (req, res) => {
       }
     ];
 
-    await iota.prepareTransfers("9".repeat(81), transfers)
-    .then(trytes => {
-      return iota.sendTrytes(trytes, depth, minimumWeightMagnitude);
-    })
-    .then(bundle => {
-      fs.readFile("./routes/transactionData/transactionData.json", (err, transactionData) => {
-        if (err) {
-          return res
+    const trytes = await iota.prepareTransfers("9".repeat(81), transfers)
+    const bundle = await iota.sendTrytes(trytes, depth, minimumWeightMagnitude);
+
+    fs.readFile("./routes/transactionData/transactionData.json", (err, transactionData) => {
+      if (err) {
+        return res
+        .json({
+          error: err,
+          message: "Error reading json file",
+          success: false
+        })
+        .status(500);
+      }
+      try {
+        const transactionObj = JSON.parse(transactionData);
+        const newTransactionData = {
+          tangleHash: bundle[0].hash,
+          size: size,
+          fleekUrl: uploadedFile.publicUrl,
+          created: currentDate,
+          hash: hex,
+          ipfs: ipfsHash
+        }
+        transactionObj.push(newTransactionData);
+        fs.writeFile("./routes/transactionData/transactionData.json", JSON.stringify(transactionObj, null, 2), err =>{
+          if (err) {
+            return res
+              .json({
+                error: err,
+                message: "Error writing json file",
+                success: false
+              })
+              .status(500);
+          }
+          console.log("File successfully updated")
+        })
+      } catch (error) {
+        return res
           .json({
             error: err,
-            message: "Error reading json file",
+            message: "Error writing json file",
             success: false
           })
-          .status(500);        }
-        try {
-          const transactionObj = JSON.parse(transactionData);
-          const newTransactionData = {
-            tangleHash: bundle[0].hash,
-            size: size,
-            created: currentDate,
-            hash: hex,
-            ipfs: ipfsHash
-          }
-
-          transactionObj.push(newTransactionData);
-          fs.writeFile("./routes/transactionData/transactionData.json", JSON.stringify(transactionObj, null, 2), err =>{
-            if (err) {
-              return res
-                .json({
-                  error: err,
-                  message: "Error writing json file",
-                  success: false
-                })
-                .status(500);
-            }
-            console.log("File successfully updated")
-          })
-        } catch (error) {
-          
-        }
-      })
+          .status(500);
+      }
     })
-    .catch(err => {
-      return res
-      .json({
-        error: err,
-        message: "Error sending transaction to the tanlge",
-        success: false
-      })
-      .status(500);
-    });
-
 
     return res
       .json({
-        pdf: pdf,
+        tangleHash: bundle[0].hash,
         message: "Patient Questionnaire is successfully created",
         success: true
       })
@@ -160,38 +158,41 @@ router.post("/create", async (req, res) => {
 })
 
 router.post("/retrieve", async (req, res) => {
-  const { tangleHash } = req.body;
+  const { hashes } = req.body;
 
   try {
     const iota = composeAPI({
       provider: CLIENT_CONFIG.node
     });
 
-    // Get the transaction trytes for the transaction with the specified hash
-    const transactions = await iota.getTrytes([tangleHash]);
-    // Convert the transaction trytes to an object
-    const txObject = asTransactionObject(transactions[0]);
-    // Trim trailing 9s make sure it is even length
-    let trimmed = txObject.signatureMessageFragment.replace(/\9+$/, "");
-    if (trimmed.length % 2 === 1) {
-      trimmed += "9";
+    let transactions = []
+
+    for (let hash of hashes) {
+      // Get the transaction trytes for the transaction with the specified hash
+      const transaction = await iota.getTrytes([hash.tangleHash]);
+      // Convert the transaction trytes to an object
+      const txObject = asTransactionObject(transaction[0]);
+      // Trim trailing 9s make sure it is even length
+      let trimmed = txObject.signatureMessageFragment.replace(/\9+$/, "");
+      if (trimmed.length % 2 === 1) {
+        trimmed += "9";
+      }
+      // Get the message and convert it to ASCII characters
+      const ascii = trytesToAscii(trimmed);
+      // Parse the JSON message
+      const payload = JSON.parse(ascii)
+      transactions.push(payload)
     }
-    // Get the message and convert it to ASCII characters
-    const ascii = trytesToAscii(trimmed);
-    // Parse the JSON message
-    const payload = JSON.parse(ascii)
     return res
-    .json({
-      payload: payload,
-      message: "Patient questionnaire loaded",
-      success: true
-    })
-    .status(200);
+      .json({
+        transactions: transactions,
+        success: true
+      })
+      .status(200);
   } catch (error) {
     return res
       .json({
         error: error,
-        message: "There was a Problem with our Servers",
         success: false
       })
       .status(500);

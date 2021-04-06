@@ -1,9 +1,10 @@
 [
   {
-    "tangleHash": "SKDZCMLWFHETVIVAQWMCYVRNFPLYNGOHHFEPYRBVPTDBREWNSLAAWCFVU9LEPFVPWCBBNXBHUOKHZ9999",
-    "size": 7187,
-    "created": "2021-04-05T17:23:54.988Z",
-    "hash": "1548322e09ddfe0ac8908feb940ce68140616c10ae0e94243a57fd4d7500d9a0",
-    "ipfs": "QmajvK1UHoqRy8CzVo5auzpJjp2giqdyHXjxfeBwE296CZ"
+    "tangleHash": "QNBEKPVAEJUCCLHHPNRKXKDBWKJTBOMBXAPCVMBHBQUCGXOVHUOIRMU9SCETCJJRKTRXUTPEGRXMA9999",
+    "size": 6072,
+    "fleekUrl": "https://storageapi.fleek.co/jonashiltl-team-bucket/de7c96c07e95bc3201810ba86ea04fd03249b18d51064b46df87b9928daf2f73",
+    "created": "2021-04-06T10:50:43.105Z",
+    "hash": "de7c96c07e95bc3201810ba86ea04fd03249b18d51064b46df87b9928daf2f73",
+    "ipfs": "QmZgP6X7mBX3Xt2oMC3Q2ttBzKCqQHCCvhs3XJr14R85UW"
   }
 ]
