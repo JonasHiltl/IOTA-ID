@@ -23,7 +23,7 @@ function App() {
               <Route path="/patient-questionnaire/create">
                 <Patientenfragebogen/>
               </Route>
-              <Route path="/patient-questionnaire">
+              <Route exact path="/patient-questionnaire">
                 <PatientQuestionnaire/>
               </Route>
               <Route path="/profile">

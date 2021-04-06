@@ -22,5 +22,21 @@
     "created": "2021-04-06T20:41:40.579+02:00",
     "hash": "e9701efb8f2639f88ecae6098935c1237a84e7956151b3962492d04e6771bcfd",
     "ipfs": "QmSnTF1F8gAzgjBXJ3XYgSu2vzAhNY76ML6Ld2qcXpH1kg"
+  },
+  {
+    "tangleHash": "NRJAQSGGRSFTSMMJJ9TSFA9ESNDRIRM9OVPMDRQJLMJYDNZGCMMMZDDIDPVZGZDKUHGQFDTADFVXA9999",
+    "size": 6063,
+    "fleekUrl": "https://storageapi.fleek.co/jonashiltl-team-bucket/39cc1cb7f325f9603de04536ce05f5f90f3ae83292b6bbb46c6335f3d00e1e23",
+    "created": "2021-04-06T22:17:18.738+02:00",
+    "hash": "39cc1cb7f325f9603de04536ce05f5f90f3ae83292b6bbb46c6335f3d00e1e23",
+    "ipfs": "QmfVAqCb8apQDdsdfg267XWKZdEgPvF2nxp8SEaDFuUH5w"
+  },
+  {
+    "tangleHash": "TBPFVZRXUQYFTAQOPBANBQOYGOUSZPDOCZASAYABX9OGYVGVKRXQRUFD9GKTZGHLGKENOAHXYPVTZ9999",
+    "size": 8216,
+    "fleekUrl": "https://storageapi.fleek.co/jonashiltl-team-bucket/5e54d4d81a9cc08dec7d33bd565c2e7590c18c8cfa0229cf4a51d4375e7473e5",
+    "created": "2021-04-06T22:39:56.067+02:00",
+    "hash": "5e54d4d81a9cc08dec7d33bd565c2e7590c18c8cfa0229cf4a51d4375e7473e5",
+    "ipfs": "QmefhJo7qUDwJvaRc15cjYgkwMJ2TULfTAPZBMqdG8GeCf"
   }
 ]
