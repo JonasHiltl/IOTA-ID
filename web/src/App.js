@@ -6,6 +6,7 @@ import CreateId from "./pages/CreateId"
 import Patientenfragebogen from "./pages/Patientenfrageboge"
 import Profile from "./pages/Profile"
 import Index from "./pages/Index"
+import PatientQuestionnaire from "./pages/PatientQuestionnaire"
 import MenuLayout from "./containers/MenuLayout"
 import CheckAuthenticated from "./containers/CheckAuthenticated"
 
@@ -19,8 +20,11 @@ function App() {
               <CreateId/>
             </Route>
             <MenuLayout>
-              <Route path="/patient-questionnaire">
+              <Route path="/patient-questionnaire/create">
                 <Patientenfragebogen/>
+              </Route>
+              <Route path="/patient-questionnaire">
+                <PatientQuestionnaire/>
               </Route>
               <Route path="/profile">
                 <Profile/>

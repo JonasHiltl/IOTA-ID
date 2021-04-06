@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
-import moment from 'moment';
+import i18n from 'i18next';
+import { DateTime } from "luxon";
 
 import { 
   Row, 
@@ -30,7 +31,7 @@ const QuestionnairePatientDetails = props => {
               <Col>
                 <Text type="secondary" strong>{t("general.dateOfBirth")}</Text>
               </Col>
-              <Text>{moment(dateOfBirth).format("MMM Mo YYYY")}</Text>
+              <Text>{DateTime.fromISO(dateOfBirth).toFormat("DD")}</Text>
             </div>
             <div>
               <Col>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
 import moment from 'moment';
+import i18n from 'i18next';
 
 import {
   DatePicker,
@@ -31,7 +32,7 @@ const DatePickerWithTopLabel = props => {
         <DatePicker
           name="dateOfBirth"
           placeholder={t("general.dateOfBirth")}
-          format="DD/MM/YYYY"
+          format={i18n.language === "de" ? "DD. MM. YYYY" : "MM/DD/YYYY"}
           style={{ width:"100%" }}
           value={moment(props.itemData)}
           //showToday={false}

@@ -4,11 +4,11 @@ import moment from "moment";
 import { useMediaQuery } from "react-responsive"
 import { useTranslation, Trans } from "react-i18next";
 import { Link, Redirect } from "react-router-dom";
+import i18n from 'i18next';
 
-import { 
+import {
   Steps, 
   Button, 
-  message,
   Typography,
   Row,
   Col,
@@ -46,18 +46,19 @@ function Patientenfragebogen() {
   const [, setRerender] = useState();
   const [addedAlergyData, setAddedAlergyData] = useState([])
   const [addedMedicationData, setAddedMedicationData] = useState([])
+  const personalInformation = useSelector(state => state.personalInformation);
   const [personalData] = useState({
-    firstName: useSelector(state => state.personalInformation.name.first),
-    lastName: useSelector(state => state.personalInformation.name.last),
-    dateOfBirth: useSelector(state => state.personalInformation.birthDate),
-    sex: useSelector(state => state.personalInformation.sex),
-    streetNumber: useSelector(state => state.personalInformation.address.street),
-    city: useSelector(state => state.personalInformation.address.city),
-    state: useSelector(state => state.personalInformation.address.state),
-    postalCode: useSelector(state => state.personalInformation.address.postalCode),
-    country: useSelector(state => state.personalInformation.address.country),
-    phoneNumber: useSelector(state => state.personalInformation.phoneNumber),
-    email: useSelector(state => state.personalInformation.email),
+    firstName: personalInformation.name.first,
+    lastName: personalInformation.name.last,
+    dateOfBirth: personalInformation.birthDate,
+    sex: personalInformation.sex,
+    streetNumber: personalInformation.address.street,
+    city: personalInformation.address.city,
+    state: personalInformation.address.state,
+    postalCode: personalInformation.address.postalCode,
+    country: personalInformation.address.country,
+    phoneNumber: personalInformation.phoneNumber,
+    email: personalInformation.email
   })
 
   const [allergyFormData, setAllergyFormData] = useState({
@@ -172,7 +173,7 @@ function Patientenfragebogen() {
                 </Col>
                 <Col className="gutter-row" xs={24} md={12} style={{ paddingBottom: 20 }}>
                     <div><Text>{t("general.dateOfBirth")}</Text></div>
-                    <DatePicker  defaultValue={moment(dateOfBirth)} format="DD/MM/YYYY" style={{backgroundColor:"none"}} disabled/>
+                    <DatePicker  defaultValue={moment(dateOfBirth)} format={i18n.language === "de" ? "DD. MM. YYYY" : "MM/DD/YYYY"} style={{backgroundColor:"none"}} disabled/>
                 </Col>
                 <Col className="gutter-row" xs={24} md={12} style={{ paddingBottom: 20 }}>
                   <div><Text>{t("general.sex")}</Text></div>

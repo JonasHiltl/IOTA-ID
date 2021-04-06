@@ -6,6 +6,7 @@ const { asTransactionObject } = require("@iota/transaction-converter");
 const Identity = require("@iota/identity-wasm/node");
 const fleekStorage = require("@fleekhq/fleek-storage-js");
 const ipfsClient = require("ipfs-http-client");
+const { DateTime } = require("luxon");
 const { SHA3 } = require("sha3");;
 const { deCreatePDF } = require("./deCreatePDF");
 const { enCreatePDF } = require("./enCreatePDF");
@@ -36,10 +37,10 @@ router.post("/create", async (req, res) => {
     let pdf
     let currentDate
     if(language === "de") {
-      currentDate = new Date()
+      currentDate = DateTime.now()
       pdf = deCreatePDF(personalData, allergyData, medicationData)
     } else {
-      currentDate = new Date()
+      currentDate = DateTime.now()
       pdf = enCreatePDF(personalData, allergyData, medicationData)
     }
 

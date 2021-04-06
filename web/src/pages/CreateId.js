@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
 import Localbase from "localbase";
 import { useMediaQuery } from "react-responsive";
-import moment from 'moment';
+import { DateTime } from "luxon";
 
 import {
   Form,

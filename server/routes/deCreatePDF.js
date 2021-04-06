@@ -1,6 +1,6 @@
 const { jsPDF } = require("jspdf");
-const moment = require("moment")
 const autoTable = require("jspdf-autotable")
+const { DateTime } = require("luxon");
 
 const deCreatePDF = (personalData, allergyData, medicationData) => {
   const { firstName, lastName, email, phoneNumber, dateOfBirth, sex, streetNumber, city, state, postalCode, country } = personalData
@@ -20,7 +20,7 @@ const deCreatePDF = (personalData, allergyData, medicationData) => {
   doc.autoTable({
     bodyStyles: { halign: "right" },
     body: [
-      [moment().format("DD. MM. YYYY")],
+      [DateTime.local().setLocale("de").toLocaleString("DATE_SHORT")],
     ],
     theme: "plain"
   })
@@ -38,7 +38,7 @@ const deCreatePDF = (personalData, allergyData, medicationData) => {
       ["Vorname", "Nachname", "Geburtsdatum", "Geschlecht"]
     ],
     body: [
-      [firstName, lastName, moment(dateOfBirth).format('DD. MM. YYYY'), sexLocalized],
+      [firstName, lastName, DateTime.fromISO(dateOfBirth).setLocale("de").toLocaleString("DATE_SHORT"), sexLocalized],
     ],
     theme: "plain",
   })
