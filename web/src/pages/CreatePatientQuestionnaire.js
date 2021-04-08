@@ -25,9 +25,10 @@ import {
   QuestionCircleOutlined,
   MinusCircleOutlined,
   PlusOutlined,
-  LoadingOutlined
+  LoadingOutlined,
+  ArrowLeftOutlined
 } from "@ant-design/icons";
-import "./Patientenfragebogen.css"
+import "./CreatePatientQuestionnaire.css"
 import QuestionnairePatientDetails from "../components/QuestionnairePatientDetails"
 import AllergyDetailsReview from "../components/AllergyDetailsReview"
 import MedicationDetailsReview from "../components/MedicationDetailsReview"

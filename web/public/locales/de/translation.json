@@ -37,7 +37,7 @@
         "exampleSneezing": "Bsp. Niesen",
         "addAllergy": "Allergie hinzufügen",
         "noAllergiesAdded": "Noch keine Allergie hinzugefügt.",
-        "condition": "Zustand",
+        "condition": "Beschwerden",
         "frequency": "Häufigkeit",
         "dose": "Dosis",
         "exampleAspirin": "Bsp. Aspirin",
@@ -49,7 +49,9 @@
         "noMedicationAdded": "Noch kein Medikament hinzugefügt.",
         "modalTitle": "Hast du deine Fragebogendaten überprüft?",
         "modalDisc": "Mit der Bestätigung wird dein Patientenfragebogen erstellt, den du deinem Arzt zur Verfügung stellen kannst.",
-        "editProfile": "Bearbeite dein <1>Profile</1>, um Informationen zu ändern"
+        "editProfile": "Bearbeite dein <1>Profile</1>, um Informationen zu ändern",
+        "notAdded": "Du hast noch keinen Patientenfragebogen erstellt.",
+        "deleteQuestionnairePopover": "Patientenfragebogen löschen?"
     },
     "signUp": {
         "header": "Erstellen Sie Ihr Konto",

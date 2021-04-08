@@ -67,7 +67,7 @@ const deCreatePDF = (personalData, allergyData, medicationData) => {
   })
 
   doc.autoTable({
-    head: [["Medikament", "Zustand", "Häufigkeit", "Dosis"]],
+    head: [["Medikament", "Beschwerden", "Häufigkeit", "Dosis"]],
     body: formattedMedication,
   })
 

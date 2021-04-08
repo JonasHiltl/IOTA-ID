@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "./App.css";
 import CreateId from "./pages/CreateId"
-import Patientenfragebogen from "./pages/Patientenfrageboge"
+import CreatePatientQuestionnaire from "./pages/CreatePatientQuestionnaire"
 import Profile from "./pages/Profile"
 import Index from "./pages/Index"
 import PatientQuestionnaire from "./pages/PatientQuestionnaire"
@@ -21,7 +21,7 @@ function App() {
             </Route>
             <MenuLayout>
               <Route path="/patient-questionnaire/create">
-                <Patientenfragebogen/>
+                <CreatePatientQuestionnaire/>
               </Route>
               <Route exact path="/patient-questionnaire">
                 <PatientQuestionnaire/>

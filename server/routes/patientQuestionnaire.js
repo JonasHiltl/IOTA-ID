@@ -142,6 +142,7 @@ router.post("/create", async (req, res) => {
     return res
       .json({
         tangleHash: bundle[0].hash,
+        ipfsHash: ipfsHash,
         message: "Patient Questionnaire is successfully created",
         success: true
       })

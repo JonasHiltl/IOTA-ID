@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
+import { Redirect } from "react-router-dom";
 import axios from "axios";
 import i18n from 'i18next';
 import Localbase from "localbase";
@@ -21,6 +22,7 @@ const { confirm } = Modal;
 const ConfirmModal = props => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const [redirect, setRedirect] = useState(false)
 
   const send = async () => {
     try {
@@ -38,7 +40,7 @@ const ConfirmModal = props => {
         let db = new Localbase("db")
         await db.collection("patientQuestionnaire").add({
           tangleHash: res.data.tangleHash
-        })
+        }, res.data.ipfsHash)
         const patientQuestionnaire = await db.collection("patientQuestionnaire").get();
         dispatch(loadPatientQuestionnaire(patientQuestionnaire))
         props.setSuccessfullyCreated(true)
@@ -47,6 +49,7 @@ const ConfirmModal = props => {
         props.setSuccessfullyCreated(false)
       }
       props.setIsLoading(false)
+      setRedirect(true)
     } catch (error) {
       message.error("Server error");
       props.setIsLoading(false)
@@ -70,7 +73,12 @@ const ConfirmModal = props => {
   }
 
   return (
-    <Button type="primary" onClick={showConfirm} loading={props.isLoading}>{t("general.done")}</Button>
+    <>
+      { redirect &&
+        <Redirect to='/patient-questionnaire' />
+      }
+      <Button type="primary" onClick={showConfirm} loading={props.isLoading}>{t("general.done")}</Button>
+    </>
   );
 }
 

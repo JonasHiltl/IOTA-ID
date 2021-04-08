@@ -49,7 +49,9 @@
         "noMedicationAdded": "No medication added.",
         "modalTitle": "Have you reviewed your questionnaire data?",
         "modalDisc": "By confirming you will create your patient questionnaire to share with your doctor.",
-        "editProfile": "Edit <1>profile</1> to change Information"
+        "editProfile": "Edit <1>profile</1> to change Information",
+        "notAdded": "You haven't created a patient questionnaire yet.",
+        "deleteQuestionnairePopover": "Delete patient Questionnaire?"
     },
     "signUp": {
         "header": "Create your account",
