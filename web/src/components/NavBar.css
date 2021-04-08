@@ -1,0 +1,28 @@
+.navbar {
+  background-color: white;
+  padding: 1rem 20px 1rem 20px;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+}
+@media (min-width: 992px) {
+  .menu {
+    display: none;
+  }
+}
+.logo {
+  height: 32px;
+  margin-left: 1rem;
+}
+
+.ant-drawer-header {
+  padding-right: 12px;
+}
+
+.ant-drawer-close {
+  padding-right: 12px;
+}
+
+.ant-drawer-body{
+  padding: 24px 0px 0px 0px !important;
+}

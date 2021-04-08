@@ -1,0 +1,24 @@
+.patientQuestionaire {
+    padding: 10px;
+    min-height: calc(100vh - 64px);
+    position: relative;
+    background-color: #F6F8FC
+}
+
+@media (min-width: 768px) {
+    .patientQuestionaire {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .ant-card-body {
+        padding: 12px;
+    }
+    .ant-card-head {
+        padding: 0px 12px;
+    }
+    .ant-col-6 {
+        padding: 1px;
+    }
+}

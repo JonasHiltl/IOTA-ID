@@ -1,0 +1,23 @@
+.profile {
+  padding: 10px;
+  background-color: #F6F8FC;
+  min-height: calc(100vh - 64px);
+}
+
+.ant-row { 
+  margin-bottom: 20px;
+}
+
+.profileWrapper {
+  background-color: #fff;
+  border: 1px dashed #D1D1D1;
+  padding: 4px;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+  .profile {
+    padding: 20px;
+  }
+}
