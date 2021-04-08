@@ -1,9 +1,0 @@
-.ant-table-cell {
-  padding: 20px;
-}
-
-@media (max-width: 768px) {
-  .ant-table-cell {
-    padding: 10px !important;
-  }
-}
