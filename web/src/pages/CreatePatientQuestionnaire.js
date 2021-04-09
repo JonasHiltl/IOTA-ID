@@ -19,7 +19,8 @@ import {
   Form,
   Empty,
   Card,
-  Alert
+  Alert,
+  Breadcrumb
 } from "antd";
 import {
   QuestionCircleOutlined,
@@ -143,6 +144,18 @@ function Patientenfragebogen() {
     <>
       { current < 3 ?
         <div className="patientQuestionaire">
+        <Row>
+          <Link to="/patient-questionnaire">
+            <Button type="text" icon={<ArrowLeftOutlined />} style={{ marginRight:4 }}/>
+          </Link>
+          <Breadcrumb separator="" style={{ display:"flex", alignItems:"center" }}>
+            <Breadcrumb.Item>Home</Breadcrumb.Item>
+            <Breadcrumb.Separator />
+            <Breadcrumb.Item>Patient questionnaire</Breadcrumb.Item>
+            <Breadcrumb.Separator />
+            <Breadcrumb.Item>Create</Breadcrumb.Item>
+          </Breadcrumb>
+        </Row>
           <Steps current={current} onChange={onStepChange} direction="horizontal">
             <Step
               title={t("patientQuestionnaire.Step1Header")}
