@@ -85,7 +85,7 @@ function CreateId() {
 
   const { firstName, lastName, birthDate, sex, email, phoneNumber, streetNumber, city, state, postalCode, country } = formData;
 
-	const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value }); console.log(formData)
+	const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
   const onBirthDateChange = (dateString) => setFormData({ ...formData, "birthDate": dateString })
   const onSexChange = e => setFormData({ ...formData, "sex": e.target.value})
   const onCountryChange = (value) => setFormData({ ...formData, "country": value})

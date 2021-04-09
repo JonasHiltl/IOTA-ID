@@ -9,7 +9,7 @@ import './i18n';
 
 import './index.css';
 import reducer from './store/reducers/auth';
-import { 
+import {
   Spin 
 } from 'antd';
 import { 

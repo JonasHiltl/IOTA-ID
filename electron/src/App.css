@@ -1,0 +1,11 @@
+@import '~antd/dist/antd.css';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.typical {
+  margin-bottom: 0px !important;
+}
