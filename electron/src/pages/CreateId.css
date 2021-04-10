@@ -1,0 +1,20 @@
+.createColRight {
+  padding: 15px;
+  height: 100vh;
+}
+
+@media (min-width: 768px) {
+  .createColRight {
+    padding: 40px;
+  }
+}
+@media (min-width: 1200px) {
+  .createColRight {
+    padding: 50px;
+  }
+}
+@media (min-width: 1767px) {
+  .createColRight {
+    padding: 150px;
+  }
+}

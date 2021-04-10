@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useTranslation } from "react-i18next";
-import Typical from "react-typical";
 
 import {
   Typography,
@@ -10,7 +9,7 @@ import {
   Col
 } from "antd";
 
-const { Title } = Typography
+const { Title, Text } = Typography
 
 const InputPersonal = props => {
   const { t } = useTranslation();
@@ -22,14 +21,9 @@ const InputPersonal = props => {
 
   return (
     <div>
-      <Title>
-        <Typical
-          steps={[t("signUp.firstName")]}
-          className={"typical"}
-        />
-      </Title>
       <Row gutter={{ xs: 8, sm: 16, md: 24 }}>
-        <Col span={12}>
+        <Col  xs={24} lg={12}>
+          <Text>{t("general.firstName")}</Text>
           <Form.Item
             style={{ width:"100%" }} 
               name="firstName" 
@@ -41,7 +35,6 @@ const InputPersonal = props => {
             ]}
           >
             <Input
-              size="large"
               name="firstName"
               placeholder={t("signUp.firstN")}
               allowClear
@@ -50,7 +43,8 @@ const InputPersonal = props => {
             />
           </Form.Item>
         </Col>
-        <Col span={12}>
+        <Col  xs={24} lg={12}>
+          <Text>{t("general.lastName")}</Text>
           <Form.Item
             style={{ width:"100%" }} 
               name="lastName" 
@@ -62,7 +56,6 @@ const InputPersonal = props => {
             ]}
           >
             <Input
-              size="large"
               name="lastName"
               placeholder={t("signUp.lastN")}
               allowClear
@@ -71,12 +64,13 @@ const InputPersonal = props => {
             />
           </Form.Item>
         </Col>
-        <Col span={12}>
+        <Col  xs={24} lg={12}>
+          <Text>{t("general.email")}</Text>
           <Form.Item
             style={{ width:"100%" }} 
               name="email" 
               rules={[
-                { 
+                {
                   type: "email",
                   message: t("messages.invalidEmail")
                 },
@@ -87,7 +81,6 @@ const InputPersonal = props => {
             ]}
           >
             <Input
-              size="large"
               name="email"
               placeholder={t("signUp.email")}
               allowClear
@@ -96,7 +89,8 @@ const InputPersonal = props => {
             />
           </Form.Item>
         </Col>
-        <Col span={12}>
+        <Col  xs={24} lg={12}>
+          <Text>{t("general.phoneNumber")}</Text>
           <Form.Item
             style={{ width:"100%" }} 
             name="phoneNumber"
@@ -108,7 +102,6 @@ const InputPersonal = props => {
             ]}
           >
             <Input
-              size="large"
               name="phoneNumber"
               placeholder={t("general.phoneNumber")}
               allowClear

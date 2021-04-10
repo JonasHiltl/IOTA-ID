@@ -1,14 +1,23 @@
 const {
   app,
   BrowserWindow,
-  ipcMain 
+  ipcMain
 } = require("electron");
 const path = require("path")
 const backend = require("i18next-electron-fs-backend");
 const fs = require("fs");
+const storage = require("electron-json-storage");
+const {
+  FETCH_DATA_FROM_STORAGE,
+  HANDLE_FETCH_DATA,
+  SAVE_DATA_IN_STORAGE,
+  HANDLE_SAVE_DATA
+} = require("./utils/constants");
+
+let win
 
 function createWindow() {
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     width: 1280,
     height: 720,
     webPreferences: {
@@ -37,3 +46,19 @@ app.on("window-all-closed", () => {
     i18nextBackend.clearMainBindings(ipcMain);
   }
 });
+
+ipcMain.on(FETCH_DATA_FROM_STORAGE, (event, message) => {
+  console.log("Main received: FETCH_DATA_FROM_STORAGE with message", message)
+  win.send(HANDLE_FETCH_DATA, {
+    success: true,
+    message: message
+  })
+})
+
+ipcMain.on(SAVE_DATA_IN_STORAGE, (event, message) => {
+  console.log("Main received: SAVE_DATA_IN_STORAGE with message", message)
+  win.send(HANDLE_SAVE_DATA, {
+    success: true,
+    message: message
+  })
+})

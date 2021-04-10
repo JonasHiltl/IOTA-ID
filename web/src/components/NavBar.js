@@ -9,7 +9,7 @@ import {
   MenuOutlined 
 } from "@ant-design/icons";
 import "./NavBar.css";
-import ChangeLanugage from "./changeLanguage"
+import ChangeLanguage from "./ChangeLanguage"
 
 const NavBar = ({ menu }) => {
   const [visible, setVisible] = useState(false);
@@ -28,7 +28,7 @@ const NavBar = ({ menu }) => {
         Logo
       </Link>
       <div>
-        <ChangeLanugage
+        <ChangeLanguage
           style={{ position:"relative"}}
         />
         <Button

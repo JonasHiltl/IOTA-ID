@@ -1,6 +1,6 @@
 import React, {useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { useTranslation, Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { Link as LinkRedux } from "react-router-dom";
 import Localbase from "localbase";
 

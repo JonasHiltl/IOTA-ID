@@ -54,7 +54,6 @@
         "deleteQuestionnairePopover": "Patientenfragebogen löschen?"
     },
     "signUp": {
-        "header": "Erstellen Sie Ihr Konto",
         "firstN": "Vorname",
         "firstName": "Wie lautet dein Vorname?",
         "lastN": "Nachname",
@@ -68,7 +67,9 @@
         "signup": "Registrieren",
         "alreadySign": "Haben Sie bereits ein Benutzerkonto? <1> Anmelden</1>",
         "activateEmail": "Bitte aktivieren Sie Ihr Konto",
-        "sentEmail": "Wir haben Ihnen den Aktivierungslink an Ihre E-Mail geschickt."
+        "sentEmail": "Wir haben Ihnen den Aktivierungslink an Ihre E-Mail geschickt.",
+        "header": "Erstelle deine digitale Identität",
+        "paragraph": "Ihre Identität werden überprüfbar und sicher auf Ihrem Gerät gespeichert sein. Sie können den Zugang zu Ihren Gesundheitsdaten ändern, freigeben und widerrufen."
     },
     "messages": {
         "inputFN": "Bitte gib deinen Vornamen ein.",

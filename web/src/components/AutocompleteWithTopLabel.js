@@ -48,7 +48,7 @@ const AutocompleteWithTopLabel = props => {
             name={props.item}
             value={props.itemData}
             prefix={<Image width={22} preview={false} src={`country-flags/svg/${imageSrc}.svg`}/>}
-            autocomplete="new-password"
+            autoComplete="new-password"
             allowClear={true}
           />
         </AutoComplete>

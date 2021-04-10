@@ -54,7 +54,6 @@
         "deleteQuestionnairePopover": "Delete patient Questionnaire?"
     },
     "signUp": {
-        "header": "Create your account",
         "firstN": "First name",
         "firstName": "What is your first name?",
         "lastN": "Last Name",
@@ -69,7 +68,9 @@
         "alreadySign": "Already have an account? <1> Login</1>",
         "activateEmail": "Please activate your Account",
         "sentEmail": "We have sent you your email activation link to your email.",
-        "addressTypical": "What is your address?"
+        "addressTypical": "What is your address?",
+        "header": "Let's create your digital Identity",
+        "paragraph": "Your credentials are going to be verifiable and securely stored on your device. You can change, share and revoke access to your health data."
     },
     "messages": {
         "inputFN": "Please input your first Name.",

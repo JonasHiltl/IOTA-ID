@@ -1,29 +1,33 @@
-import React, {useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import Localbase from "localbase"
+const { ipcRenderer } = require("electron");
 
-import { verify, loadPersonalInformation, loadPatientQuestionnaire } from "../store/actions/auth";
+import { loadSavedData } from "../../preload"
+
+import {
+  FETCH_DATA_FROM_STORAGE,
+  HANDLE_FETCH_DATA,
+  SAVE_DATA_IN_STORAGE,
+  HANDLE_SAVE_DATA
+} from "../../utils/constants";
 
 const CheckAuthenticated = props => {
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector(state => state.isAuthenticated);
 
-  useEffect( () => {
-    async function getDID() {
-      const db = new Localbase("db")
-      await db.collection("identity").doc("did").get().then(identity => {
-        if (identity) {
-          dispatch(verify(identity.id))
-        }
-      })
-      if (isAuthenticated) {
-        dispatch(loadPersonalInformation())
-        const patientQuestionnaire = await db.collection("patientQuestionnaire").get();
-        dispatch(loadPatientQuestionnaire(patientQuestionnaire))
-      }
-    }
-    getDID()
-  }, [dispatch, isAuthenticated])
+  useEffect(() => {
+    loadSavedData();
+  }, []);
+
+  useEffect(() => {
+    ipcRenderer.on(HANDLE_FETCH_DATA, handleReceiveData)
+    return () => {
+      ipcRenderer.removeListener(HANDLE_FETCH_DATA, handleReceiveData)
+    };
+  });
+
+  const handleReceiveData = (event, data) => {
+    console.log("Data received", data)
+  }
 
   return (
     <>
