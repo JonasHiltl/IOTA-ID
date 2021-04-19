@@ -28,14 +28,15 @@ const {
 
 
 
-server.use(cors({origin: "http://localhost:3000", credentials: true }))
+server.use(cors())
 server.use(express.json({ limit: "10MB" }))
 
 server.use("/patient-questionnaire", patientQuestionnaireRoute);
 
 server.post("/create", async (req, res) => {
-  const {firstName, lastName, birthDate, sex, email, phoneNumber, streetNumber, city, state, postalCode, country} = req.body;
+  const {firstName, lastName, email, phoneNumber, dateOfBirth, sex, address, city, state, postalCode, country} = req.body;
   const name = `${firstName} ${lastName}` 
+  console.log(req.body)
 
   try {
     const reqIsIncomplete = Object.values(req.body).find(value => !value);
@@ -72,12 +73,12 @@ server.post("/create", async (req, res) => {
         first: firstName,
         last: lastName
       },
-      birthDate: birthDate,
+      dateOfBirth: dateOfBirth,
       sex: sex,
       email: email,
       phoneNumber: phoneNumber,
       address: {
-        street: streetNumber,
+        street: address,
         city: city,
         state: state,
         postalCode: postalCode,
@@ -184,7 +185,7 @@ server.post("/verify", async (req, res) => {
 })
 
 server.post("/update-personal-credential", async (req, res) =>{
-  const {id, firstName, lastName, birthDate, sex, email, phoneNumber, streetNumber, city, state, postalCode, country} = req.body;
+  const {id, firstName, lastName, dateOfBirth, sex, email, phoneNumber, streetNumber, city, state, postalCode, country} = req.body;
 
   try {
     const personalInformation = {
@@ -193,12 +194,12 @@ server.post("/update-personal-credential", async (req, res) =>{
         first: firstName,
         last: lastName
       },
-      birthDate: birthDate,
+      dateOfBirth: dateOfBirth,
       sex: sex,
       email: email,
       phoneNumber: phoneNumber,
       address: {
-        street: streetNumber,
+        street: address,
         city: city,
         state: state,
         postalCode: postalCode,
